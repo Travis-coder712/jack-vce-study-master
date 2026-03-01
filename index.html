@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jack VCE Study Master</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231a365d'/><stop offset='50%25' stop-color='%236366f1'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><polygon points='50,22 88,40 50,54 12,40' fill='white'/><rect x='47' y='40' width='6' height='28' fill='white' rx='2'/><path d='M28 46 L28 62 Q50 76 72 62 L72 46' fill='none' stroke='white' stroke-width='3.5'/><circle cx='50' cy='72' r='4.5' fill='%23fbbf24'/></svg>">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -30,14 +30,85 @@
   --economics: #d97706;
   --busman11: #8b5cf6;
   --busman12: #0891b2;
+  --bg-subtle: #f7fafc;
+  --success-bg: #f0fff4;
+  --success-border: #c6f6d5;
+  --info-bg: #ebf8ff;
+  --info-border: #bee3f8;
+  --info-text: #2a4365;
+  --warning-bg: #fffbeb;
+  --warning-border: #fde68a;
+  --warning-text: #92400e;
+  --danger-bg: #fff5f5;
+  --danger-border: #fed7d7;
+  --danger-text: #c53030;
+}
+
+/* Dark Mode */
+html.dark {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --primary: #0f172a;
+  --primary-light: #1e3a5f;
+  --accent: #60a5fa;
+  --danger: #f87171;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.5), 0 4px 6px rgba(0,0,0,0.3);
+  --bg-subtle: #1a2332;
+  --success-bg: rgba(74, 222, 128, 0.1);
+  --success-border: rgba(74, 222, 128, 0.25);
+  --info-bg: rgba(96, 165, 250, 0.1);
+  --info-border: rgba(96, 165, 250, 0.25);
+  --info-text: #93c5fd;
+  --warning-bg: rgba(251, 191, 36, 0.1);
+  --warning-border: rgba(251, 191, 36, 0.25);
+  --warning-text: #fcd34d;
+  --danger-bg: rgba(248, 113, 113, 0.1);
+  --danger-border: rgba(248, 113, 113, 0.25);
+  --danger-text: #fca5a5;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg);
+  background-image:
+    radial-gradient(at 20% 80%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(49, 130, 206, 0.04) 0%, transparent 70%);
+  background-attachment: fixed;
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
+}
+html.dark body {
+  background-image:
+    radial-gradient(at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(49, 130, 206, 0.07) 0%, transparent 70%);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #3182ce);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+html.dark .gradient-text {
+  background: linear-gradient(135deg, #818cf8, #a78bfa, #60a5fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Modern heading feel */
+.hero-title, .section-title, .stat-number, h1, h2, h3 {
+  letter-spacing: -0.02em;
 }
 
 /* Header */
@@ -110,9 +181,9 @@ body {
   padding: 1.5rem;
   margin-bottom: 1rem;
   border: 1px solid var(--border);
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-.card:hover { box-shadow: var(--shadow-md); }
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
 /* Dashboard */
 .dashboard-grid {
@@ -136,7 +207,9 @@ body {
   min-width: 140px;
   border: 1px solid var(--border);
   text-align: center;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+.stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 .stat-number {
   font-size: 2rem;
   font-weight: 700;
@@ -203,20 +276,20 @@ body {
   color: white;
 }
 .badge-urgent {
-  background: #fed7d7;
-  color: #c53030;
+  background: var(--danger-bg);
+  color: var(--danger-text);
 }
 .badge-soon {
-  background: #fefcbf;
-  color: #975a16;
+  background: var(--warning-bg);
+  color: var(--warning-text);
 }
 .badge-upcoming {
-  background: #c6f6d5;
-  color: #276749;
+  background: var(--success-bg);
+  color: var(--success);
 }
 .badge-done {
-  background: #c6f6d5;
-  color: #276749;
+  background: var(--success-bg);
+  color: var(--success);
 }
 .badge-subject {
   padding: 0.15rem 0.5rem;
@@ -236,7 +309,7 @@ body {
   transition: background 0.15s;
   user-select: none;
 }
-.subject-header:hover { background: #f7fafc; }
+.subject-header:hover { background: var(--bg-subtle); }
 .subject-icon {
   width: 40px;
   height: 40px;
@@ -287,7 +360,7 @@ body {
   vertical-align: middle;
 }
 .assessment-table tr:last-child td { border-bottom: none; }
-.assessment-table tr:hover td { background: #f7fafc; }
+.assessment-table tr:hover td { background: var(--bg-subtle); }
 
 /* Weight bar */
 .weight-bar-container {
@@ -299,7 +372,7 @@ body {
 .weight-bar {
   flex: 1;
   height: 6px;
-  background: #e2e8f0;
+  background: var(--border);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -350,13 +423,13 @@ input[type="number"].input-sm { width: 65px; }
 }
 .btn-primary { background: var(--accent); color: white; }
 .btn-primary:hover { background: #2b6cb0; }
-.btn-secondary { background: #edf2f7; color: var(--text); }
-.btn-secondary:hover { background: #e2e8f0; }
-.btn-danger { background: #fed7d7; color: #c53030; }
-.btn-danger:hover { background: #feb2b2; }
+.btn-secondary { background: var(--bg-subtle); color: var(--text); }
+.btn-secondary:hover { background: var(--border); }
+.btn-danger { background: var(--danger-bg); color: var(--danger-text); }
+.btn-danger:hover { background: var(--danger-border); }
 .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
 .btn-icon { padding: 0.35rem; border-radius: 6px; background: none; border: 1px solid var(--border); }
-.btn-icon:hover { background: #edf2f7; }
+.btn-icon:hover { background: var(--bg-subtle); }
 
 /* Progress ring */
 .progress-ring {
@@ -367,7 +440,7 @@ input[type="number"].input-sm { width: 65px; }
 .progress-bar-horiz {
   flex: 1;
   height: 8px;
-  background: #e2e8f0;
+  background: var(--border);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -440,18 +513,18 @@ input[type="number"].input-sm { width: 65px; }
 
 /* Info box */
 .info-box {
-  background: #ebf8ff;
-  border: 1px solid #bee3f8;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
   border-radius: 8px;
   padding: 0.75rem 1rem;
   font-size: 0.85rem;
-  color: #2a4365;
+  color: var(--info-text);
   margin-bottom: 1rem;
 }
 .info-box.warning {
-  background: #fffbeb;
-  border-color: #fde68a;
-  color: #92400e;
+  background: var(--warning-bg);
+  border-color: var(--warning-border);
+  color: var(--warning-text);
 }
 
 /* Notes textarea */
@@ -578,8 +651,8 @@ input[type="number"].input-sm { width: 65px; }
   align-items: baseline;
   gap: 0.5rem;
   padding: 1rem;
-  background: #f0fff4;
-  border: 1px solid #c6f6d5;
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
   border-radius: 8px;
   margin-top: 1rem;
 }
@@ -657,7 +730,7 @@ input[type="number"].input-sm { width: 65px; }
 }
 .quiz-progress {
   height: 6px;
-  background: #e2e8f0;
+  background: var(--border);
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 1.5rem;
@@ -689,23 +762,25 @@ input[type="number"].input-sm { width: 65px; }
   padding: 0.85rem 1rem;
   border: 2px solid var(--border);
   border-radius: 10px;
-  background: white;
+  background: var(--surface);
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
+  color: var(--text);
 }
-.quiz-option:hover { border-color: var(--accent); background: #ebf8ff; }
-.quiz-option.correct { border-color: var(--success); background: #f0fff4; }
-.quiz-option.incorrect { border-color: var(--danger); background: #fff5f5; }
+.quiz-option:hover { border-color: var(--accent); background: var(--info-bg); }
+.quiz-option.correct { border-color: var(--success); background: var(--success-bg); }
+.quiz-option.incorrect { border-color: var(--danger); background: var(--danger-bg); }
 .quiz-option.dimmed { opacity: 0.5; pointer-events: none; }
 .quiz-explanation {
   margin-top: 1rem;
   padding: 0.75rem 1rem;
   border-radius: 8px;
   font-size: 0.85rem;
-  background: #ebf8ff;
-  border: 1px solid #bee3f8;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  color: var(--info-text);
 }
 .quiz-result {
   text-align: center;
@@ -731,11 +806,12 @@ input[type="number"].input-sm { width: 65px; }
   padding: 1rem;
   border: 2px solid var(--border);
   border-radius: 10px;
-  background: white;
+  background: var(--surface);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s ease;
   font-family: inherit;
   text-align: left;
+  color: var(--text);
 }
 .quiz-subject-btn:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .quiz-subject-icon {
@@ -751,10 +827,11 @@ input[type="number"].input-sm { width: 65px; }
   gap: 0.75rem;
 }
 .resource-card {
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1rem;
-  transition: all 0.15s;
+  transition: all 0.2s ease;
 }
 .resource-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
 .resource-type {
@@ -783,7 +860,7 @@ input[type="number"].input-sm { width: 65px; }
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background: #f7fafc;
+  background: var(--bg-subtle);
   border-radius: 10px;
 }
 .scaling-slider {
@@ -810,13 +887,127 @@ input[type="number"].input-sm { width: 65px; }
   min-width: 50px;
   text-align: center;
 }
+html.dark .scaling-score-display { color: var(--accent); }
+
+/* Dark mode header & hero */
+html.dark .header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+}
+html.dark .hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #4338ca 70%, #6d28d9 100%);
+}
+html.dark .scaling-slider::-webkit-slider-thumb {
+  background: var(--surface);
+  border-color: var(--accent);
+}
+html.dark input, html.dark select, html.dark textarea {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: background 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.1);
+}
+
+/* Game overlay */
+.game-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 300;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.game-overlay.open { display: flex; }
+.game-container {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+}
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.game-header h2 { font-size: 1.1rem; margin: 0; }
+.game-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.game-close:hover { background: var(--bg-subtle); }
+.game-body { padding: 1.25rem; }
+
+/* Memory card */
+.memory-card {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: 2px solid transparent;
+  color: white;
+  font-weight: 700;
+}
+.memory-card.flipped {
+  background: var(--surface);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+.memory-card.matched {
+  background: var(--success-bg);
+  border-color: var(--success);
+  transform: scale(0.95);
+  cursor: default;
+}
+.memory-card:not(.flipped):not(.matched):hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="header-inner">
-    <h1><span>📚</span> Jack VCE Study Master</h1>
+    <h1><span>🚀</span> Jack VCE Study Master <button class="theme-toggle" onclick="toggleDarkMode()" id="themeToggle" title="Toggle dark mode">🌙</button></h1>
     <div class="nav" id="nav">
       <button class="active" data-view="dashboard">Dashboard</button>
       <button data-view="year11">Year 11</button>
@@ -833,6 +1024,11 @@ input[type="number"].input-sm { width: 65px; }
 <!-- Add/Edit Assessment Modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal" id="modal-content"></div>
+</div>
+
+<!-- Easter Egg Game Overlay -->
+<div class="game-overlay" id="gameOverlay">
+  <div class="game-container" id="gameContainer"></div>
 </div>
 
 <script>
@@ -977,6 +1173,81 @@ const DEFAULT_SUBJECTS = [
       { id: 'bm2-u4s2', name: 'SAC 5: Implementing Change', type: 'SAC', weight: 12.5, unit: 4, area: 'AoS 2 / Outcome 2', description: 'Change management strategies, leadership in change, employee resistance, evaluation. 50 marks. ~100 min (10 reading + 90 writing).' },
       { id: 'bm2-exam', name: 'End-of-Year Exam', type: 'Exam', weight: 50, unit: '3 & 4', area: 'All Outcomes', description: 'Covers all Units 3 & 4 content. 2 hours. Structured short answer, case study analysis, extended response. This is the single biggest component of the study score.' }
     ]
+  },
+  {
+    id: 'yr12-english',
+    name: 'English',
+    year: 12,
+    units: 'Units 3 & 4',
+    color: '#dc2626',
+    icon: '\u{1F4DD}',
+    vcaaWeighted: true,
+    description: 'Analytical and creative responses to texts, and presenting a point of view. Compulsory for ATAR.',
+    notes: 'VCAA-mandated weightings: Unit 3 SACs = 25%, Unit 4 SACs = 25%, Exam = 50%. English (or an equivalent) is the only compulsory subject for ATAR calculation. SACs are completed under test conditions.',
+    assessments: [
+      { id: 'en2-u3s1', name: 'SAC 1: Reading & Responding to Texts', type: 'SAC', weight: 10, unit: 3, area: 'AoS 1 / Outcome 1', description: 'Analytical response to a selected text. Interpreting ideas, themes, and the ways authors construct meaning. ~800\u20131000 words.' },
+      { id: 'en2-u3s2', name: 'SAC 2: Creating Texts', type: 'SAC', weight: 7.5, unit: 3, area: 'AoS 2 / Outcome 2', description: 'Create a written text for a specific audience and purpose. Includes a written statement of intention.' },
+      { id: 'en2-u3s3', name: 'SAC 3: Analysing Argument', type: 'SAC', weight: 7.5, unit: 3, area: 'AoS 3 / Outcome 3', description: 'Analyse the use of argument and persuasive language in media texts. ~600\u2013800 words.' },
+      { id: 'en2-u4s1', name: 'SAC 4: Reading & Responding to Texts', type: 'SAC', weight: 12.5, unit: 4, area: 'AoS 1 / Outcome 1', description: 'Close analysis of a selected text. Extended analytical interpretation examining how meaning is constructed. ~800\u20131000 words.' },
+      { id: 'en2-u4s2', name: 'SAC 5: Creating & Presenting Texts', type: 'SAC', weight: 12.5, unit: 4, area: 'AoS 2 / Outcome 2', description: 'Create and present a sustained written text. Accompanied by a written statement of intention explaining choices.' },
+      { id: 'en2-exam', name: 'End-of-Year Exam', type: 'Exam', weight: 50, unit: '3 & 4', area: 'All Outcomes', description: '3 hours. Section A: Analytical interpretation of a text (30 marks). Section B: Comparative analysis of texts (30 marks). Section C: Argument and persuasive language (30 marks).' }
+    ]
+  },
+  {
+    id: 'yr12-methods',
+    name: 'Mathematical Methods',
+    year: 12,
+    units: 'Units 3 & 4',
+    color: '#6366f1',
+    icon: '\u{1F4D0}',
+    vcaaWeighted: true,
+    description: 'Functions, algebra, calculus, probability & statistics. Prerequisite for many university courses.',
+    notes: 'VCAA-mandated weightings: Unit 3 SAC = 20%, Unit 4 SAC = 20%, Exam 1 (tech-free) = 20%, Exam 2 (CAS) = 40%. Methods scales very well \u2014 it\u2019s one of the most rewarding subjects for ATAR. Two exams: a short tech-free exam and a longer CAS-allowed exam.',
+    assessments: [
+      { id: 'mm2-u3s1', name: 'SAC 1: Application Task', type: 'SAC', weight: 20, unit: 3, area: 'Outcome 1', description: 'Mathematical investigation over 2\u20133 classes. Involves functions, algebra, calculus. Demonstrates understanding of Unit 3 content in an applied context.' },
+      { id: 'mm2-u4s1', name: 'SAC 2: Modelling or Problem-Solving Task 1', type: 'SAC', weight: 8, unit: 4, area: 'Outcome 2 (Part 1)', description: 'One of two problem-solving tasks. Tests ability to apply concepts from Unit 4 including integration, probability distributions, and statistical inference.' },
+      { id: 'mm2-u4s2', name: 'SAC 3: Modelling or Problem-Solving Task 2', type: 'SAC', weight: 12, unit: 4, area: 'Outcome 2 (Part 2)', description: 'Second problem-solving task. Together with SAC 2 they cover the breadth of Unit 4 content. CAS calculator permitted.' },
+      { id: 'mm2-exam1', name: 'Exam 1: Technology-Free', type: 'Exam', weight: 20, unit: '3 & 4', area: 'All Outcomes', description: '1 hour. Short answer and extended response. No calculator, no notes. Tests algebraic manipulation, calculus by hand, and conceptual understanding.' },
+      { id: 'mm2-exam2', name: 'Exam 2: Technology-Active (CAS)', type: 'Exam', weight: 40, unit: '3 & 4', area: 'All Outcomes', description: '2 hours. Multiple choice (20 marks) and extended response (60 marks). CAS calculator permitted. Covers all Units 3 & 4 content. The single biggest component of the study score.' }
+    ]
+  },
+  {
+    id: 'yr12-biology',
+    name: 'Biology',
+    year: 12,
+    units: 'Units 3 & 4',
+    color: '#059669',
+    icon: '\u{1F9EC}',
+    vcaaWeighted: true,
+    description: 'Molecular biology, heredity, gene regulation, and evolution. Builds on Unit 1 & 2 foundations.',
+    notes: 'VCAA-mandated weightings: Unit 3 SACs = 20%, Unit 4 SACs = 20%, Exam = 60%. The exam is the dominant component. SACs must include at least two different task types across the year (e.g., report, structured questions, data analysis, media response).',
+    assessments: [
+      { id: 'bi2-u3s1', name: 'SAC 1: DNA & Genes', type: 'SAC', weight: 7, unit: 3, area: 'AoS 1 / Outcome 1', description: 'DNA structure, gene expression, protein synthesis. Relationship between nucleic acids and proteins in cellular processes.' },
+      { id: 'bi2-u3s2', name: 'SAC 2: Gene Regulation & Biotechnology', type: 'SAC', weight: 7, unit: 3, area: 'AoS 2 / Outcome 2', description: 'Regulation of gene expression, epigenetics, CRISPR, gene therapy, GM organisms. Ethical considerations.' },
+      { id: 'bi2-u3s3', name: 'SAC 3: Practical Investigation', type: 'SAC', weight: 6, unit: 3, area: 'AoS 3 / Outcome 3', description: 'Student-designed or adapted investigation. Scientific methodology, data analysis, and evaluation of results.' },
+      { id: 'bi2-u4s1', name: 'SAC 4: Heredity', type: 'SAC', weight: 7, unit: 4, area: 'AoS 1 / Outcome 1', description: 'Patterns of inheritance, pedigree analysis, genetic crosses. Population genetics and allele frequency.' },
+      { id: 'bi2-u4s2', name: 'SAC 5: Evolution & Biodiversity', type: 'SAC', weight: 7, unit: 4, area: 'AoS 2 / Outcome 2', description: 'Evidence for evolution, natural selection, speciation, human evolution. Phylogenetic trees and molecular evidence.' },
+      { id: 'bi2-u4s3', name: 'SAC 6: Practical Investigation', type: 'SAC', weight: 6, unit: 4, area: 'AoS 3 / Outcome 3', description: 'Student-designed investigation. Must be a different task type from Unit 3 practical investigation.' },
+      { id: 'bi2-exam', name: 'End-of-Year Exam', type: 'Exam', weight: 60, unit: '3 & 4', area: 'All Outcomes', description: '2.5 hours. Section A: 30 multiple choice (30 marks). Section B: Short answer (80 marks). Covers all Units 3 & 4 content. The exam is 60% of the study score.' }
+    ]
+  },
+  {
+    id: 'yr12-economics',
+    name: 'Economics',
+    year: 12,
+    units: 'Units 3 & 4',
+    color: '#d97706',
+    icon: '\u{1F4C8}',
+    vcaaWeighted: true,
+    description: 'Australian economic activity, macroeconomics, aggregate demand/supply, fiscal & monetary policy.',
+    notes: 'VCAA-mandated weightings: Unit 3 SACs = 25%, Unit 4 SACs = 25%, Exam = 50%. SACs must include at least two different task types (e.g., structured questions, case study analysis, data interpretation, report, media analysis).',
+    assessments: [
+      { id: 'ec2-u3s1', name: 'SAC 1: International Economics', type: 'SAC', weight: 12.5, unit: 3, area: 'AoS 1 / Outcome 1', description: 'International economic relationships, trade, globalisation, exchange rates. How these affect the Australian economy.' },
+      { id: 'ec2-u3s2', name: 'SAC 2: Domestic Macroeconomics', type: 'SAC', weight: 12.5, unit: 3, area: 'AoS 2 / Outcome 2', description: 'Aggregate demand and supply model, macroeconomic goals (growth, employment, price stability, external stability).' },
+      { id: 'ec2-u4s1', name: 'SAC 3: Aggregate Demand Policies', type: 'SAC', weight: 12.5, unit: 4, area: 'AoS 1 / Outcome 1', description: 'Fiscal policy (government budgets, taxation, spending) and monetary policy (RBA, interest rates, money supply). How they influence the economy.' },
+      { id: 'ec2-u4s2', name: 'SAC 4: Aggregate Supply Policies', type: 'SAC', weight: 12.5, unit: 4, area: 'AoS 2 / Outcome 2', description: 'Supply-side policies, structural reform, labour market, competition policy. How they address long-term economic challenges.' },
+      { id: 'ec2-exam', name: 'End-of-Year Exam', type: 'Exam', weight: 50, unit: '3 & 4', area: 'All Outcomes', description: '2 hours. Section A: Multiple choice (15 marks). Section B: Short answer and data analysis (45 marks). Section C: Extended response (20 marks). Covers all Units 3 & 4 content.' }
+    ]
   }
 ];
 
@@ -1032,7 +1303,37 @@ function getSubjects() {
 let currentView = 'dashboard';
 let expandedSubjects = {};
 
+// ============================================================
+// DARK MODE
+// ============================================================
+const DARK_MODE_KEY = 'jackVCEStudyMaster_darkMode';
+
+function initDarkMode() {
+  const saved = localStorage.getItem(DARK_MODE_KEY);
+  if (saved === 'true') {
+    document.documentElement.classList.add('dark');
+  }
+  updateThemeToggleIcon();
+}
+
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('dark');
+  const isDark = document.documentElement.classList.contains('dark');
+  localStorage.setItem(DARK_MODE_KEY, isDark);
+  updateThemeToggleIcon();
+}
+
+function updateThemeToggleIcon() {
+  const btn = document.getElementById('themeToggle');
+  if (btn) {
+    const isDark = document.documentElement.classList.contains('dark');
+    btn.textContent = isDark ? '\u2600\uFE0F' : '\uD83C\uDF19';
+    btn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+  }
+}
+
 function init() {
+  initDarkMode();
   document.querySelectorAll('#nav button').forEach(btn => {
     btn.addEventListener('click', () => {
       currentView = btn.dataset.view;
@@ -1103,7 +1404,7 @@ function renderDashboard() {
 
   // Hero section
   html += '<div class="hero">';
-  html += '<div class="hero-title">\u{1F680} Your future starts now, Jack.</div>';
+  html += '<div class="hero-title">\u{1F680} <span style="background:linear-gradient(90deg,#fff,#c4b5fd,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Your future starts now, Jack.</span></div>';
   html += '<div class="hero-subtitle">6 subjects. 47 assessments. Every study session is an investment in the life you want to build. You\u2019ve chosen an incredible combination \u2014 analytical, creative, practical, and ambitious.</div>';
   html += '<div class="hero-subjects">';
   html += '<span class="hero-chip">\u{1F4D0} Maths Methods</span>';
@@ -1243,6 +1544,38 @@ function renderYear(year) {
 }
 
 // Scaling interpolation
+// Approximate aggregate-to-ATAR conversion (based on recent Victorian ATAR distributions)
+const ATAR_TABLE = [
+  { aggregate: 210, atar: 99.95 },
+  { aggregate: 200, atar: 99.50 },
+  { aggregate: 190, atar: 98.00 },
+  { aggregate: 180, atar: 95.50 },
+  { aggregate: 170, atar: 92.00 },
+  { aggregate: 160, atar: 87.00 },
+  { aggregate: 150, atar: 82.00 },
+  { aggregate: 140, atar: 76.00 },
+  { aggregate: 130, atar: 69.00 },
+  { aggregate: 120, atar: 61.00 },
+  { aggregate: 110, atar: 53.00 },
+  { aggregate: 100, atar: 45.00 },
+  { aggregate: 90, atar: 37.00 },
+  { aggregate: 80, atar: 30.00 }
+];
+
+function estimateATAR(aggregate) {
+  if (aggregate >= 210) return 99.95;
+  if (aggregate <= 80) return 30.00;
+  for (let i = 0; i < ATAR_TABLE.length - 1; i++) {
+    const upper = ATAR_TABLE[i];
+    const lower = ATAR_TABLE[i + 1];
+    if (aggregate >= lower.aggregate && aggregate <= upper.aggregate) {
+      const t = (aggregate - lower.aggregate) / (upper.aggregate - lower.aggregate);
+      return Math.round((lower.atar + t * (upper.atar - lower.atar)) * 100) / 100;
+    }
+  }
+  return 30;
+}
+
 const SCALING_POINTS = [
   { name: 'Mathematical Methods', color: '#6366f1', points: {20:22, 25:28, 30:35, 35:41, 40:46, 45:50, 50:50} },
   { name: 'Economics', color: '#d97706', points: {20:19, 25:25, 30:31, 35:37, 40:42, 45:47, 50:50} },
@@ -1307,7 +1640,7 @@ function renderScalingResults(raw) {
     html += `<td>${s.raw}</td>`;
     html += `<td style="font-weight:700;font-size:1.1rem;">${s.scaled}</td>`;
     html += `<td style="font-weight:700;color:${diffColor}">${diffStr}</td>`;
-    html += `<td><div style="height:20px;background:#e2e8f0;border-radius:4px;overflow:hidden;position:relative;">`;
+    html += `<td><div style="height:20px;background:var(--border);border-radius:4px;overflow:hidden;position:relative;">`;
     html += `<div style="position:absolute;left:${(raw/50)*100}%;top:0;bottom:0;width:2px;background:#a0aec0;z-index:2;"></div>`;
     html += `<div style="height:100%;width:${barPct}%;background:${s.color};border-radius:4px;opacity:0.7;transition:width 0.2s;"></div>`;
     html += `</div></td>`;
@@ -1324,11 +1657,18 @@ function renderScalingResults(raw) {
   const sixth = others[4] || { scaled: 0 };
   const aggregate = english.scaled + top3.reduce((sum, s) => sum + s.scaled, 0) + (fifth.scaled * 0.1) + (sixth.scaled * 0.1);
 
-  html += `<div style="margin-top:1rem;padding:1rem;background:linear-gradient(135deg,#ebf8ff,#f0fff4);border-radius:10px;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">`;
+  const atarEstimate = estimateATAR(aggregate);
+  const atarColor = atarEstimate >= 90 ? 'var(--success)' : atarEstimate >= 75 ? 'var(--accent)' : atarEstimate >= 60 ? 'var(--warning)' : 'var(--danger)';
+
+  html += `<div style="margin-top:1rem;padding:1rem;background:linear-gradient(135deg,var(--info-bg),var(--success-bg));border-radius:10px;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">`;
   html += `<div><div style="font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Estimated Aggregate</div>`;
   html += `<div style="font-size:2rem;font-weight:800;color:var(--primary);">${aggregate.toFixed(1)}</div></div>`;
+  html += `<div style="flex-shrink:0;text-align:center;padding:0 1rem;border-left:2px solid var(--border);"><div style="font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Estimated ATAR</div>`;
+  html += `<div style="font-size:2rem;font-weight:800;color:${atarColor};">${atarEstimate.toFixed(2)}</div></div>`;
   html += `<div style="font-size:0.8rem;color:var(--text-muted);flex:1;">= ${english.scaled} (English) + ${top3.map(s => s.scaled).join(' + ')} (best 3) + ${(fifth.scaled * 0.1).toFixed(1)} (5th\u00D710%) + ${(sixth.scaled * 0.1).toFixed(1)} (6th\u00D710%)</div>`;
   html += `</div>`;
+
+  html += `<div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);font-style:italic;">ATAR estimate is approximate, based on recent Victorian ATAR distribution data. Actual ATARs depend on the full state-wide cohort results.</div>`;
 
   return html;
 }
@@ -1383,7 +1723,7 @@ function renderATARExplanation() {
     html += `</tr>`;
   });
 
-  html += `<tr style="background:#f0fff4;"><td colspan="4" style="font-weight:700;">Total Aggregate</td><td style="font-weight:700;font-size:1.1rem;">${totalContrib.toFixed(1)}</td></tr>`;
+  html += `<tr style="background:var(--success-bg);"><td colspan="4" style="font-weight:700;">Total Aggregate</td><td style="font-weight:700;font-size:1.1rem;">${totalContrib.toFixed(1)}</td></tr>`;
   html += '</tbody></table></div>';
 
   html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.75rem;"><em>In this example, if Jack scored a raw 35 in every subject, his aggregate would be ' + totalContrib.toFixed(1) + '. The 5th and 6th subjects (Business Management and VET Sport) add only 10% of their scaled score each \u2014 so their contribution is small but still helpful. The maximum possible aggregate is approximately 209.5.</em></p>';
@@ -1464,7 +1804,7 @@ function renderSubjectCard(sub) {
     const unitLabel = 'Unit ' + a.unit;
     if (a.unit !== currentUnit) {
       currentUnit = a.unit;
-      html += `<tr><td colspan="6" style="background:#f7fafc;font-weight:700;font-size:0.8rem;color:${sub.color};padding:0.5rem 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">Unit ${a.unit}</td></tr>`;
+      html += `<tr><td colspan="6" style="background:var(--bg-subtle);font-weight:700;font-size:0.8rem;color:${sub.color};padding:0.5rem 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">Unit ${a.unit}</td></tr>`;
     }
 
     const hasResult = data.result !== undefined && data.result !== null && data.result !== '';
@@ -1591,6 +1931,8 @@ const RESOURCES = {
     { type: 'YouTube', title: 'GTAC Biology Revision', desc: 'VCE-specific revision videos: enzymes, photosynthesis, immune response.', url: 'https://gtac.edu.au/revision-series/vbrs/', color: '#FF0000' },
     { type: 'Website', title: 'VCE BioNinja \u2014 Unit 1', desc: 'Text-based study resource aligned directly to VCE Biology Unit 1.', url: 'https://vce.bioninja.com.au/unit-one/', color: '#059669' },
     { type: 'Podcast', title: 'Mr. Barlow\u2019s VCE Biology Podcast', desc: 'Episodes 1\u201312 cover Unit 1. Listen on the bus/train.', url: 'https://podcasts.apple.com/us/podcast/vce-biology/id272577510', color: '#8B5CF6' },
+    { type: 'Podcast', title: 'Ologies with Alie Ward', desc: 'Interviews with scientists in every "-ology". Ecology, zoology, marine biology \u2014 engaging and funny.', url: 'https://www.alieward.com/ologies', color: '#8B5CF6' },
+    { type: 'Podcast', title: 'Naked Scientists', desc: 'Cambridge University science podcast. Covers cell biology, genetics, evolution \u2014 Unit 1 relevant topics weekly.', url: 'https://www.thenakedscientists.com/', color: '#8B5CF6' },
     { type: 'Documentary', title: 'Our Planet (Netflix)', desc: 'David Attenborough. Stunning visuals of ecosystems and biodiversity.', url: 'https://www.ourplanet.com/en/', color: '#059669' }
   ],
   'yr11-economics': [
@@ -1599,12 +1941,16 @@ const RESOURCES = {
     { type: 'YouTube', title: 'Economics Explained', desc: 'Australian channel. Accessible essays on inflation, GDP, trade, housing.', url: 'https://www.youtube.com/channel/UCZ4AMrDcNrfy3X6nsU8-rPg', color: '#FF0000' },
     { type: 'Podcast', title: 'Planet Money (NPR)', desc: 'Fun, accessible economics storytelling. Short episodes perfect for commute.', url: 'https://www.npr.org/podcasts/510289/planet-money', color: '#8B5CF6' },
     { type: 'Podcast', title: 'Freakonomics Radio', desc: 'The hidden side of everything. Economics applied to everyday life.', url: 'https://freakonomics.com/podcasts/', color: '#8B5CF6' },
+    { type: 'Podcast', title: 'The Indicator from Planet Money', desc: 'Short daily episodes (~10 min) on one economic concept. Perfect for bus rides.', url: 'https://www.npr.org/podcasts/510325/the-indicator-from-planet-money', color: '#8B5CF6' },
+    { type: 'Podcast', title: 'The Economists (ABC)', desc: 'ABC Radio National. Australian economics focus \u2014 RBA, housing, wages, trade. Directly relevant to VCE Econ.', url: 'https://www.abc.net.au/listen/programs/the-economists', color: '#8B5CF6' },
     { type: 'Movie', title: 'The Big Short (2015)', desc: 'The 2008 financial crisis explained through colourful characters. Brilliant and educational.', url: 'https://www.imdb.com/title/tt1596363/', color: '#d97706' },
     { type: 'Movie', title: 'Inside Job (2010)', desc: 'Oscar-winning documentary narrated by Matt Damon about the GFC.', url: 'https://www.imdb.com/title/tt1645089/', color: '#d97706' }
   ],
   'yr11-busman': [
     { type: 'YouTube', title: 'Teaching Bubble', desc: 'VCE Business Management-specific. Short, concise revision videos for Units 1\u20134.', url: 'https://www.youtube.com/@teachingbubble', color: '#FF0000' },
     { type: 'YouTube', title: 'Two Teachers', desc: 'Business studies videos with activity resources. Great for concepts like marketing mix, HR.', url: 'https://www.youtube.com/c/TwoTeachers', color: '#FF0000' },
+    { type: 'Podcast', title: 'How I Built This (NPR)', desc: 'Founders tell stories behind great companies. Entrepreneurship, innovation, business growth \u2014 perfect for Unit 1.', url: 'https://www.npr.org/podcasts/510313/how-i-built-this', color: '#8B5CF6' },
+    { type: 'Podcast', title: 'The Squiz Today', desc: 'Australian daily news briefing (~10 min). Great for staying across business and economic news relevant to SACs.', url: 'https://www.thesquiz.com.au/', color: '#8B5CF6' },
     { type: 'Movie', title: 'The Social Network (2010)', desc: 'Facebook\u2019s founding. Entrepreneurship, innovation, and business disputes.', url: 'https://www.imdb.com/title/tt1285016/', color: '#8b5cf6' },
     { type: 'Movie', title: 'Moneyball (2011)', desc: 'Data-driven decisions in baseball. Challenges conventional business thinking.', url: 'https://www.imdb.com/title/tt1210166/', color: '#8b5cf6' },
     { type: 'Documentary', title: 'Formula 1: Drive to Survive (Netflix)', desc: 'Team management, sponsorship, global business \u2014 through the lens of F1 racing.', url: 'https://www.netflix.com/title/80204890', color: '#0891b2' },
@@ -1785,13 +2131,63 @@ function renderUniCareers() {
   ];
 
   traits.forEach(t => {
-    html += `<div style="background:white;border:1px solid var(--border);border-radius:10px;padding:1rem;border-top:3px solid ${t.color};">`;
+    html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;border-top:3px solid ${t.color};">`;
     html += `<div style="font-size:1.3rem;margin-bottom:0.25rem;">${t.icon}</div>`;
     html += `<div style="font-weight:700;font-size:0.95rem;margin-bottom:0.25rem;">${t.title}</div>`;
     html += `<div style="font-size:0.8rem;color:var(--text-muted);">${t.desc}</div>`;
     html += `</div>`;
   });
   html += '</div>';
+  html += '</div>';
+
+  // University choosing guide
+  html += '<div class="card" style="border-left:4px solid var(--success);">';
+  html += '<div class="section-title">\u{1F914} How to Choose a University & Course</div>';
+  html += '<p style="font-size:0.9rem;margin-bottom:1rem;">Before diving into specific courses, it\u2019s worth thinking about <strong>what matters to you</strong> in a university experience. There\u2019s no single "best" uni \u2014 the right choice depends on your priorities.</p>';
+
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0.75rem;margin-bottom:1rem;">';
+
+  const uniFactors = [
+    { icon: '\u{1F3AF}', title: 'Course Content', desc: 'Look at what you\u2019ll actually study. Read the subject lists for years 2\u20133, not just the degree title. A "Bachelor of Science" can mean very different things at different unis.', color: '#6366f1' },
+    { icon: '\u{1F4CD}', title: 'Location & Commute', desc: 'A 90-minute commute each way gets old fast. Consider how you\u2019ll get there, whether you\u2019d live on campus, and how the location fits with part-time work or social life.', color: '#059669' },
+    { icon: '\u{1F3C6}', title: 'Reputation & Rankings', desc: 'Rankings matter for some fields (especially competitive graduate programs like medicine or law), but for most careers, your skills and experience matter more than the name on your degree.', color: '#d97706' },
+    { icon: '\u{1F91D}', title: 'Industry Connections', desc: 'Some unis have stronger ties to specific industries. Deakin excels in sport science partnerships, RMIT is known for industry placements, Melbourne\u2019s brand opens corporate doors.', color: '#dc2626' },
+    { icon: '\u{1F9E9}', title: 'Course Structure', desc: 'Melbourne Model (broad then specialise) vs. Monash (specialise from day one). Some people love exploring first; others want to dive straight into their field. Neither is wrong.', color: '#8b5cf6' },
+    { icon: '\u{1F465}', title: 'Campus Culture & Support', desc: 'Visit on open day. Does it feel right? Check student support services, clubs, study spaces, mental health resources. The \u201cvibe\u201d matters more than you\u2019d think.', color: '#0891b2' }
+  ];
+
+  uniFactors.forEach(f => {
+    html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;border-top:3px solid ${f.color};">`;
+    html += `<div style="font-size:1.3rem;margin-bottom:0.25rem;">${f.icon}</div>`;
+    html += `<div style="font-weight:700;font-size:0.95rem;margin-bottom:0.25rem;">${f.title}</div>`;
+    html += `<div style="font-size:0.8rem;color:var(--text-muted);">${f.desc}</div>`;
+    html += `</div>`;
+  });
+  html += '</div>';
+
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">';
+
+  html += '<div style="background:var(--success-bg);border-radius:10px;padding:1rem;">';
+  html += '<div style="font-weight:700;font-size:0.9rem;margin-bottom:0.5rem;color:var(--success);">Types of Degrees</div>';
+  html += '<ul style="font-size:0.8rem;color:var(--text-muted);padding-left:1.2rem;list-style:disc;">';
+  html += '<li><strong>Single degree</strong> \u2014 3\u20134 years in one area</li>';
+  html += '<li><strong>Double degree</strong> \u2014 combine two fields (e.g., Commerce/Science), usually 4\u20135 years</li>';
+  html += '<li><strong>Generalist entry</strong> \u2014 broad first year, specialise later (Melbourne Model)</li>';
+  html += '<li><strong>Specialist entry</strong> \u2014 dive into your field from year 1 (most other unis)</li>';
+  html += '<li><strong>Graduate entry</strong> \u2014 some professions (medicine, law at UniMelb) require a first degree before entering</li>';
+  html += '</ul></div>';
+
+  html += '<div style="background:var(--info-bg);border-radius:10px;padding:1rem;">';
+  html += '<div style="font-weight:700;font-size:0.9rem;margin-bottom:0.5rem;color:var(--accent);">Pro Tips</div>';
+  html += '<ul style="font-size:0.8rem;color:var(--text-muted);padding-left:1.2rem;list-style:disc;">';
+  html += '<li>Your first preference should be your <strong>dream course</strong>, not your "safe" one \u2014 VTAC preferences don\u2019t cost you anything</li>';
+  html += '<li>Many courses accept students below the published ATAR through <strong>special consideration</strong> or adjustment schemes</li>';
+  html += '<li>You can <strong>transfer</strong> between courses or unis after first year in many cases</li>';
+  html += '<li><strong>Gap years</strong> are completely fine \u2014 many employers and unis value the maturity gained</li>';
+  html += '<li>Talk to <strong>current students</strong> at open days, not just marketing staff</li>';
+  html += '</ul></div>';
+  html += '</div>';
+
   html += '</div>';
 
   // University courses
@@ -1888,7 +2284,7 @@ function renderUniCareers() {
     html += `<div style="flex:1;">`;
     html += `<div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.25rem;">`;
     html += `<strong style="font-size:0.95rem;">${c.name}</strong>`;
-    html += `<span style="font-size:0.75rem;background:#edf2f7;padding:0.1rem 0.4rem;border-radius:4px;color:var(--text-muted);">${c.tag}</span>`;
+    html += `<span style="font-size:0.75rem;background:var(--bg-subtle);padding:0.1rem 0.4rem;border-radius:4px;color:var(--text-muted);">${c.tag}</span>`;
     html += `</div>`;
     html += `<div style="font-size:0.85rem;color:${c.color};font-weight:600;margin-bottom:0.25rem;">${c.uni} \u2022 ATAR: ${c.atar}</div>`;
     html += `<div style="font-size:0.8rem;color:var(--text-muted);">${c.fit}</div>`;
@@ -1922,7 +2318,7 @@ function renderUniCareers() {
   openDays.forEach(od => {
     const statusBadge = od.status === 'Confirmed'
       ? '<span class="badge badge-done">Confirmed</span>'
-      : '<span class="badge" style="background:#fefcbf;color:#975a16;">Expected</span>';
+      : '<span class="badge" style="background:var(--warning-bg);color:var(--warning-text);">Expected</span>';
     html += `<tr>`;
     html += `<td><strong style="color:${od.color}">${od.uni}</strong></td>`;
     html += `<td>${od.date}</td>`;
@@ -2252,11 +2648,271 @@ document.getElementById('modal').addEventListener('click', function(e) {
 
 // Close modal on Escape
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Escape') {
+    closeModal();
+    closeGame();
+  }
 });
 
 function attachEventListeners() {
   // Event listeners are attached inline for simplicity
+}
+
+// ============================================================
+// EASTER EGGS
+// ============================================================
+
+// Konami code: Up Up Down Down Left Right Left Right B A
+const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let konamiIndex = 0;
+
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('gameOverlay').classList.contains('open')) return;
+  if (e.key === KONAMI[konamiIndex]) {
+    konamiIndex++;
+    if (konamiIndex === KONAMI.length) {
+      konamiIndex = 0;
+      launchSnakeGame();
+    }
+  } else {
+    konamiIndex = 0;
+  }
+});
+
+// Triple-click title for memory game
+let titleClickCount = 0;
+let titleClickTimer = null;
+document.querySelector('.header h1').addEventListener('click', function(e) {
+  if (e.target.closest('.theme-toggle')) return;
+  titleClickCount++;
+  clearTimeout(titleClickTimer);
+  titleClickTimer = setTimeout(() => { titleClickCount = 0; }, 500);
+  if (titleClickCount >= 3) {
+    titleClickCount = 0;
+    launchMemoryGame();
+  }
+});
+
+function closeGame() {
+  const overlay = document.getElementById('gameOverlay');
+  overlay.classList.remove('open');
+  if (window._snakeInterval) {
+    clearInterval(window._snakeInterval);
+    window._snakeInterval = null;
+  }
+}
+
+// ---- SNAKE GAME ----
+function launchSnakeGame() {
+  const overlay = document.getElementById('gameOverlay');
+  const container = document.getElementById('gameContainer');
+  container.innerHTML = `
+    <div class="game-header">
+      <h2>🐍 Snake</h2>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <span id="snakeScore" style="font-weight:700;color:var(--accent);">Score: 0</span>
+        <button class="game-close" onclick="closeGame()">&times;</button>
+      </div>
+    </div>
+    <div class="game-body" style="display:flex;flex-direction:column;align-items:center;padding:1rem;">
+      <canvas id="snakeCanvas" width="380" height="380" style="border:2px solid var(--border);border-radius:8px;background:#0f172a;max-width:100%;"></canvas>
+      <div style="text-align:center;padding-top:0.75rem;font-size:0.8rem;color:var(--text-muted);">Arrow keys to move. Eat the food to grow!</div>
+    </div>
+  `;
+  overlay.classList.add('open');
+
+  const canvas = document.getElementById('snakeCanvas');
+  const ctx = canvas.getContext('2d');
+  const gridSize = 20;
+  const tileCount = Math.floor(canvas.width / gridSize);
+
+  let snake = [{x: 10, y: 10}];
+  let food = {x: 15, y: 15};
+  let dx = 0, dy = 0;
+  let score = 0;
+  let gameRunning = true;
+
+  function placeFood() {
+    food.x = Math.floor(Math.random() * tileCount);
+    food.y = Math.floor(Math.random() * tileCount);
+    for (let seg of snake) {
+      if (seg.x === food.x && seg.y === food.y) return placeFood();
+    }
+  }
+
+  function draw() {
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Grid
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= tileCount; i++) {
+      ctx.beginPath(); ctx.moveTo(i * gridSize, 0); ctx.lineTo(i * gridSize, canvas.height); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i * gridSize); ctx.lineTo(canvas.width, i * gridSize); ctx.stroke();
+    }
+    // Food
+    ctx.fillStyle = '#fbbf24';
+    ctx.shadowColor = '#fbbf24';
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.arc(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, gridSize/2 - 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    // Snake
+    snake.forEach((seg, i) => {
+      const isHead = i === 0;
+      ctx.fillStyle = isHead ? '#8b5cf6' : '#6366f1';
+      ctx.shadowColor = isHead ? '#8b5cf6' : 'transparent';
+      ctx.shadowBlur = isHead ? 8 : 0;
+      const r = 4;
+      const x = seg.x * gridSize + 1, y = seg.y * gridSize + 1, w = gridSize - 2, h = gridSize - 2;
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+  }
+
+  function update() {
+    if (!gameRunning) return;
+    if (dx === 0 && dy === 0) { draw(); return; }
+    const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+    if (head.x < 0) head.x = tileCount - 1;
+    if (head.x >= tileCount) head.x = 0;
+    if (head.y < 0) head.y = tileCount - 1;
+    if (head.y >= tileCount) head.y = 0;
+    for (let seg of snake) {
+      if (seg.x === head.x && seg.y === head.y) {
+        gameRunning = false;
+        clearInterval(window._snakeInterval);
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 24px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText('Game Over!', canvas.width/2, canvas.height/2 - 10);
+        ctx.font = '16px system-ui';
+        ctx.fillText('Score: ' + score, canvas.width/2, canvas.height/2 + 20);
+        ctx.fillText('Press Space to restart', canvas.width/2, canvas.height/2 + 50);
+        return;
+      }
+    }
+    snake.unshift(head);
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      document.getElementById('snakeScore').textContent = 'Score: ' + score;
+      placeFood();
+    } else {
+      snake.pop();
+    }
+    draw();
+  }
+
+  function handleSnakeKey(e) {
+    if (!document.getElementById('gameOverlay').classList.contains('open')) return;
+    switch(e.key) {
+      case 'ArrowUp': if (dy !== 1) { dx = 0; dy = -1; } e.preventDefault(); break;
+      case 'ArrowDown': if (dy !== -1) { dx = 0; dy = 1; } e.preventDefault(); break;
+      case 'ArrowLeft': if (dx !== 1) { dx = -1; dy = 0; } e.preventDefault(); break;
+      case 'ArrowRight': if (dx !== -1) { dx = 1; dy = 0; } e.preventDefault(); break;
+      case ' ':
+        if (!gameRunning) {
+          snake = [{x: 10, y: 10}]; dx = 0; dy = 0; score = 0; gameRunning = true;
+          document.getElementById('snakeScore').textContent = 'Score: 0';
+          placeFood();
+          window._snakeInterval = setInterval(update, 120);
+        }
+        e.preventDefault();
+        break;
+    }
+  }
+
+  document.removeEventListener('keydown', window._snakeHandler);
+  window._snakeHandler = handleSnakeKey;
+  document.addEventListener('keydown', window._snakeHandler);
+
+  placeFood();
+  draw();
+  window._snakeInterval = setInterval(update, 120);
+}
+
+// ---- MEMORY MATCH GAME ----
+function launchMemoryGame() {
+  const overlay = document.getElementById('gameOverlay');
+  const container = document.getElementById('gameContainer');
+  const emojis = ['\u{1F4D0}','\u{1F9EC}','\u{1F4D6}','\u{1F4C8}','\u{1F4BC}','\u{1F3C0}','\u{1F52C}','\u{1F3AF}'];
+  const cards = [...emojis, ...emojis];
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  let flipped = [];
+  let matched = [];
+  let moves = 0;
+  let canFlip = true;
+
+  function renderBoard() {
+    let html = `<div class="game-header"><h2>\u{1F9E0} Memory Match</h2><div style="display:flex;align-items:center;gap:1rem;">`;
+    html += `<span id="memoryMoves" style="font-weight:700;color:var(--accent);">Moves: ${moves}</span>`;
+    html += `<span id="memoryPairs" style="font-weight:700;color:var(--success);">Pairs: ${matched.length/2}/8</span>`;
+    html += `<button class="game-close" onclick="closeGame()">&times;</button></div></div>`;
+    html += `<div class="game-body"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;max-width:400px;margin:0 auto;">`;
+    cards.forEach((emoji, i) => {
+      const isFlipped = flipped.includes(i) || matched.includes(i);
+      const isMatched = matched.includes(i);
+      html += `<div class="memory-card ${isFlipped ? 'flipped' : ''} ${isMatched ? 'matched' : ''}" onclick="window._flipCard(${i})">`;
+      html += isFlipped ? emoji : '?';
+      html += `</div>`;
+    });
+    html += `</div><div style="text-align:center;margin-top:0.75rem;font-size:0.8rem;color:var(--text-muted);">Match all the subject emoji pairs!</div></div>`;
+    container.innerHTML = html;
+  }
+
+  window._flipCard = function(index) {
+    if (!canFlip) return;
+    if (flipped.includes(index) || matched.includes(index)) return;
+    flipped.push(index);
+    renderBoard();
+    if (flipped.length === 2) {
+      moves++;
+      canFlip = false;
+      const [a, b] = flipped;
+      if (cards[a] === cards[b]) {
+        matched.push(a, b);
+        flipped = [];
+        canFlip = true;
+        renderBoard();
+        if (matched.length === cards.length) {
+          setTimeout(() => {
+            container.innerHTML = `<div class="game-header"><h2>\u{1F9E0} Memory Match</h2><button class="game-close" onclick="closeGame()">&times;</button></div>
+              <div class="game-body" style="text-align:center;padding:2rem;">
+                <div style="font-size:3rem;margin-bottom:0.5rem;">\u{1F389}</div>
+                <div class="gradient-text" style="font-size:1.5rem;font-weight:800;">You Win!</div>
+                <div style="margin:0.5rem 0;color:var(--text-muted);">Completed in ${moves} moves</div>
+                <div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem;">
+                  <button class="btn btn-primary" onclick="launchMemoryGame()">Play Again</button>
+                  <button class="btn btn-secondary" onclick="closeGame()">Close</button>
+                </div>
+              </div>`;
+          }, 500);
+        }
+      } else {
+        setTimeout(() => {
+          flipped = [];
+          canFlip = true;
+          renderBoard();
+        }, 800);
+      }
+    }
+  };
+
+  overlay.classList.add('open');
+  renderBoard();
 }
 
 // ============================================================
