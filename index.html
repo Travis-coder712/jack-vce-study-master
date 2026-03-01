@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack VCE Study Master</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --text: #1a202c;
+  --text-muted: #718096;
+  --border: #e2e8f0;
+  --primary: #1a365d;
+  --primary-light: #2b6cb0;
+  --accent: #3182ce;
+  --danger: #e53e3e;
+  --success: #38a169;
+  --warning: #d69e2e;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+  --methods: #6366f1;
+  --biology: #059669;
+  --english: #dc2626;
+  --economics: #d97706;
+  --busman11: #8b5cf6;
+  --busman12: #0891b2;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.header h1 span { font-size: 1.6rem; }
+
+/* Navigation */
+.nav {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 3px;
+}
+.nav button {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav button:hover { background: rgba(255,255,255,0.15); color: white; }
+.nav button.active { background: rgba(255,255,255,0.25); color: white; }
+
+/* Main Content */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: var(--shadow-md); }
+
+/* Dashboard */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.dashboard-grid .full-width { grid-column: 1 / -1; }
+.stat-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  flex: 1;
+  min-width: 140px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+/* Section headers */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Assessment list */
+.assessment-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.assessment-item:last-child { border-bottom: none; }
+.assessment-name { font-weight: 600; font-size: 0.95rem; }
+.assessment-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+.assessment-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-weight {
+  background: var(--primary);
+  color: white;
+}
+.badge-urgent {
+  background: #fed7d7;
+  color: #c53030;
+}
+.badge-soon {
+  background: #fefcbf;
+  color: #975a16;
+}
+.badge-upcoming {
+  background: #c6f6d5;
+  color: #276749;
+}
+.badge-done {
+  background: #c6f6d5;
+  color: #276749;
+}
+.badge-subject {
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: white;
+}
+
+/* Subject cards */
+.subject-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  transition: background 0.15s;
+  user-select: none;
+}
+.subject-header:hover { background: #f7fafc; }
+.subject-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-right: 0.75rem;
+  color: white;
+  flex-shrink: 0;
+}
+.subject-info { flex: 1; }
+.subject-name { font-weight: 700; font-size: 1.05rem; }
+.subject-subtitle { font-size: 0.8rem; color: var(--text-muted); }
+.subject-chevron {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+.subject-chevron.open { transform: rotate(90deg); }
+.subject-body {
+  display: none;
+  padding: 0 1.5rem 1.5rem;
+}
+.subject-body.open { display: block; }
+
+/* Assessment table */
+.assessment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.assessment-table th {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.assessment-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.assessment-table tr:last-child td { border-bottom: none; }
+.assessment-table tr:hover td { background: #f7fafc; }
+
+/* Weight bar */
+.weight-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 100px;
+}
+.weight-bar {
+  flex: 1;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.weight-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+.weight-pct {
+  font-weight: 700;
+  font-size: 0.85rem;
+  min-width: 35px;
+  text-align: right;
+}
+
+/* Inputs */
+.input-sm {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+.input-sm:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(49,130,206,0.1);
+}
+input[type="date"].input-sm { min-width: 130px; }
+input[type="number"].input-sm { width: 65px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: #2b6cb0; }
+.btn-secondary { background: #edf2f7; color: var(--text); }
+.btn-secondary:hover { background: #e2e8f0; }
+.btn-danger { background: #fed7d7; color: #c53030; }
+.btn-danger:hover { background: #feb2b2; }
+.btn-sm { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+.btn-icon { padding: 0.35rem; border-radius: 6px; background: none; border: 1px solid var(--border); }
+.btn-icon:hover { background: #edf2f7; }
+
+/* Progress ring */
+.progress-ring {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.progress-bar-horiz {
+  flex: 1;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* Subject progress on dashboard */
+.subject-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.subject-progress-row:last-child { border-bottom: none; }
+.subject-progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.subject-progress-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-width: 120px;
+}
+.subject-progress-stats {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  min-width: 50px;
+  text-align: right;
+}
+
+/* Timeline item */
+.timeline-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-date {
+  text-align: center;
+  min-width: 55px;
+  flex-shrink: 0;
+}
+.timeline-day {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.timeline-month {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.timeline-content { flex: 1; }
+.timeline-title { font-weight: 600; font-size: 0.9rem; }
+.timeline-sub { font-size: 0.8rem; color: var(--text-muted); }
+.timeline-countdown {
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding-top: 0.2rem;
+}
+
+/* Info box */
+.info-box {
+  background: #ebf8ff;
+  border: 1px solid #bee3f8;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #2a4365;
+  margin-bottom: 1rem;
+}
+.info-box.warning {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+/* Notes textarea */
+.notes-area {
+  width: 100%;
+  min-height: 60px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+.notes-area:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Subject detail header */
+.subject-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.subject-detail-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+/* Export/Import */
+.settings-section {
+  margin-bottom: 1.5rem;
+}
+.settings-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+.modal h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 0.75rem;
+}
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+}
+.empty-state-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.empty-state-text { font-size: 0.95rem; }
+
+/* Weighted avg display */
+.weighted-avg {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f0fff4;
+  border: 1px solid #c6f6d5;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+.weighted-avg-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--success);
+}
+.weighted-avg-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .header-inner { flex-direction: column; align-items: stretch; }
+  .nav { justify-content: center; }
+  .stat-row { flex-direction: column; }
+  .assessment-table { font-size: 0.8rem; }
+  .assessment-table th, .assessment-table td { padding: 0.5rem 0.4rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .main { padding: 1rem; }
+  .hide-mobile { display: none; }
+}
+
+@media (max-width: 480px) {
+  .header h1 { font-size: 1.1rem; }
+  .nav button { font-size: 0.78rem; padding: 0.35rem 0.6rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1><span>📚</span> Jack VCE Study Master</h1>
+    <div class="nav" id="nav">
+      <button class="active" data-view="dashboard">Dashboard</button>
+      <button data-view="year11">Year 11</button>
+      <button data-view="year12">Year 12</button>
+      <button data-view="settings">Settings</button>
+    </div>
+  </div>
+</div>
+
+<div class="main" id="app"></div>
+
+<!-- Add/Edit Assessment Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+// ============================================================
+// DATA: Subject and assessment definitions
+// ============================================================
+const DEFAULT_SUBJECTS = [
+  {
+    id: 'yr11-methods',
+    name: 'Mathematical Methods',
+    year: 11,
+    units: 'Units 1 & 2',
+    color: '#6366f1',
+    icon: '\u{1F4D0}',
+    vcaaWeighted: false,
+    description: 'Functions, algebra, calculus and probability. CAS calculator is essential.',
+    notes: 'Year 11 weightings are set by Kew High School. The defaults below are typical \u2014 update them to match your actual assessment outline.',
+    assessments: [
+      { id: 'mm-u1t1', name: 'Topic Test 1: Functions, Relations & Graphs', type: 'Test', weight: 10, unit: 1, area: 'AoS 1', description: 'Covers polynomial, power and exponential functions, domain/range, transformations.' },
+      { id: 'mm-u1t2', name: 'Topic Test 2: Algebra, Number & Structure', type: 'Test', weight: 10, unit: 1, area: 'AoS 2', description: 'Algebraic manipulation, simultaneous equations, inequalities.' },
+      { id: 'mm-u1inv', name: 'Mathematical Investigation', type: 'Investigation', weight: 12, unit: 1, area: 'AoS 1\u20132', description: 'Extended investigation over ~1 week. Formulation, exploration, communication of mathematical concepts.' },
+      { id: 'mm-s1ex', name: 'Semester 1 Exam', type: 'Exam', weight: 18, unit: 1, area: 'All Unit 1', description: 'Covers all Unit 1 content. Two sections: technology-free and technology-active (CAS).' },
+      { id: 'mm-u2t3', name: 'Topic Test 3: Calculus', type: 'Test', weight: 10, unit: 2, area: 'AoS 3', description: 'Differentiation, rates of change, graphing with calculus.' },
+      { id: 'mm-u2t4', name: 'Topic Test 4: Probability & Statistics', type: 'Test', weight: 10, unit: 2, area: 'AoS 4', description: 'Counting methods, probability rules, discrete distributions.' },
+      { id: 'mm-u2inv', name: 'Modelling / CAS Investigation', type: 'Investigation', weight: 12, unit: 2, area: 'AoS 3\u20134', description: 'Modelling task or CAS-based investigation. Apply computational thinking.' },
+      { id: 'mm-s2ex', name: 'Semester 2 Exam', type: 'Exam', weight: 18, unit: 2, area: 'All Unit 2', description: 'Covers all Unit 2 content. Prepares for the style of Units 3&4 exams.' }
+    ]
+  },
+  {
+    id: 'yr11-biology',
+    name: 'Biology',
+    year: 11,
+    units: 'Units 1 & 2',
+    color: '#059669',
+    icon: '\u{1F9EC}',
+    vcaaWeighted: false,
+    description: 'Cell biology, organ systems, genetics, and practical investigation skills.',
+    notes: 'Includes minimum 10 hrs practical work per unit plus a 7-hr student investigation. Update weightings to match Kew High School.',
+    assessments: [
+      { id: 'bi-u1s1', name: 'SAC 1: Cellular Structure & Function', type: 'SAC', weight: 10, unit: 1, area: 'AoS 1', description: 'Cell organelles, transport, cell cycle, growth and differentiation.' },
+      { id: 'bi-u1s2', name: 'SAC 2: Functioning Systems', type: 'SAC', weight: 10, unit: 1, area: 'AoS 2', description: 'How cells are specialised and organised into tissues, organs and systems.' },
+      { id: 'bi-u1inv', name: 'Practical Investigation Report', type: 'Investigation', weight: 12, unit: 1, area: 'AoS 3', description: 'Student-designed investigation. Minimum 7 hours. Assessed as lab report, poster, or presentation.' },
+      { id: 'bi-s1ex', name: 'Semester 1 Exam', type: 'Exam', weight: 18, unit: 1, area: 'All Unit 1', description: 'Covers all Unit 1 content including practical concepts.' },
+      { id: 'bi-u2s1', name: 'SAC 3: Inheritance', type: 'SAC', weight: 10, unit: 2, area: 'AoS 1', description: 'DNA, genes, chromosomes, patterns of inheritance, genetic variation.' },
+      { id: 'bi-u2s2', name: 'SAC 4: Organism Regulation', type: 'SAC', weight: 10, unit: 2, area: 'AoS 2', description: 'Homeostasis, nervous and endocrine systems, immune response.' },
+      { id: 'bi-u2inv', name: 'Practical Investigation Report', type: 'Investigation', weight: 12, unit: 2, area: 'AoS 3', description: 'Second student investigation. Can be fieldwork or lab-based.' },
+      { id: 'bi-s2ex', name: 'Semester 2 Exam', type: 'Exam', weight: 18, unit: 2, area: 'All Unit 2', description: 'Covers all Unit 2 content. Good preparation for Units 3&4 exam format.' }
+    ]
+  },
+  {
+    id: 'yr11-english',
+    name: 'English',
+    year: 11,
+    units: 'Units 1 & 2',
+    color: '#dc2626',
+    icon: '\u{1F4D6}',
+    vcaaWeighted: false,
+    description: 'Text analysis, creative writing, and argument analysis. Compulsory VCE subject.',
+    notes: 'English is the only compulsory VCE subject. Set texts are chosen by Kew High School. Update weightings as needed.',
+    assessments: [
+      { id: 'en-u1tr', name: 'Text Response: Reading & Exploring Texts', type: 'Essay', weight: 15, unit: 1, area: 'AoS 1', description: 'Personal or analytical response to a set text. Focus on ideas, themes, and connections.' },
+      { id: 'en-u1cw', name: 'Creative Writing: Crafting Texts', type: 'Creative', weight: 15, unit: 1, area: 'AoS 2', description: 'Two original creative texts. Genres may include short story, speech, poetry, feature article, memoir.' },
+      { id: 'en-s1ex', name: 'Semester 1 Exam', type: 'Exam', weight: 20, unit: 1, area: 'All Unit 1', description: 'Text response under timed conditions. Usually 2 hours.' },
+      { id: 'en-u2tr', name: 'Text Response: Analytical Response', type: 'Essay', weight: 15, unit: 2, area: 'AoS 1', description: 'Formal analytical essay on a set text. Focus on how meaning is constructed.' },
+      { id: 'en-u2aa', name: 'Analysing Argument', type: 'Analysis', weight: 15, unit: 2, area: 'AoS 2', description: 'Analyse use of argument and persuasive language in media texts. May include oral component.' },
+      { id: 'en-s2ex', name: 'Semester 2 Exam', type: 'Exam', weight: 20, unit: 2, area: 'All Unit 2', description: 'Text response and/or argument analysis under timed conditions.' }
+    ]
+  },
+  {
+    id: 'yr11-economics',
+    name: 'Economics',
+    year: 11,
+    units: 'Units 1 & 2',
+    color: '#d97706',
+    icon: '\u{1F4C8}',
+    vcaaWeighted: false,
+    description: 'Economic decision-making, markets, behavioural economics, and living standards.',
+    notes: 'Includes analysis of real-world Australian and global economic data. Update weightings to match Kew High School.',
+    assessments: [
+      { id: 'ec-u1s1', name: 'SAC 1: Thinking Like an Economist', type: 'SAC', weight: 10, unit: 1, area: 'AoS 1', description: 'Basic economic concepts: scarcity, opportunity cost, PPF, resource allocation.' },
+      { id: 'ec-u1s2', name: 'SAC 2: Decision-Making in Markets', type: 'SAC', weight: 10, unit: 1, area: 'AoS 2', description: 'Supply and demand, market equilibrium, elasticity, market failure.' },
+      { id: 'ec-u1s3', name: 'SAC 3: Behavioural Economics', type: 'SAC', weight: 10, unit: 1, area: 'AoS 3', description: 'Cognitive biases, heuristics, nudge theory, deviations from rational behaviour.' },
+      { id: 'ec-s1ex', name: 'Semester 1 Exam', type: 'Exam', weight: 20, unit: 1, area: 'All Unit 1', description: 'Covers all Unit 1 areas of study.' },
+      { id: 'ec-u2s1', name: 'SAC 4: Economic Activity', type: 'SAC', weight: 12, unit: 2, area: 'AoS 1', description: 'GDP, economic growth, aggregate demand/supply, business cycle.' },
+      { id: 'ec-u2s2', name: 'SAC 5: Economic Performance & Living Standards', type: 'SAC', weight: 13, unit: 2, area: 'AoS 2', description: 'Measuring living standards, income distribution, trade, globalisation.' },
+      { id: 'ec-s2ex', name: 'Semester 2 Exam', type: 'Exam', weight: 25, unit: 2, area: 'All Unit 2', description: 'Covers all Unit 2 content. May include data analysis and extended response.' }
+    ]
+  },
+  {
+    id: 'yr11-busman',
+    name: 'Business Management',
+    year: 11,
+    units: 'Units 1 & 2',
+    color: '#8b5cf6',
+    icon: '\u{1F4BC}',
+    vcaaWeighted: false,
+    description: 'Planning and establishing a business. Covers entrepreneurship, marketing, HR, finance.',
+    notes: 'Great preparation for Year 12 Business Management. Update weightings to match Kew High School.',
+    assessments: [
+      { id: 'bm1-u1s1', name: 'SAC 1: Business Ideas', type: 'SAC', weight: 10, unit: 1, area: 'AoS 1', description: 'Sources of business ideas, entrepreneurship, characteristics of successful businesses.' },
+      { id: 'bm1-u1s2', name: 'SAC 2: External Environment', type: 'SAC', weight: 10, unit: 1, area: 'AoS 2', description: 'PEST analysis, legal, political, social, economic, technological, global factors.' },
+      { id: 'bm1-u1s3', name: 'SAC 3: Internal Environment', type: 'SAC', weight: 10, unit: 1, area: 'AoS 3', description: 'Business models, legal structures, sources of finance, staffing considerations.' },
+      { id: 'bm1-s1ex', name: 'Semester 1 Exam', type: 'Exam', weight: 20, unit: 1, area: 'All Unit 1', description: 'Structured questions and case study analysis covering all of Unit 1.' },
+      { id: 'bm1-u2s1', name: 'SAC 4: Legal Requirements & Finance', type: 'SAC', weight: 10, unit: 2, area: 'AoS 1', description: 'Legal compliance, taxation, insurance, financial record-keeping.' },
+      { id: 'bm1-u2s2', name: 'SAC 5: Marketing a Business', type: 'SAC', weight: 10, unit: 2, area: 'AoS 2', description: 'Market research, target markets, marketing mix (7Ps), branding.' },
+      { id: 'bm1-u2s3', name: 'SAC 6: Staffing a Business', type: 'SAC', weight: 10, unit: 2, area: 'AoS 3', description: 'Recruitment, selection, employment contracts, workplace relations.' },
+      { id: 'bm1-s2ex', name: 'Semester 2 Exam', type: 'Exam', weight: 20, unit: 2, area: 'All Unit 2', description: 'Covers all Unit 2 content including case study analysis.' }
+    ]
+  },
+  {
+    id: 'yr12-busman',
+    name: 'Business Management',
+    year: 12,
+    units: 'Units 3 & 4',
+    color: '#0891b2',
+    icon: '\u{1F3AF}',
+    vcaaWeighted: true,
+    description: 'Managing and transforming a business. Contributes directly to ATAR.',
+    notes: 'VCAA-mandated weightings: Unit 3 SACs = 25%, Unit 4 SACs = 25%, Exam = 50%. SACs are completed under test conditions (supervised, closed book). Case studies must be contemporary (last 4 years).',
+    assessments: [
+      { id: 'bm2-u3s1', name: 'SAC 1: Business Foundations', type: 'SAC', weight: 5, unit: 3, area: 'AoS 1 / Outcome 1', description: 'Business objectives, management styles, management skills, corporate culture. 20 marks. ~50 min (10 reading + 40 writing).' },
+      { id: 'bm2-u3s2', name: 'SAC 2: Managing Employees', type: 'SAC', weight: 10, unit: 3, area: 'AoS 2 / Outcome 2', description: 'Motivation theories, training, performance management, HR management. 40 marks. Largest Unit 3 SAC.' },
+      { id: 'bm2-u3s3', name: 'SAC 3: Operations Management', type: 'SAC', weight: 10, unit: 3, area: 'AoS 3 / Outcome 3', description: 'Operations system, strategies (quality, technology, materials), corporate social responsibility. 40 marks.' },
+      { id: 'bm2-u4s1', name: 'SAC 4: Reviewing Performance \u2013 The Need for Change', type: 'SAC', weight: 12.5, unit: 4, area: 'AoS 1 / Outcome 1', description: 'KPIs (financial & non-financial), Lewin\u2019s Force Field Analysis, driving/restraining forces. 50 marks.' },
+      { id: 'bm2-u4s2', name: 'SAC 5: Implementing Change', type: 'SAC', weight: 12.5, unit: 4, area: 'AoS 2 / Outcome 2', description: 'Change management strategies, leadership in change, employee resistance, evaluation. 50 marks. ~100 min (10 reading + 90 writing).' },
+      { id: 'bm2-exam', name: 'End-of-Year Exam', type: 'Exam', weight: 50, unit: '3 & 4', area: 'All Outcomes', description: 'Covers all Units 3 & 4 content. 2 hours. Structured short answer, case study analysis, extended response. This is the single biggest component of the study score.' }
+    ]
+  }
+];
+
+// ============================================================
+// STATE: App state management with localStorage
+// ============================================================
+const STORAGE_KEY = 'jackVCEStudyMaster';
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch (e) { console.error('Failed to load state', e); }
+  return {};
+}
+
+function saveState(state) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) { console.error('Failed to save state', e); }
+}
+
+function getAssessmentData(assessmentId) {
+  const state = loadState();
+  return state[assessmentId] || {};
+}
+
+function setAssessmentData(assessmentId, data) {
+  const state = loadState();
+  state[assessmentId] = { ...(state[assessmentId] || {}), ...data };
+  saveState(state);
+}
+
+function getCustomSubjects() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY + '_subjects');
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  return null;
+}
+
+function saveCustomSubjects(subjects) {
+  localStorage.setItem(STORAGE_KEY + '_subjects', JSON.stringify(subjects));
+}
+
+function getSubjects() {
+  return getCustomSubjects() || JSON.parse(JSON.stringify(DEFAULT_SUBJECTS));
+}
+
+// ============================================================
+// APP
+// ============================================================
+let currentView = 'dashboard';
+let expandedSubjects = {};
+
+function init() {
+  document.querySelectorAll('#nav button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentView = btn.dataset.view;
+      document.querySelectorAll('#nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    });
+  });
+  render();
+}
+
+function render() {
+  const app = document.getElementById('app');
+  switch (currentView) {
+    case 'dashboard': app.innerHTML = renderDashboard(); break;
+    case 'year11': app.innerHTML = renderYear(11); break;
+    case 'year12': app.innerHTML = renderYear(12); break;
+    case 'settings': app.innerHTML = renderSettings(); break;
+  }
+  attachEventListeners();
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard() {
+  const subjects = getSubjects();
+  const state = loadState();
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  // Gather all assessments with dates
+  const allAssessments = [];
+  const totalAssessments = { total: 0, withDates: 0, withResults: 0 };
+
+  subjects.forEach(sub => {
+    sub.assessments.forEach(a => {
+      totalAssessments.total++;
+      const data = state[a.id] || {};
+      if (data.date) totalAssessments.withDates++;
+      if (data.result !== undefined && data.result !== null && data.result !== '') totalAssessments.withResults++;
+      if (data.date) {
+        const d = new Date(data.date + 'T00:00:00');
+        const daysAway = Math.ceil((d - today) / (1000*60*60*24));
+        allAssessments.push({
+          ...a,
+          subject: sub,
+          date: d,
+          daysAway,
+          result: data.result,
+          resultTotal: data.resultTotal
+        });
+      }
+    });
+  });
+
+  allAssessments.sort((a, b) => a.date - b.date);
+
+  const upcoming = allAssessments.filter(a => a.daysAway >= 0 && a.daysAway <= 28 && (a.result === undefined || a.result === null || a.result === ''));
+  const urgent = upcoming.filter(a => a.daysAway <= 7);
+  const soon = upcoming.filter(a => a.daysAway > 7 && a.daysAway <= 14);
+  const horizon = upcoming.filter(a => a.daysAway > 14);
+  const overdue = allAssessments.filter(a => a.daysAway < 0 && (a.result === undefined || a.result === null || a.result === ''));
+
+  let html = '';
+
+  // Stats row
+  html += '<div class="stat-row">';
+  html += `<div class="stat-card"><div class="stat-number" style="color:${urgent.length > 0 ? 'var(--danger)' : 'var(--success)'}">${urgent.length}</div><div class="stat-label">Due This Week</div></div>`;
+  html += `<div class="stat-card"><div class="stat-number" style="color:var(--warning)">${soon.length}</div><div class="stat-label">Due Next Week</div></div>`;
+  html += `<div class="stat-card"><div class="stat-number" style="color:var(--accent)">${upcoming.length}</div><div class="stat-label">Next 4 Weeks</div></div>`;
+  html += `<div class="stat-card"><div class="stat-number">${totalAssessments.withResults}/${totalAssessments.total}</div><div class="stat-label">Results Entered</div></div>`;
+  html += '</div>';
+
+  html += '<div class="dashboard-grid">';
+
+  // Overdue
+  if (overdue.length > 0) {
+    html += '<div class="card full-width" style="border-left: 4px solid var(--danger);">';
+    html += '<div class="section-title">\u26A0\uFE0F Overdue / Missing Results</div>';
+    overdue.forEach(a => {
+      html += renderTimelineItem(a, 'overdue');
+    });
+    html += '</div>';
+  }
+
+  // Upcoming timeline
+  html += '<div class="card">';
+  html += '<div class="section-title">Upcoming Assessments</div>';
+  if (upcoming.length === 0) {
+    if (totalAssessments.withDates === 0) {
+      html += '<div class="empty-state"><div class="empty-state-icon">\u{1F4C5}</div><div class="empty-state-text">No dates set yet. Go to each subject and add your assessment dates to see them here.</div></div>';
+    } else {
+      html += '<div class="empty-state"><div class="empty-state-icon">\u2705</div><div class="empty-state-text">Nothing due in the next 4 weeks!</div></div>';
+    }
+  } else {
+    if (urgent.length > 0) {
+      html += '<div style="font-weight:600;color:var(--danger);margin-bottom:0.5rem;font-size:0.85rem;">THIS WEEK</div>';
+      urgent.forEach(a => { html += renderTimelineItem(a, 'urgent'); });
+    }
+    if (soon.length > 0) {
+      html += '<div style="font-weight:600;color:var(--warning);margin:0.75rem 0 0.5rem;font-size:0.85rem;">NEXT WEEK</div>';
+      soon.forEach(a => { html += renderTimelineItem(a, 'soon'); });
+    }
+    if (horizon.length > 0) {
+      html += '<div style="font-weight:600;color:var(--success);margin:0.75rem 0 0.5rem;font-size:0.85rem;">COMING UP</div>';
+      horizon.forEach(a => { html += renderTimelineItem(a, 'upcoming'); });
+    }
+  }
+  html += '</div>';
+
+  // Subject progress
+  html += '<div class="card">';
+  html += '<div class="section-title">Subject Progress</div>';
+  subjects.forEach(sub => {
+    const total = sub.assessments.length;
+    const done = sub.assessments.filter(a => {
+      const d = state[a.id];
+      return d && d.result !== undefined && d.result !== null && d.result !== '';
+    }).length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+    // Weighted average
+    let wavg = calcWeightedAvg(sub, state);
+
+    html += '<div class="subject-progress-row">';
+    html += `<div class="subject-progress-dot" style="background:${sub.color}"></div>`;
+    html += `<div class="subject-progress-name">${sub.year === 12 ? 'Yr12 ' : ''}${sub.name}</div>`;
+    html += '<div class="progress-ring" style="flex:1">';
+    html += `<div class="progress-bar-horiz"><div class="progress-bar-fill" style="width:${pct}%;background:${sub.color}"></div></div>`;
+    html += '</div>';
+    html += `<div class="subject-progress-stats">${done}/${total}`;
+    if (wavg !== null) html += `<br><span style="font-weight:700;color:${sub.color}">${wavg}%</span>`;
+    html += '</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  html += '</div>'; // dashboard-grid
+
+  return html;
+}
+
+function renderTimelineItem(a, urgency) {
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const badgeClass = urgency === 'urgent' ? 'badge-urgent' : urgency === 'soon' ? 'badge-soon' : urgency === 'overdue' ? 'badge-urgent' : 'badge-upcoming';
+  let countdownText = '';
+  if (a.daysAway === 0) countdownText = 'TODAY';
+  else if (a.daysAway === 1) countdownText = 'Tomorrow';
+  else if (a.daysAway < 0) countdownText = `${Math.abs(a.daysAway)} days ago`;
+  else countdownText = `In ${a.daysAway} days`;
+
+  return `<div class="timeline-item">
+    <div class="timeline-date">
+      <div class="timeline-day">${a.date.getDate()}</div>
+      <div class="timeline-month">${months[a.date.getMonth()]}</div>
+      <div style="font-size:0.65rem;color:var(--text-muted)">${days[a.date.getDay()]}</div>
+    </div>
+    <div class="timeline-content">
+      <div class="timeline-title">${a.name}</div>
+      <div class="timeline-sub">
+        <span class="badge badge-subject" style="background:${a.subject.color}">${a.subject.year === 12 ? 'Yr12 ' : ''}${a.subject.name}</span>
+        <span class="badge badge-weight" style="margin-left:0.25rem">${a.weight}%</span>
+      </div>
+    </div>
+    <div class="timeline-countdown" style="color:${urgency === 'urgent' || urgency === 'overdue' ? 'var(--danger)' : urgency === 'soon' ? 'var(--warning)' : 'var(--success)'}">
+      <span class="badge ${badgeClass}">${countdownText}</span>
+    </div>
+  </div>`;
+}
+
+// ============================================================
+// YEAR VIEW
+// ============================================================
+function renderYear(year) {
+  const subjects = getSubjects().filter(s => s.year === year);
+  let html = `<div class="section-title">${year === 12 ? '\u{1F393}' : '\u{1F4DA}'} Year ${year} Subjects</div>`;
+
+  if (year === 12) {
+    html += '<div class="info-box">Year 12 subjects contribute directly to the ATAR. Weightings shown are set by VCAA and cannot be changed by the school.</div>';
+  } else {
+    html += '<div class="info-box warning">Year 11 weightings shown below are <strong>typical estimates</strong>. Please update them to match the actual Kew High School assessment outline for each subject.</div>';
+  }
+
+  subjects.forEach(sub => {
+    html += renderSubjectCard(sub);
+  });
+
+  return html;
+}
+
+function renderSubjectCard(sub) {
+  const state = loadState();
+  const isOpen = expandedSubjects[sub.id];
+  const totalAssess = sub.assessments.length;
+  const completedAssess = sub.assessments.filter(a => {
+    const d = state[a.id];
+    return d && d.result !== undefined && d.result !== null && d.result !== '';
+  }).length;
+  const wavg = calcWeightedAvg(sub, state);
+
+  let html = `<div class="card" style="padding:0;border-left:4px solid ${sub.color};">`;
+
+  // Header
+  html += `<div class="subject-header" onclick="toggleSubject('${sub.id}')">`;
+  html += `<div style="display:flex;align-items:center;flex:1">`;
+  html += `<div class="subject-icon" style="background:${sub.color}">${sub.icon}</div>`;
+  html += `<div class="subject-info">`;
+  html += `<div class="subject-name">${sub.name}</div>`;
+  html += `<div class="subject-subtitle">${sub.units} \u2022 ${completedAssess}/${totalAssess} results entered${wavg !== null ? ' \u2022 Avg: ' + wavg + '%' : ''}</div>`;
+  html += `</div></div>`;
+  html += `<div class="subject-chevron ${isOpen ? 'open' : ''}">\u25B6</div>`;
+  html += `</div>`;
+
+  // Body
+  html += `<div class="subject-body ${isOpen ? 'open' : ''}" id="subject-body-${sub.id}">`;
+
+  // Description & notes
+  html += `<p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.5rem;">${sub.description}</p>`;
+  if (sub.notes) {
+    html += `<div class="info-box">${sub.notes}</div>`;
+  }
+
+  // Weighted average
+  if (wavg !== null) {
+    html += `<div class="weighted-avg"><div class="weighted-avg-number">${wavg}%</div><div class="weighted-avg-label">Weighted Average<br>(based on ${completedAssess} result${completedAssess === 1 ? '' : 's'} entered)</div></div>`;
+    html += '<div style="height:0.75rem"></div>';
+  }
+
+  // Visual weight breakdown
+  html += '<div style="margin-bottom:1rem">';
+  html += '<div style="font-weight:600;font-size:0.85rem;margin-bottom:0.5rem;">Assessment Weight Breakdown</div>';
+  html += '<div style="display:flex;height:24px;border-radius:6px;overflow:hidden;gap:1px;">';
+  sub.assessments.forEach(a => {
+    html += `<div style="flex:${a.weight};background:${sub.color};opacity:${0.4 + (a.weight / 100) * 1.2};display:flex;align-items:center;justify-content:center;color:white;font-size:0.65rem;font-weight:600;min-width:${a.weight > 5 ? '30px' : '15px'}" title="${a.name}: ${a.weight}%">${a.weight > 7 ? a.weight + '%' : ''}</div>`;
+  });
+  html += '</div>';
+  html += '<div style="display:flex;gap:1px;margin-top:2px;">';
+  sub.assessments.forEach(a => {
+    html += `<div style="flex:${a.weight};font-size:0.6rem;color:var(--text-muted);text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" title="${a.name}">${a.weight > 10 ? a.type : ''}</div>`;
+  });
+  html += '</div></div>';
+
+  // Assessment table
+  html += '<div style="overflow-x:auto;">';
+  html += '<table class="assessment-table">';
+  html += '<thead><tr>';
+  html += '<th>Assessment</th>';
+  html += '<th>Type</th>';
+  html += '<th>Weight</th>';
+  html += '<th>Date</th>';
+  html += '<th style="min-width:120px">Result</th>';
+  html += '<th class="hide-mobile">Notes</th>';
+  html += '</tr></thead><tbody>';
+
+  let currentUnit = null;
+  sub.assessments.forEach(a => {
+    const data = state[a.id] || {};
+    const unitLabel = 'Unit ' + a.unit;
+    if (a.unit !== currentUnit) {
+      currentUnit = a.unit;
+      html += `<tr><td colspan="6" style="background:#f7fafc;font-weight:700;font-size:0.8rem;color:${sub.color};padding:0.5rem 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">Unit ${a.unit}</td></tr>`;
+    }
+
+    const hasResult = data.result !== undefined && data.result !== null && data.result !== '';
+    html += `<tr>`;
+    html += `<td><div style="font-weight:600;">${a.name}</div><div style="font-size:0.75rem;color:var(--text-muted)">${a.area || ''}</div>`;
+    if (a.description) html += `<div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.15rem;font-style:italic" class="hide-mobile">${a.description}</div>`;
+    html += `</td>`;
+    html += `<td><span style="font-size:0.8rem;">${a.type}</span></td>`;
+    html += `<td><div class="weight-bar-container"><div class="weight-bar"><div class="weight-bar-fill" style="width:${Math.min(a.weight * 2, 100)}%;background:${sub.color}"></div></div><span class="weight-pct" style="color:${sub.color}">${a.weight}%</span></div></td>`;
+    html += `<td><input type="date" class="input-sm" value="${data.date || ''}" onchange="updateDate('${a.id}', this.value)"></td>`;
+    html += `<td><div style="display:flex;align-items:center;gap:0.25rem;">`;
+    html += `<input type="number" class="input-sm" placeholder="\u2014" min="0" value="${hasResult ? data.result : ''}" onchange="updateResult('${a.id}', this.value)" style="width:55px">`;
+    html += `<span style="color:var(--text-muted);font-size:0.85rem">/</span>`;
+    html += `<input type="number" class="input-sm" placeholder="100" min="1" value="${data.resultTotal || ''}" onchange="updateResultTotal('${a.id}', this.value)" style="width:55px">`;
+    if (hasResult && data.resultTotal) {
+      const pct = Math.round((parseFloat(data.result) / parseFloat(data.resultTotal)) * 100);
+      html += `<span style="font-weight:700;font-size:0.85rem;color:${pct >= 70 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--danger)'};min-width:35px;text-align:right">${pct}%</span>`;
+    }
+    html += `</div></td>`;
+    html += `<td class="hide-mobile"><input type="text" class="input-sm" placeholder="Add notes\u2026" value="${data.notes || ''}" onchange="updateNotes('${a.id}', this.value)"></td>`;
+    html += `</tr>`;
+  });
+
+  html += '</tbody></table>';
+  html += '</div>';
+
+  // Add assessment button
+  html += `<div style="margin-top:0.75rem;display:flex;gap:0.5rem;">`;
+  html += `<button class="btn btn-secondary btn-sm" onclick="addAssessment('${sub.id}')">+ Add Assessment</button>`;
+  if (!sub.vcaaWeighted) {
+    html += `<button class="btn btn-secondary btn-sm" onclick="editWeights('${sub.id}')">Edit Weights</button>`;
+  }
+  html += `</div>`;
+
+  html += '</div>'; // subject-body
+  html += '</div>'; // card
+  return html;
+}
+
+// ============================================================
+// SETTINGS VIEW
+// ============================================================
+function renderSettings() {
+  let html = '<div class="section-title">\u2699\uFE0F Settings & Data</div>';
+
+  html += '<div class="card">';
+  html += '<div class="settings-section">';
+  html += '<h3>Export / Import Data</h3>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">Export your dates, results, and notes as a JSON file to share with family members or back up your data. Each family member can import the same file to stay in sync.</p>';
+  html += '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;">';
+  html += '<button class="btn btn-primary" onclick="exportData()">Export Data</button>';
+  html += '<button class="btn btn-secondary" onclick="document.getElementById(\'importFile\').click()">Import Data</button>';
+  html += '<input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+
+  html += '<div class="card">';
+  html += '<div class="settings-section">';
+  html += '<h3>Reset Customisations</h3>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">Reset all subject/assessment customisations (added assessments, changed weights) back to defaults. This does NOT delete your dates, results, or notes.</p>';
+  html += '<button class="btn btn-danger btn-sm" onclick="resetSubjects()">Reset to Default Assessments</button>';
+  html += '</div>';
+  html += '</div>';
+
+  html += '<div class="card">';
+  html += '<div class="settings-section">';
+  html += '<h3>Clear All Data</h3>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">Permanently delete all saved dates, results, notes, and customisations. This cannot be undone.</p>';
+  html += '<button class="btn btn-danger btn-sm" onclick="clearAllData()">Clear Everything</button>';
+  html += '</div>';
+  html += '</div>';
+
+  html += '<div class="card">';
+  html += '<div class="settings-section">';
+  html += '<h3>About</h3>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);">Jack VCE Study Master helps track VCE assessment tasks, dates, and results for Year 11 and 12 subjects at Kew High School.</p>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Year 12 assessment weightings are set by VCAA. Year 11 weightings are estimates \u2014 update them to match the school\u2019s actual assessment outline.</p>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Data is stored locally in your browser. Use Export/Import to share between devices.</p>';
+  html += '</div>';
+  html += '</div>';
+
+  return html;
+}
+
+// ============================================================
+// CALCULATIONS
+// ============================================================
+function calcWeightedAvg(sub, state) {
+  let totalWeight = 0;
+  let weightedSum = 0;
+  sub.assessments.forEach(a => {
+    const data = state[a.id] || {};
+    if (data.result !== undefined && data.result !== null && data.result !== '' && data.resultTotal) {
+      const pct = (parseFloat(data.result) / parseFloat(data.resultTotal)) * 100;
+      weightedSum += pct * a.weight;
+      totalWeight += a.weight;
+    }
+  });
+  if (totalWeight === 0) return null;
+  return Math.round((weightedSum / totalWeight) * 10) / 10;
+}
+
+// ============================================================
+// EVENT HANDLERS
+// ============================================================
+function toggleSubject(id) {
+  expandedSubjects[id] = !expandedSubjects[id];
+  render();
+}
+
+function updateDate(assessmentId, value) {
+  setAssessmentData(assessmentId, { date: value || null });
+  // Don't re-render to avoid losing focus, but update dashboard if on it
+}
+
+function updateResult(assessmentId, value) {
+  setAssessmentData(assessmentId, { result: value === '' ? null : parseFloat(value) });
+}
+
+function updateResultTotal(assessmentId, value) {
+  setAssessmentData(assessmentId, { resultTotal: value === '' ? null : parseFloat(value) });
+}
+
+function updateNotes(assessmentId, value) {
+  setAssessmentData(assessmentId, { notes: value });
+}
+
+function addAssessment(subjectId) {
+  const modal = document.getElementById('modal');
+  const content = document.getElementById('modal-content');
+  content.innerHTML = `
+    <h2>Add Assessment</h2>
+    <div class="form-group">
+      <label>Assessment Name</label>
+      <input type="text" id="new-name" placeholder="e.g. SAC 7: Topic Name">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Type</label>
+        <select id="new-type">
+          <option>SAC</option>
+          <option>Test</option>
+          <option>Investigation</option>
+          <option>Essay</option>
+          <option>Exam</option>
+          <option>Assignment</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Weight (%)</label>
+        <input type="number" id="new-weight" min="0" max="100" value="10">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Unit</label>
+        <input type="text" id="new-unit" placeholder="e.g. 1, 2, 3">
+      </div>
+      <div class="form-group">
+        <label>Area of Study</label>
+        <input type="text" id="new-area" placeholder="e.g. AoS 1">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description (optional)</label>
+      <textarea id="new-desc" rows="2" placeholder="Brief description of what this assessment covers"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNewAssessment('${subjectId}')">Add Assessment</button>
+    </div>
+  `;
+  modal.classList.add('open');
+}
+
+function saveNewAssessment(subjectId) {
+  const name = document.getElementById('new-name').value.trim();
+  if (!name) { alert('Please enter a name'); return; }
+  const type = document.getElementById('new-type').value;
+  const weight = parseFloat(document.getElementById('new-weight').value) || 0;
+  const unit = document.getElementById('new-unit').value.trim() || '1';
+  const area = document.getElementById('new-area').value.trim();
+  const desc = document.getElementById('new-desc').value.trim();
+
+  const subjects = getSubjects();
+  const sub = subjects.find(s => s.id === subjectId);
+  if (!sub) return;
+
+  const newId = subjectId + '-custom-' + Date.now();
+  sub.assessments.push({
+    id: newId,
+    name,
+    type,
+    weight,
+    unit,
+    area,
+    description: desc
+  });
+
+  saveCustomSubjects(subjects);
+  closeModal();
+  render();
+}
+
+function editWeights(subjectId) {
+  const subjects = getSubjects();
+  const sub = subjects.find(s => s.id === subjectId);
+  if (!sub) return;
+
+  const modal = document.getElementById('modal');
+  const content = document.getElementById('modal-content');
+
+  let formHtml = '<h2>Edit Assessment Weights</h2>';
+  formHtml += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Adjust the percentage weights to match your school\u2019s assessment outline. Weights should add up to 100%.</p>';
+
+  sub.assessments.forEach((a, i) => {
+    formHtml += `<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">`;
+    formHtml += `<input type="number" class="input-sm" id="weight-${i}" value="${a.weight}" min="0" max="100" style="width:65px">`;
+    formHtml += `<span style="font-size:0.85rem;flex:1">${a.name}</span>`;
+    formHtml += `<button class="btn btn-danger btn-sm" onclick="deleteAssessment('${subjectId}', ${i})" style="font-size:0.7rem;padding:0.2rem 0.4rem;">\u2715</button>`;
+    formHtml += `</div>`;
+  });
+
+  formHtml += `<div id="weight-total" style="font-weight:600;margin-top:0.5rem;font-size:0.9rem;"></div>`;
+  formHtml += `<div class="modal-actions">`;
+  formHtml += `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button>`;
+  formHtml += `<button class="btn btn-primary" onclick="saveWeights('${subjectId}', ${sub.assessments.length})">Save Weights</button>`;
+  formHtml += `</div>`;
+
+  content.innerHTML = formHtml;
+  modal.classList.add('open');
+
+  // Update total display
+  function updateTotal() {
+    let total = 0;
+    for (let i = 0; i < sub.assessments.length; i++) {
+      const input = document.getElementById('weight-' + i);
+      if (input) total += parseFloat(input.value) || 0;
+    }
+    const el = document.getElementById('weight-total');
+    if (el) {
+      el.textContent = `Total: ${total}%`;
+      el.style.color = total === 100 ? 'var(--success)' : 'var(--danger)';
+    }
+  }
+  updateTotal();
+  for (let i = 0; i < sub.assessments.length; i++) {
+    const input = document.getElementById('weight-' + i);
+    if (input) input.addEventListener('input', updateTotal);
+  }
+}
+
+function saveWeights(subjectId, count) {
+  const subjects = getSubjects();
+  const sub = subjects.find(s => s.id === subjectId);
+  if (!sub) return;
+
+  for (let i = 0; i < count; i++) {
+    const input = document.getElementById('weight-' + i);
+    if (input && sub.assessments[i]) {
+      sub.assessments[i].weight = parseFloat(input.value) || 0;
+    }
+  }
+
+  saveCustomSubjects(subjects);
+  closeModal();
+  render();
+}
+
+function deleteAssessment(subjectId, index) {
+  if (!confirm('Delete this assessment?')) return;
+  const subjects = getSubjects();
+  const sub = subjects.find(s => s.id === subjectId);
+  if (!sub) return;
+  sub.assessments.splice(index, 1);
+  saveCustomSubjects(subjects);
+  closeModal();
+  render();
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+// Export / Import
+function exportData() {
+  const state = loadState();
+  const subjects = getCustomSubjects();
+  const exportObj = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    assessmentData: state,
+    customSubjects: subjects
+  };
+  const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'jack-vce-data-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.assessmentData) {
+        const current = loadState();
+        const merged = { ...current, ...data.assessmentData };
+        saveState(merged);
+      }
+      if (data.customSubjects) {
+        saveCustomSubjects(data.customSubjects);
+      }
+      alert('Data imported successfully!');
+      render();
+    } catch (err) {
+      alert('Error importing file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function resetSubjects() {
+  if (!confirm('Reset all assessment customisations to defaults? Your dates, results, and notes will be kept.')) return;
+  localStorage.removeItem(STORAGE_KEY + '_subjects');
+  render();
+}
+
+function clearAllData() {
+  if (!confirm('Delete ALL data including dates, results, and notes? This cannot be undone.')) return;
+  if (!confirm('Are you sure? This will permanently erase everything.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_KEY + '_subjects');
+  render();
+}
+
+// Close modal on overlay click
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Close modal on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+function attachEventListeners() {
+  // Event listeners are attached inline for simplicity
+}
+
+// ============================================================
+// INIT
+// ============================================================
+init();
+</script>
+</body>
+</html>
