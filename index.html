@@ -617,6 +617,7 @@ input[type="number"].input-sm { width: 65px; }
       <button class="active" data-view="dashboard">Dashboard</button>
       <button data-view="year11">Year 11</button>
       <button data-view="year12">Year 12</button>
+      <button data-view="uni">Uni & Careers</button>
       <button data-view="settings">Settings</button>
     </div>
   </div>
@@ -737,6 +738,23 @@ const DEFAULT_SUBJECTS = [
     ]
   },
   {
+    id: 'yr11-vetsport',
+    name: 'VET Sport & Recreation',
+    year: 11,
+    units: 'Units 3 & 4',
+    color: '#e11d48',
+    icon: '\u{1F3C0}',
+    vcaaWeighted: true,
+    description: 'Certificate III in Sport, Aquatics and Recreation (SIS30122). Competency-based + scored assessment for ATAR contribution.',
+    notes: 'VET scored assessment: Coursework = 66%, Exam = 34%. Completing Units 3&4 in Year 11 means this can count as a 5th or 6th subject for ATAR. SACs cover units of competency and must use at least 2 different task types across the 3 coursework tasks. Also requires 5 days Structured Workplace Learning.',
+    assessments: [
+      { id: 'vs-cw1', name: 'Coursework Task 1: WHS & Sport Coaching', type: 'Portfolio', weight: 22, unit: 3, area: 'BSBWHS308 / SISSSCO001', description: 'Covers WHS hazard identification, risk assessment and sport coaching with foundation level participants. Portfolio or work performance task.' },
+      { id: 'vs-cw2', name: 'Coursework Task 2: Delivering Recreation Sessions', type: 'Product', weight: 22, unit: 3, area: 'SISXPLD002', description: 'Plan and deliver recreation sessions. Product or industry project format. Assessed on ability to organise, deliver and review sessions.' },
+      { id: 'vs-cw3', name: 'Coursework Task 3: Facilitating Groups', type: 'Work Performance', weight: 22, unit: 4, area: 'SISXPLD004', description: 'Facilitate group activities in a sport/recreation context. Must be a different task type from Tasks 1 and 2.' },
+      { id: 'vs-exam', name: 'End-of-Year Exam', type: 'Exam', weight: 34, unit: '3 & 4', area: 'All Units of Competency', description: '90 minutes + 15 min reading. Section A: 15 multiple choice (15 marks). Section B: 7 short answer questions (85 marks). Set and assessed by VCAA.' }
+    ]
+  },
+  {
     id: 'yr12-busman',
     name: 'Business Management',
     year: 12,
@@ -827,6 +845,7 @@ function render() {
     case 'dashboard': app.innerHTML = renderDashboard(); break;
     case 'year11': app.innerHTML = renderYear(11); break;
     case 'year12': app.innerHTML = renderYear(12); break;
+    case 'uni': app.innerHTML = renderUniCareers(); break;
     case 'settings': app.innerHTML = renderSettings(); break;
   }
   attachEventListeners();
@@ -991,14 +1010,125 @@ function renderYear(year) {
 
   if (year === 12) {
     html += '<div class="info-box">Year 12 subjects contribute directly to the ATAR. Weightings shown are set by VCAA and cannot be changed by the school.</div>';
+    html += renderScalingSection();
+    html += renderATARExplanation();
   } else {
-    html += '<div class="info-box warning">Year 11 weightings shown below are <strong>typical estimates</strong>. Please update them to match the actual Kew High School assessment outline for each subject.</div>';
+    html += '<div class="info-box warning">Year 11 weightings shown below are <strong>typical estimates</strong>. Please update them to match the actual Kew High School assessment outline for each subject. VET Sport &amp; Rec uses VCAA-mandated scored assessment weightings.</div>';
   }
 
   subjects.forEach(sub => {
     html += renderSubjectCard(sub);
   });
 
+  return html;
+}
+
+function renderScalingSection() {
+  const scalingData = [
+    { name: 'Mathematical Methods', scaled: 34.4, direction: 'up', color: 'var(--methods)', raw30: 35, raw35: 41, raw40: 46, note: 'Strongest scaling subject. A raw 35 becomes ~41 scaled.' },
+    { name: 'Economics', scaled: 31.2, direction: 'up', color: 'var(--economics)', raw30: 31, raw35: 37, raw40: 42, note: 'Modest positive scaling. Solid cohort strength.' },
+    { name: 'Biology', scaled: 30.5, direction: 'neutral', color: 'var(--biology)', raw30: 31, raw35: 36, raw40: 41, note: 'Essentially neutral. What you score is what you get.' },
+    { name: 'English', scaled: 28.2, direction: 'down', color: 'var(--english)', raw30: 28, raw35: 33, raw40: 39, note: 'Slight downward scaling. Every VCE student takes English, so the cohort is broad.' },
+    { name: 'Business Management', scaled: 27.2, direction: 'down', color: 'var(--busman12)', raw30: 27, raw35: 32, raw40: 38, note: 'Scales moderately down. Aim for higher raw scores to compensate.' },
+    { name: 'VET Sport & Rec', scaled: 23.9, direction: 'down', color: '#e11d48', raw30: 23, raw35: 28, raw40: 34, note: 'Scales down significantly. But as a 5th/6th subject, the impact is limited to 10%.' }
+  ];
+
+  let html = '<div class="card">';
+  html += '<div class="section-title">\u{1F4CA} ATAR Scaling (2025 VTAC Data)</div>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Scaling adjusts raw study scores based on the strength of the student cohort. A raw mean of 30 is neutral \u2014 subjects above 30 scale up, below 30 scale down. Data from the 2025 VTAC Scaling Report.</p>';
+
+  html += '<table class="assessment-table"><thead><tr>';
+  html += '<th>Subject</th><th>Scaled Mean</th><th>Direction</th><th>Raw 30\u2192</th><th>Raw 35\u2192</th><th>Raw 40\u2192</th>';
+  html += '</tr></thead><tbody>';
+
+  scalingData.forEach(s => {
+    const arrow = s.direction === 'up' ? '\u2B06\uFE0F' : s.direction === 'down' ? '\u2B07\uFE0F' : '\u27A1\uFE0F';
+    const dirColor = s.direction === 'up' ? 'var(--success)' : s.direction === 'down' ? 'var(--danger)' : 'var(--warning)';
+    html += `<tr>`;
+    html += `<td><strong style="color:${s.color}">${s.name}</strong></td>`;
+    html += `<td style="font-weight:700;color:${dirColor}">${s.scaled}</td>`;
+    html += `<td>${arrow}</td>`;
+    html += `<td>${s.raw30}</td>`;
+    html += `<td>${s.raw35}</td>`;
+    html += `<td>${s.raw40}</td>`;
+    html += `</tr>`;
+  });
+  html += '</tbody></table>';
+
+  // Visual bar chart
+  html += '<div style="margin-top:1rem;">';
+  scalingData.forEach(s => {
+    const pct = (s.scaled / 50) * 100;
+    const neutralPct = (30 / 50) * 100;
+    html += `<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">`;
+    html += `<div style="width:120px;font-size:0.75rem;text-align:right;font-weight:600;color:${s.color}">${s.name.replace('VET Sport & Rec','VET Sport')}</div>`;
+    html += `<div style="flex:1;height:18px;background:#e2e8f0;border-radius:4px;position:relative;overflow:hidden;">`;
+    html += `<div style="position:absolute;left:${neutralPct}%;top:0;bottom:0;width:1px;background:#a0aec0;z-index:1"></div>`;
+    html += `<div style="height:100%;width:${pct}%;background:${s.color};border-radius:4px;opacity:0.7;"></div>`;
+    html += `</div>`;
+    html += `<div style="width:30px;font-size:0.8rem;font-weight:700">${s.scaled}</div>`;
+    html += `</div>`;
+  });
+  html += '<div style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:0.25rem;">The vertical line marks 30 (neutral). Bars extending past it scale up.</div>';
+  html += '</div>';
+
+  html += '</div>';
+  return html;
+}
+
+function renderATARExplanation() {
+  let html = '<div class="card">';
+  html += '<div class="section-title">\u{1F9EE} How Jack\u2019s ATAR Will Be Calculated</div>';
+
+  html += '<p style="font-size:0.9rem;margin-bottom:1rem;">Jack will complete <strong>6 VCE subjects</strong> with scored Units 3&4 assessment. The ATAR uses a formula called the <strong>aggregate</strong>, which takes the best results from these studies:</p>';
+
+  html += '<div class="info-box" style="margin-bottom:1rem;">';
+  html += '<strong>ATAR Aggregate = English + next best 3 primary subjects + 10% of 5th study + 10% of 6th study</strong>';
+  html += '</div>';
+
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;"><strong>The rules:</strong></p>';
+  html += '<ul style="font-size:0.85rem;color:var(--text-muted);margin-left:1.25rem;margin-bottom:1rem;">';
+  html += '<li style="margin-bottom:0.35rem;"><strong>English is compulsory</strong> \u2014 it always counts as one of the primary four (even if it\u2019s not the highest score).</li>';
+  html += '<li style="margin-bottom:0.35rem;"><strong>Best 3 of the remaining 5</strong> subjects fill the other primary spots (scaled scores used).</li>';
+  html += '<li style="margin-bottom:0.35rem;">The <strong>5th and 6th best</strong> scaled scores each contribute only <strong>10%</strong> of their value to the aggregate.</li>';
+  html += '<li style="margin-bottom:0.35rem;">The aggregate (max ~209.5) is then converted to an ATAR percentile rank (0\u201399.95).</li>';
+  html += '</ul>';
+
+  html += '<p style="font-size:0.9rem;font-weight:600;margin-bottom:0.5rem;">Example using Jack\u2019s subjects:</p>';
+  html += '<div style="overflow-x:auto;">';
+  html += '<table class="assessment-table"><thead><tr>';
+  html += '<th>Subject</th><th>Raw Score</th><th>Scaled Score</th><th>Role in ATAR</th><th>Contributes</th>';
+  html += '</tr></thead><tbody>';
+
+  const example = [
+    { name: 'Maths Methods', raw: 35, scaled: 41, role: 'Primary (Best)', contrib: 41, color: 'var(--methods)' },
+    { name: 'Economics', raw: 35, scaled: 37, role: 'Primary', contrib: 37, color: 'var(--economics)' },
+    { name: 'Biology', raw: 35, scaled: 36, role: 'Primary', contrib: 36, color: 'var(--biology)' },
+    { name: 'English', raw: 35, scaled: 33, role: 'Primary (compulsory)', contrib: 33, color: 'var(--english)' },
+    { name: 'Business Management', raw: 35, scaled: 32, role: '5th study (10%)', contrib: 3.2, color: 'var(--busman12)' },
+    { name: 'VET Sport & Rec', raw: 35, scaled: 28, role: '6th study (10%)', contrib: 2.8, color: '#e11d48' }
+  ];
+
+  let totalContrib = 0;
+  example.forEach(s => {
+    totalContrib += s.contrib;
+    html += `<tr>`;
+    html += `<td><strong style="color:${s.color}">${s.name}</strong></td>`;
+    html += `<td>${s.raw}</td>`;
+    html += `<td style="font-weight:600">${s.scaled}</td>`;
+    html += `<td style="font-size:0.8rem">${s.role}</td>`;
+    html += `<td style="font-weight:700">${s.contrib}</td>`;
+    html += `</tr>`;
+  });
+
+  html += `<tr style="background:#f0fff4;"><td colspan="4" style="font-weight:700;">Total Aggregate</td><td style="font-weight:700;font-size:1.1rem;">${totalContrib.toFixed(1)}</td></tr>`;
+  html += '</tbody></table></div>';
+
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.75rem;"><em>In this example, if Jack scored a raw 35 in every subject, his aggregate would be ' + totalContrib.toFixed(1) + '. The 5th and 6th subjects (Business Management and VET Sport) add only 10% of their scaled score each \u2014 so their contribution is small but still helpful. The maximum possible aggregate is approximately 209.5.</em></p>';
+
+  html += '<div class="info-box" style="margin-top:0.75rem;"><strong>Key takeaway:</strong> Maths Methods is by far the most valuable subject for Jack\u2019s ATAR due to its strong scaling. Every extra mark in Methods is worth more than in any other subject. English, while compulsory, is still important as it always counts in the primary four.</div>';
+
+  html += '</div>';
   return html;
 }
 
@@ -1109,6 +1239,184 @@ function renderSubjectCard(sub) {
 
   html += '</div>'; // subject-body
   html += '</div>'; // card
+  return html;
+}
+
+// ============================================================
+// UNI & CAREERS VIEW
+// ============================================================
+function renderUniCareers() {
+  let html = '<div class="section-title">\u{1F393} Uni & Careers</div>';
+
+  // Personality & subject analysis
+  html += '<div class="card" style="border-left:4px solid var(--accent);">';
+  html += '<div class="section-title">\u{1F31F} Jack\u2019s Subject Profile</div>';
+  html += '<p style="font-size:0.95rem;margin-bottom:1rem;">This is a genuinely <strong>diverse and impressive</strong> combination of subjects. Not many students manage to span the analytical rigour of Mathematical Methods, the scientific depth of Biology, the communication skills of English, the real-world application of Economics and Business Management, AND the practical vocational experience of VET Sport &amp; Recreation. This breadth opens doors to an unusually wide range of university courses and career paths.</p>';
+
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:0.75rem;margin-bottom:1rem;">';
+
+  const traits = [
+    { icon: '\u{1F9E0}', title: 'Analytical Thinker', desc: 'Maths Methods and Economics show strong quantitative reasoning and problem-solving ability. Comfortable with data, logic, and abstract concepts.', color: 'var(--methods)' },
+    { icon: '\u{1F50D}', title: 'Scientific Curiosity', desc: 'Biology reveals an interest in how living systems work \u2014 from cells to ecosystems. A natural investigator who wants to understand the \u201cwhy\u201d behind things.', color: 'var(--biology)' },
+    { icon: '\u{1F4DD}', title: 'Strong Communicator', desc: 'English develops the ability to construct persuasive arguments, analyse complex texts, and express ideas clearly \u2014 skills valued in every career.', color: 'var(--english)' },
+    { icon: '\u{1F4C8}', title: 'Business-Minded', desc: 'Business Management and Economics together suggest someone who understands how organisations and economies work \u2014 a future leader or entrepreneur.', color: 'var(--economics)' },
+    { icon: '\u{1F3C3}', title: 'Active & Practical', desc: 'VET Sport & Recreation shows a hands-on, people-oriented personality who values physical activity, teamwork, and real-world skills over pure theory.', color: '#e11d48' },
+    { icon: '\u{1F310}', title: 'Versatile & Adaptable', desc: 'This combination spans STEM, humanities, business, and vocational studies. Jack isn\u2019t locked into one path \u2014 he has options across almost every field.', color: 'var(--primary-light)' }
+  ];
+
+  traits.forEach(t => {
+    html += `<div style="background:white;border:1px solid var(--border);border-radius:10px;padding:1rem;border-top:3px solid ${t.color};">`;
+    html += `<div style="font-size:1.3rem;margin-bottom:0.25rem;">${t.icon}</div>`;
+    html += `<div style="font-weight:700;font-size:0.95rem;margin-bottom:0.25rem;">${t.title}</div>`;
+    html += `<div style="font-size:0.8rem;color:var(--text-muted);">${t.desc}</div>`;
+    html += `</div>`;
+  });
+  html += '</div>';
+  html += '</div>';
+
+  // University courses
+  html += '<div class="card">';
+  html += '<div class="section-title">\u{1F4DA} 10 University Courses Worth Exploring</div>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">These courses are well-matched to Jack\u2019s subject combination, spanning business, science, sport, and health. ATAR requirements shown are indicative based on 2025/2026 data.</p>';
+
+  const courses = [
+    {
+      name: 'Bachelor of Commerce',
+      uni: 'University of Melbourne',
+      atar: '92',
+      fit: 'Maths Methods is a prerequisite. Business Management and Economics directly align with majors in Finance, Accounting, Economics, and Management.',
+      color: '#003366',
+      tag: 'Business / Finance'
+    },
+    {
+      name: 'Bachelor of Biomedicine',
+      uni: 'University of Melbourne',
+      atar: '93',
+      fit: 'Biology and Maths Methods are directly relevant. This is the premier pathway to graduate medicine, dentistry, physiotherapy, and other health professions.',
+      color: '#003366',
+      tag: 'Health / Medicine Pathway'
+    },
+    {
+      name: 'Bachelor of Commerce',
+      uni: 'Monash University',
+      atar: '~83',
+      fit: 'One of Australia\u2019s most respected business degrees. Maths Methods, Business Management, and Economics all align. Offers Actuarial Studies, Finance, Business Analytics.',
+      color: '#006DAE',
+      tag: 'Business / Finance'
+    },
+    {
+      name: 'Bachelor of Business (Sport Management)',
+      uni: 'Deakin University',
+      atar: '~75\u201380',
+      fit: 'Combines business knowledge with sport passion. VET Sport & Rec gives practical grounding. Deakin partners with Melbourne Vixens, Geelong FC, Cricket Australia.',
+      color: '#00AEEF',
+      tag: 'Sport Business'
+    },
+    {
+      name: 'B. Exercise & Sport Science / B. Business (Sport Management)',
+      uni: 'Deakin University',
+      atar: '~75\u201380',
+      fit: 'Double degree combining sport science (Biology) with business management. Deakin\u2019s sport science school is ranked #1 in the world. 220+ hours placement.',
+      color: '#00AEEF',
+      tag: 'Sport + Business'
+    },
+    {
+      name: 'Bachelor of Science',
+      uni: 'University of Melbourne',
+      atar: '91',
+      fit: 'Maths Methods is a prerequisite. Biology maps to majors in Genetics, Biomedical Science, Zoology, or Ecology. Enormous flexibility across 30+ majors.',
+      color: '#003366',
+      tag: 'Science (Broad)'
+    },
+    {
+      name: 'Bachelor of Business',
+      uni: 'RMIT University',
+      atar: '70',
+      fit: 'Highly practical, industry-focused business degree in Melbourne CBD. Business Management and Economics provide direct preparation. Emphasises real-world projects.',
+      color: '#E60028',
+      tag: 'Business (Practical)'
+    },
+    {
+      name: 'Bachelor of Biomedical and Exercise Science',
+      uni: 'Victoria University',
+      atar: 'Flexible',
+      fit: 'Combines Biology (anatomy, physiology) with exercise science. VU is ranked 6th in the world for sport science. Pathways to exercise physiology and rehabilitation.',
+      color: '#004B87',
+      tag: 'Sport Science + Health'
+    },
+    {
+      name: 'Bachelor of Sport and Exercise Science',
+      uni: 'La Trobe University',
+      atar: '~61',
+      fit: 'Biology underpins physiology and anatomy. VET Sport & Rec provides practical industry grounding. Careers in strength & conditioning, coaching, community health.',
+      color: '#E31B23',
+      tag: 'Sport Science'
+    },
+    {
+      name: 'Bachelor of Health Science / Bachelor of Business',
+      uni: 'Swinburne University',
+      atar: '~60\u201365',
+      fit: 'Unique double degree bridging health and business. Perfect for Biology + Business Management + Economics. Careers in health administration, policy, pharma business.',
+      color: '#F26522',
+      tag: 'Health + Business'
+    }
+  ];
+
+  courses.forEach((c, i) => {
+    html += `<div style="display:flex;gap:1rem;padding:1rem 0;${i < courses.length - 1 ? 'border-bottom:1px solid var(--border);' : ''}align-items:flex-start;">`;
+    html += `<div style="width:32px;height:32px;border-radius:50%;background:${c.color};color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;">${i + 1}</div>`;
+    html += `<div style="flex:1;">`;
+    html += `<div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.25rem;">`;
+    html += `<strong style="font-size:0.95rem;">${c.name}</strong>`;
+    html += `<span style="font-size:0.75rem;background:#edf2f7;padding:0.1rem 0.4rem;border-radius:4px;color:var(--text-muted);">${c.tag}</span>`;
+    html += `</div>`;
+    html += `<div style="font-size:0.85rem;color:${c.color};font-weight:600;margin-bottom:0.25rem;">${c.uni} \u2022 ATAR: ${c.atar}</div>`;
+    html += `<div style="font-size:0.8rem;color:var(--text-muted);">${c.fit}</div>`;
+    html += `</div></div>`;
+  });
+
+  html += '</div>';
+
+  // University Open Days
+  html += '<div class="card">';
+  html += '<div class="section-title">\u{1F3EB} 2026 Victorian University Open Days</div>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Open days are the best way to explore campuses, talk to lecturers, and get a feel for university life. Most are held in July\u2013August. Check university websites closer to the date for registration details.</p>';
+
+  const openDays = [
+    { uni: 'Swinburne University of Technology', date: 'Sunday 26 July 2026', campus: 'Hawthorn', status: 'Confirmed', color: '#F26522' },
+    { uni: 'La Trobe University', date: 'Early August 2026 (TBC)', campus: 'Bundoora (Melbourne)', status: 'Expected', color: '#E31B23' },
+    { uni: 'RMIT University', date: 'August 2026 (TBC)', campus: 'City, Brunswick, Bundoora', status: 'Expected', color: '#E60028' },
+    { uni: 'Monash University', date: 'August 2026 (TBC)', campus: 'Clayton & Parkville', status: 'Expected', color: '#006DAE' },
+    { uni: 'University of Melbourne', date: 'Sunday 16 August 2026', campus: 'Parkville', status: 'Confirmed', color: '#003366' },
+    { uni: 'Victoria University', date: 'Sunday 16 August 2026', campus: 'Footscray Park', status: 'Confirmed', color: '#004B87' },
+    { uni: 'Deakin University', date: 'August 2026 (TBC)', campus: 'Burwood, Geelong', status: 'Expected', color: '#00AEEF' },
+    { uni: 'Australian Catholic University', date: 'August 2026 (TBC)', campus: 'Fitzroy (Melbourne)', status: 'Expected', color: '#7B2D8E' },
+    { uni: 'Victoria University', date: 'Sunday 30 August 2026', campus: 'City Tower', status: 'Confirmed', color: '#004B87' }
+  ];
+
+  html += '<div style="overflow-x:auto;">';
+  html += '<table class="assessment-table"><thead><tr>';
+  html += '<th>University</th><th>Date</th><th>Campus</th><th>Status</th>';
+  html += '</tr></thead><tbody>';
+
+  openDays.forEach(od => {
+    const statusBadge = od.status === 'Confirmed'
+      ? '<span class="badge badge-done">Confirmed</span>'
+      : '<span class="badge" style="background:#fefcbf;color:#975a16;">Expected</span>';
+    html += `<tr>`;
+    html += `<td><strong style="color:${od.color}">${od.uni}</strong></td>`;
+    html += `<td>${od.date}</td>`;
+    html += `<td style="font-size:0.8rem">${od.campus}</td>`;
+    html += `<td>${statusBadge}</td>`;
+    html += `</tr>`;
+  });
+
+  html += '</tbody></table></div>';
+
+  html += '<div class="info-box" style="margin-top:1rem;">Tip: Bookmark <strong>vtac.edu.au/opendays</strong> \u2014 VTAC maintains an updated list of all Victorian open days as universities confirm their 2026 dates (usually announced around April\u2013May).</div>';
+
+  html += '</div>';
+
   return html;
 }
 
