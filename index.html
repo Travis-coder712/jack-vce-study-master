@@ -606,6 +606,206 @@ input[type="number"].input-sm { width: 65px; }
   .header h1 { font-size: 1.1rem; }
   .nav button { font-size: 0.78rem; padding: 0.35rem 0.6rem; }
 }
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 40%, #6366f1 70%, #8b5cf6 100%);
+  border-radius: var(--radius);
+  padding: 2rem 2rem 1.5rem;
+  color: white;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.25rem; }
+.hero-subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 1rem; max-width: 600px; }
+.hero-subjects {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.hero-chip {
+  background: rgba(255,255,255,0.2);
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+/* Quiz Styles */
+.quiz-container { max-width: 600px; margin: 0 auto; }
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.quiz-progress {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #6366f1);
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+.quiz-question {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+.quiz-topic {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.quiz-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.quiz-option:hover { border-color: var(--accent); background: #ebf8ff; }
+.quiz-option.correct { border-color: var(--success); background: #f0fff4; }
+.quiz-option.incorrect { border-color: var(--danger); background: #fff5f5; }
+.quiz-option.dimmed { opacity: 0.5; pointer-events: none; }
+.quiz-explanation {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: #ebf8ff;
+  border: 1px solid #bee3f8;
+}
+.quiz-result {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+.quiz-score {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.quiz-subject-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.quiz-subject-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  text-align: left;
+}
+.quiz-subject-btn:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.quiz-subject-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; color: white; flex-shrink: 0;
+}
+
+/* Resource Styles */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+.resource-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: all 0.15s;
+}
+.resource-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.resource-type {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.resource-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.15rem; }
+.resource-desc { font-size: 0.8rem; color: var(--text-muted); }
+.resource-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.resource-link:hover { text-decoration: underline; }
+
+/* Scaling slider */
+.scaling-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 10px;
+}
+.scaling-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 8px;
+  background: linear-gradient(90deg, #e53e3e, #d69e2e, #38a169, #3182ce);
+  border-radius: 4px;
+  outline: none;
+}
+.scaling-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--accent);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+.scaling-score-display {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+  min-width: 50px;
+  text-align: center;
+}
 </style>
 </head>
 <body>
@@ -617,6 +817,7 @@ input[type="number"].input-sm { width: 65px; }
       <button class="active" data-view="dashboard">Dashboard</button>
       <button data-view="year11">Year 11</button>
       <button data-view="year12">Year 12</button>
+      <button data-view="study">Study Zone</button>
       <button data-view="uni">Uni & Careers</button>
       <button data-view="settings">Settings</button>
     </div>
@@ -845,6 +1046,7 @@ function render() {
     case 'dashboard': app.innerHTML = renderDashboard(); break;
     case 'year11': app.innerHTML = renderYear(11); break;
     case 'year12': app.innerHTML = renderYear(12); break;
+    case 'study': app.innerHTML = renderStudyZone(); break;
     case 'uni': app.innerHTML = renderUniCareers(); break;
     case 'settings': app.innerHTML = renderSettings(); break;
   }
@@ -894,6 +1096,19 @@ function renderDashboard() {
   const overdue = allAssessments.filter(a => a.daysAway < 0 && (a.result === undefined || a.result === null || a.result === ''));
 
   let html = '';
+
+  // Hero section
+  html += '<div class="hero">';
+  html += '<div class="hero-title">\u{1F680} Your future starts now, Jack.</div>';
+  html += '<div class="hero-subtitle">6 subjects. 47 assessments. Every study session is an investment in the life you want to build. You\u2019ve chosen an incredible combination \u2014 analytical, creative, practical, and ambitious.</div>';
+  html += '<div class="hero-subjects">';
+  html += '<span class="hero-chip">\u{1F4D0} Maths Methods</span>';
+  html += '<span class="hero-chip">\u{1F9EC} Biology</span>';
+  html += '<span class="hero-chip">\u{1F4D6} English</span>';
+  html += '<span class="hero-chip">\u{1F4C8} Economics</span>';
+  html += '<span class="hero-chip">\u{1F4BC} Business Mgmt</span>';
+  html += '<span class="hero-chip">\u{1F3C0} VET Sport</span>';
+  html += '</div></div>';
 
   // Stats row
   html += '<div class="stat-row">';
@@ -1023,57 +1238,100 @@ function renderYear(year) {
   return html;
 }
 
+// Scaling interpolation
+const SCALING_POINTS = [
+  { name: 'Mathematical Methods', color: '#6366f1', points: {20:22, 25:28, 30:35, 35:41, 40:46, 45:50, 50:50} },
+  { name: 'Economics', color: '#d97706', points: {20:19, 25:25, 30:31, 35:37, 40:42, 45:47, 50:50} },
+  { name: 'Biology', color: '#059669', points: {20:19, 25:25, 30:31, 35:36, 40:41, 45:46, 50:50} },
+  { name: 'English', color: '#dc2626', points: {20:17, 25:22, 30:28, 35:33, 40:39, 45:44, 50:50} },
+  { name: 'Business Management', color: '#0891b2', points: {20:16, 25:21, 30:27, 35:32, 40:38, 45:43, 50:49} },
+  { name: 'VET Sport & Rec', color: '#e11d48', points: {20:12, 25:17, 30:23, 35:28, 40:34, 45:39, 50:45} }
+];
+
+function interpolateScale(points, raw) {
+  const keys = Object.keys(points).map(Number).sort((a,b) => a - b);
+  if (raw <= keys[0]) return points[keys[0]];
+  if (raw >= keys[keys.length-1]) return points[keys[keys.length-1]];
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (raw >= keys[i] && raw <= keys[i+1]) {
+      const t = (raw - keys[i]) / (keys[i+1] - keys[i]);
+      return Math.round(points[keys[i]] + t * (points[keys[i+1]] - points[keys[i]]));
+    }
+  }
+  return raw;
+}
+
 function renderScalingSection() {
-  const scalingData = [
-    { name: 'Mathematical Methods', scaled: 34.4, direction: 'up', color: 'var(--methods)', raw30: 35, raw35: 41, raw40: 46, note: 'Strongest scaling subject. A raw 35 becomes ~41 scaled.' },
-    { name: 'Economics', scaled: 31.2, direction: 'up', color: 'var(--economics)', raw30: 31, raw35: 37, raw40: 42, note: 'Modest positive scaling. Solid cohort strength.' },
-    { name: 'Biology', scaled: 30.5, direction: 'neutral', color: 'var(--biology)', raw30: 31, raw35: 36, raw40: 41, note: 'Essentially neutral. What you score is what you get.' },
-    { name: 'English', scaled: 28.2, direction: 'down', color: 'var(--english)', raw30: 28, raw35: 33, raw40: 39, note: 'Slight downward scaling. Every VCE student takes English, so the cohort is broad.' },
-    { name: 'Business Management', scaled: 27.2, direction: 'down', color: 'var(--busman12)', raw30: 27, raw35: 32, raw40: 38, note: 'Scales moderately down. Aim for higher raw scores to compensate.' },
-    { name: 'VET Sport & Rec', scaled: 23.9, direction: 'down', color: '#e11d48', raw30: 23, raw35: 28, raw40: 34, note: 'Scales down significantly. But as a 5th/6th subject, the impact is limited to 10%.' }
-  ];
-
   let html = '<div class="card">';
-  html += '<div class="section-title">\u{1F4CA} ATAR Scaling (2025 VTAC Data)</div>';
-  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Scaling adjusts raw study scores based on the strength of the student cohort. A raw mean of 30 is neutral \u2014 subjects above 30 scale up, below 30 scale down. Data from the 2025 VTAC Scaling Report.</p>';
+  html += '<div class="section-title">\u{1F4CA} Interactive ATAR Scaling Calculator (2025 VTAC Data)</div>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Drag the slider to see how a raw study score scales for each of Jack\u2019s subjects. Scaling adjusts scores based on cohort strength \u2014 above 30 = scales up, below 30 = scales down.</p>';
 
-  html += '<table class="assessment-table"><thead><tr>';
-  html += '<th>Subject</th><th>Scaled Mean</th><th>Direction</th><th>Raw 30\u2192</th><th>Raw 35\u2192</th><th>Raw 40\u2192</th>';
-  html += '</tr></thead><tbody>';
+  html += '<div class="scaling-slider-container">';
+  html += '<span style="font-size:0.8rem;font-weight:600;">Raw Score:</span>';
+  html += '<input type="range" class="scaling-slider" id="scalingSlider" min="20" max="50" value="35" oninput="updateScaling(this.value)">';
+  html += '<div class="scaling-score-display" id="scalingDisplay">35</div>';
+  html += '</div>';
 
-  scalingData.forEach(s => {
-    const arrow = s.direction === 'up' ? '\u2B06\uFE0F' : s.direction === 'down' ? '\u2B07\uFE0F' : '\u27A1\uFE0F';
-    const dirColor = s.direction === 'up' ? 'var(--success)' : s.direction === 'down' ? 'var(--danger)' : 'var(--warning)';
-    html += `<tr>`;
-    html += `<td><strong style="color:${s.color}">${s.name}</strong></td>`;
-    html += `<td style="font-weight:700;color:${dirColor}">${s.scaled}</td>`;
-    html += `<td>${arrow}</td>`;
-    html += `<td>${s.raw30}</td>`;
-    html += `<td>${s.raw35}</td>`;
-    html += `<td>${s.raw40}</td>`;
-    html += `</tr>`;
-  });
-  html += '</tbody></table>';
-
-  // Visual bar chart
-  html += '<div style="margin-top:1rem;">';
-  scalingData.forEach(s => {
-    const pct = (s.scaled / 50) * 100;
-    const neutralPct = (30 / 50) * 100;
-    html += `<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">`;
-    html += `<div style="width:120px;font-size:0.75rem;text-align:right;font-weight:600;color:${s.color}">${s.name.replace('VET Sport & Rec','VET Sport')}</div>`;
-    html += `<div style="flex:1;height:18px;background:#e2e8f0;border-radius:4px;position:relative;overflow:hidden;">`;
-    html += `<div style="position:absolute;left:${neutralPct}%;top:0;bottom:0;width:1px;background:#a0aec0;z-index:1"></div>`;
-    html += `<div style="height:100%;width:${pct}%;background:${s.color};border-radius:4px;opacity:0.7;"></div>`;
-    html += `</div>`;
-    html += `<div style="width:30px;font-size:0.8rem;font-weight:700">${s.scaled}</div>`;
-    html += `</div>`;
-  });
-  html += '<div style="font-size:0.7rem;color:var(--text-muted);text-align:center;margin-top:0.25rem;">The vertical line marks 30 (neutral). Bars extending past it scale up.</div>';
+  html += '<div id="scalingResults">';
+  html += renderScalingResults(35);
   html += '</div>';
 
   html += '</div>';
   return html;
+}
+
+function renderScalingResults(raw) {
+  let html = '<table class="assessment-table"><thead><tr>';
+  html += '<th>Subject</th><th>Raw</th><th>Scaled</th><th>Change</th><th style="width:40%">Visual</th>';
+  html += '</tr></thead><tbody>';
+
+  const results = [];
+  SCALING_POINTS.forEach(s => {
+    const scaled = interpolateScale(s.points, raw);
+    const diff = scaled - raw;
+    results.push({ ...s, raw, scaled, diff });
+  });
+
+  results.sort((a, b) => b.scaled - a.scaled);
+
+  results.forEach(s => {
+    const diffStr = s.diff > 0 ? '+' + s.diff : s.diff === 0 ? '0' : '' + s.diff;
+    const diffColor = s.diff > 0 ? 'var(--success)' : s.diff < 0 ? 'var(--danger)' : 'var(--warning)';
+    const barPct = Math.min((s.scaled / 50) * 100, 100);
+    html += '<tr>';
+    html += `<td><strong style="color:${s.color}">${s.name}</strong></td>`;
+    html += `<td>${s.raw}</td>`;
+    html += `<td style="font-weight:700;font-size:1.1rem;">${s.scaled}</td>`;
+    html += `<td style="font-weight:700;color:${diffColor}">${diffStr}</td>`;
+    html += `<td><div style="height:20px;background:#e2e8f0;border-radius:4px;overflow:hidden;position:relative;">`;
+    html += `<div style="position:absolute;left:${(raw/50)*100}%;top:0;bottom:0;width:2px;background:#a0aec0;z-index:2;"></div>`;
+    html += `<div style="height:100%;width:${barPct}%;background:${s.color};border-radius:4px;opacity:0.7;transition:width 0.2s;"></div>`;
+    html += `</div></td>`;
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+
+  // ATAR aggregate estimate
+  const sorted = results.sort((a, b) => b.scaled - a.scaled);
+  const english = sorted.find(s => s.name === 'English');
+  const others = sorted.filter(s => s.name !== 'English');
+  const top3 = others.slice(0, 3);
+  const fifth = others[3] || { scaled: 0 };
+  const sixth = others[4] || { scaled: 0 };
+  const aggregate = english.scaled + top3.reduce((sum, s) => sum + s.scaled, 0) + (fifth.scaled * 0.1) + (sixth.scaled * 0.1);
+
+  html += `<div style="margin-top:1rem;padding:1rem;background:linear-gradient(135deg,#ebf8ff,#f0fff4);border-radius:10px;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">`;
+  html += `<div><div style="font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Estimated Aggregate</div>`;
+  html += `<div style="font-size:2rem;font-weight:800;color:var(--primary);">${aggregate.toFixed(1)}</div></div>`;
+  html += `<div style="font-size:0.8rem;color:var(--text-muted);flex:1;">= ${english.scaled} (English) + ${top3.map(s => s.scaled).join(' + ')} (best 3) + ${(fifth.scaled * 0.1).toFixed(1)} (5th\u00D710%) + ${(sixth.scaled * 0.1).toFixed(1)} (6th\u00D710%)</div>`;
+  html += `</div>`;
+
+  return html;
+}
+
+function updateScaling(val) {
+  document.getElementById('scalingDisplay').textContent = val;
+  document.getElementById('scalingResults').innerHTML = renderScalingResults(parseInt(val));
 }
 
 function renderATARExplanation() {
@@ -1240,6 +1498,264 @@ function renderSubjectCard(sub) {
   html += '</div>'; // subject-body
   html += '</div>'; // card
   return html;
+}
+
+// ============================================================
+// STUDY ZONE: Quiz Game + Resources
+// ============================================================
+const QUIZ_QUESTIONS = {
+  'yr11-biology': [
+    { q: 'What is the "powerhouse of the cell" that produces ATP?', opts: ['Nucleus', 'Mitochondria', 'Ribosome', 'Golgi apparatus'], ans: 1, topic: 'Cell Organelles', explain: 'Mitochondria convert glucose into ATP through cellular respiration.' },
+    { q: 'What type of cell transport requires energy (ATP)?', opts: ['Osmosis', 'Diffusion', 'Active transport', 'Facilitated diffusion'], ans: 2, topic: 'Cell Transport', explain: 'Active transport moves substances against the concentration gradient, requiring energy.' },
+    { q: 'Which cell structure controls what enters and leaves the cell?', opts: ['Cell wall', 'Nucleus', 'Cell membrane', 'Cytoplasm'], ans: 2, topic: 'Cell Structure', explain: 'The cell membrane (plasma membrane) is selectively permeable, controlling substance movement.' },
+    { q: 'What is osmosis?', opts: ['Movement of any molecule across a membrane', 'Movement of water from high to low solute concentration', 'Movement of water from low to high solute concentration through a semipermeable membrane', 'Active transport of water'], ans: 2, topic: 'Cell Transport', explain: 'Osmosis is the net movement of water molecules across a semipermeable membrane from a region of low solute concentration to high solute concentration.' },
+    { q: 'Which organelle is responsible for photosynthesis?', opts: ['Mitochondria', 'Chloroplast', 'Ribosome', 'Vacuole'], ans: 1, topic: 'Cell Organelles', explain: 'Chloroplasts contain chlorophyll and convert light energy into glucose. Found only in plant cells.' },
+    { q: 'What type of cell division produces two genetically identical daughter cells?', opts: ['Meiosis', 'Binary fission', 'Mitosis', 'Budding'], ans: 2, topic: 'Cell Cycle', explain: 'Mitosis produces two identical diploid cells for growth and repair. Meiosis produces four different haploid cells for reproduction.' },
+    { q: 'What is the main function of ribosomes?', opts: ['DNA replication', 'Protein synthesis', 'Lipid storage', 'Cell division'], ans: 1, topic: 'Cell Organelles', explain: 'Ribosomes read mRNA and assemble amino acids into proteins (translation).' },
+    { q: 'What key feature do plant cells have that animal cells lack?', opts: ['Nucleus', 'Mitochondria', 'Cell wall', 'Ribosomes'], ans: 2, topic: 'Cell Structure', explain: 'Plant cells have a rigid cell wall (made of cellulose) outside the cell membrane, providing structural support.' },
+    { q: 'During which phase of the cell cycle does DNA replication occur?', opts: ['G1 phase', 'S phase', 'G2 phase', 'M phase'], ans: 1, topic: 'Cell Cycle', explain: 'The S (synthesis) phase is when DNA is replicated so each daughter cell gets a complete copy.' },
+    { q: 'What is an enzyme?', opts: ['A type of lipid', 'A biological catalyst that speeds up reactions', 'A nucleic acid', 'A structural protein'], ans: 1, topic: 'Enzymes', explain: 'Enzymes are biological catalysts (usually proteins) that lower activation energy and speed up chemical reactions without being consumed.' },
+    { q: 'What is diffusion?', opts: ['Movement from low to high concentration', 'Net movement from high to low concentration', 'Movement requiring ATP', 'Movement of water only'], ans: 1, topic: 'Cell Transport', explain: 'Diffusion is the net movement of particles from a region of high concentration to low concentration (down the gradient). No energy required.' },
+    { q: 'What does the Golgi apparatus do?', opts: ['Produces ATP', 'Modifies, packages and secretes proteins', 'Stores DNA', 'Breaks down waste'], ans: 1, topic: 'Cell Organelles', explain: 'The Golgi apparatus receives proteins from the ER, modifies them (e.g., adding sugar groups), packages them into vesicles, and sends them to their destination.' },
+    { q: 'What is cell differentiation?', opts: ['Cell death', 'Cell division', 'A cell becoming specialised for a particular function', 'DNA mutation'], ans: 2, topic: 'Cell Biology', explain: 'Differentiation is when an unspecialised cell develops into a specialised cell type (e.g., nerve cell, muscle cell) by turning specific genes on/off.' },
+    { q: 'Which organelle contains the cell\u2019s genetic material (DNA)?', opts: ['Ribosome', 'Mitochondria', 'Nucleus', 'Endoplasmic reticulum'], ans: 2, topic: 'Cell Structure', explain: 'The nucleus houses DNA organised into chromosomes and controls cell activities.' },
+    { q: 'What is a prokaryotic cell?', opts: ['A cell with a nucleus', 'A cell without a membrane-bound nucleus', 'A plant cell', 'A cancer cell'], ans: 1, topic: 'Cell Types', explain: 'Prokaryotes (bacteria, archaea) lack a membrane-bound nucleus \u2014 their DNA floats freely in the cytoplasm. Eukaryotes have a defined nucleus.' }
+  ],
+  'yr11-economics': [
+    { q: 'What is opportunity cost?', opts: ['The price of a good', 'The next best alternative foregone', 'The total cost of production', 'The profit margin'], ans: 1, topic: 'Key Concepts', explain: 'Opportunity cost is the value of the next best alternative that must be given up when making a choice. It\u2019s central to economic thinking.' },
+    { q: 'What does a Production Possibility Frontier (PPF) show?', opts: ['Supply and demand curves', 'Maximum output combinations with given resources', 'Price changes over time', 'Government spending'], ans: 1, topic: 'Key Concepts', explain: 'A PPF shows all combinations of two goods that can be produced with available resources. Points on the curve are efficient; inside = inefficient; outside = unattainable.' },
+    { q: 'According to the law of demand, when price increases\u2026', opts: ['Quantity demanded increases', 'Quantity demanded decreases', 'Supply increases', 'Demand curve shifts right'], ans: 1, topic: 'Markets', explain: 'The law of demand: as price rises, quantity demanded falls (and vice versa), all else being equal. This creates a downward-sloping demand curve.' },
+    { q: 'What is market equilibrium?', opts: ['When government sets the price', 'When quantity supplied equals quantity demanded', 'When there is no competition', 'When prices are falling'], ans: 1, topic: 'Markets', explain: 'Equilibrium is where the supply and demand curves intersect. At this price, there is no surplus or shortage.' },
+    { q: 'What is a "nudge" in behavioural economics?', opts: ['A government regulation', 'A tax on goods', 'A subtle design choice that influences behaviour without restricting options', 'A direct order'], ans: 2, topic: 'Behavioural Economics', explain: 'A nudge gently steers people toward better choices (e.g., opt-out organ donation, smaller plates in cafeterias) without removing freedom of choice.' },
+    { q: 'What causes a shift in the supply curve (not a movement along it)?', opts: ['A change in the product\u2019s price', 'A change in input/production costs', 'A change in quantity demanded', 'Consumer preferences'], ans: 1, topic: 'Markets', explain: 'Supply curve shifts when non-price factors change: input costs, technology, number of sellers, government policy, natural events.' },
+    { q: 'What is scarcity?', opts: ['When a product is expensive', 'When wants exceed available resources', 'When there is a recession', 'When imports exceed exports'], ans: 1, topic: 'Key Concepts', explain: 'Scarcity is the fundamental economic problem: human wants are unlimited but resources are limited. This forces choices and trade-offs.' },
+    { q: 'What is price elasticity of demand?', opts: ['How much supply changes with price', 'How responsive quantity demanded is to a price change', 'The equilibrium price', 'Government price controls'], ans: 1, topic: 'Markets', explain: 'PED measures the % change in quantity demanded relative to a % change in price. Elastic = very responsive; Inelastic = not very responsive.' },
+    { q: 'What is an externality?', opts: ['A cost or benefit to a third party not involved in a transaction', 'An imported good', 'A government subsidy', 'A business\u2019s profit'], ans: 0, topic: 'Market Failure', explain: 'Externalities are costs (negative) or benefits (positive) that affect people not directly involved in producing or consuming a good, e.g., pollution, education.' },
+    { q: 'What is confirmation bias?', opts: ['Seeking info that confirms existing beliefs', 'Being biased toward expensive products', 'Always choosing the cheapest option', 'Trusting expert advice'], ans: 0, topic: 'Behavioural Economics', explain: 'Confirmation bias is the tendency to search for, interpret, and remember information that confirms what you already believe, ignoring contradictory evidence.' },
+    { q: 'Which are the four factors of production?', opts: ['Money, labour, land, capital', 'Land, labour, capital, enterprise', 'Supply, demand, price, quantity', 'Imports, exports, tax, spending'], ans: 1, topic: 'Key Concepts', explain: 'The four factors of production are: Land (natural resources), Labour (human effort), Capital (machinery, tools), Enterprise (entrepreneurship/risk-taking).' },
+    { q: 'What is a public good?', opts: ['Any good sold by the government', 'A good that is non-excludable and non-rivalrous', 'A good with no cost', 'A good produced by charities'], ans: 1, topic: 'Market Failure', explain: 'Public goods are non-excludable (can\u2019t stop people using them) and non-rivalrous (one person\u2019s use doesn\u2019t reduce availability). E.g., street lights, national defence.' },
+    { q: 'What does GDP measure?', opts: ['Total government spending', 'Total value of goods and services produced in a country in a year', 'The unemployment rate', 'The inflation rate'], ans: 1, topic: 'Economic Activity', explain: 'GDP (Gross Domestic Product) measures the total monetary value of all final goods and services produced within a country in a given period.' },
+    { q: 'What is the availability heuristic?', opts: ['Judging probability based on how easily examples come to mind', 'Always choosing the first option', 'Following the majority', 'Avoiding losses'], ans: 0, topic: 'Behavioural Economics', explain: 'The availability heuristic means we judge how likely something is based on how easily we can recall examples. Dramatic events (plane crashes) seem more likely than they are.' },
+    { q: 'What causes market failure?', opts: ['Perfect competition', 'Externalities, public goods, asymmetric information, market power', 'Low inflation', 'High GDP growth'], ans: 1, topic: 'Market Failure', explain: 'Market failure occurs when free markets don\u2019t allocate resources efficiently. Key causes: externalities, public goods, information asymmetry, and monopoly power.' }
+  ],
+  'yr11-busman': [
+    { q: 'What is an entrepreneur?', opts: ['Anyone with a job', 'Someone who starts and manages a business, taking on financial risk', 'A government employee', 'A business consultant'], ans: 1, topic: 'Business Ideas', explain: 'Entrepreneurs identify opportunities, take financial risks, and organise resources to create businesses. They are the "enterprise" factor of production.' },
+    { q: 'What does PEST stand for in business analysis?', opts: ['Price, Earnings, Sales, Tax', 'Political, Economic, Social, Technological', 'Product, Environment, Strategy, Target', 'Planning, Execution, Selling, Training'], ans: 1, topic: 'External Environment', explain: 'PEST analysis examines the macro-external factors: Political (laws, regulations), Economic (inflation, interest rates), Social (demographics, trends), Technological (innovation).' },
+    { q: 'What is a sole trader?', opts: ['A business with many owners', 'A business owned and operated by one person', 'A government agency', 'A publicly listed company'], ans: 1, topic: 'Legal Structures', explain: 'A sole trader is the simplest business structure \u2014 one person owns and runs the business. They have unlimited liability (personal assets at risk).' },
+    { q: 'What is unlimited liability?', opts: ['Debts are limited to business assets', 'The owner is personally responsible for all business debts', 'The government covers business debts', 'Liability is shared equally'], ans: 1, topic: 'Legal Structures', explain: 'Unlimited liability means the owner\u2019s personal assets (house, car, savings) can be used to pay business debts. Sole traders and partnerships have this.' },
+    { q: 'What is a franchise?', opts: ['A government grant', 'A business that buys the right to operate under an established brand', 'A type of sole trader', 'A non-profit organisation'], ans: 1, topic: 'Business Ideas', explain: 'A franchise (e.g., McDonald\u2019s, Subway) buys the right to use an established brand, systems, and support. The franchisor grants rights; the franchisee operates.' },
+    { q: 'What is a stakeholder?', opts: ['A shareholder only', 'Anyone affected by or who can affect a business', 'A customer only', 'A competitor'], ans: 1, topic: 'Business Basics', explain: 'Stakeholders include employees, customers, suppliers, shareholders, government, community \u2014 anyone with an interest in or affected by the business.' },
+    { q: 'What is the difference between debt and equity finance?', opts: ['No difference', 'Debt is borrowed money; equity is selling ownership', 'Debt is from shareholders; equity is from banks', 'Debt is free; equity costs money'], ans: 1, topic: 'Sources of Finance', explain: 'Debt finance = borrowing (loans, overdrafts) that must be repaid with interest. Equity finance = raising funds by selling ownership shares in the business.' },
+    { q: 'What are the four functions of management?', opts: ['Hiring, firing, selling, buying', 'Planning, organising, leading, controlling', 'Marketing, finance, HR, operations', 'Research, development, sales, support'], ans: 1, topic: 'Management', explain: 'Planning (setting goals), Organising (arranging resources), Leading (motivating people), Controlling (monitoring and correcting performance).' },
+    { q: 'What does a SWOT analysis examine?', opts: ['Supply, Waste, Output, Tax', 'Strengths, Weaknesses, Opportunities, Threats', 'Sales, Workers, Operations, Technology', 'Strategy, Workflow, Objectives, Timeline'], ans: 1, topic: 'Business Planning', explain: 'SWOT: Strengths and Weaknesses are internal; Opportunities and Threats are external. Used to evaluate a business\u2019s position.' },
+    { q: 'What is corporate social responsibility (CSR)?', opts: ['Maximising profit at all costs', 'A business considering its impact on society and the environment', 'Following the law only', 'A type of tax'], ans: 1, topic: 'Business Ethics', explain: 'CSR means a business voluntarily goes beyond legal requirements to consider social, environmental, and ethical impacts of its decisions.' },
+    { q: 'What is cash flow?', opts: ['Total profit', 'The movement of money in and out of a business', 'Revenue minus expenses', 'The value of all assets'], ans: 1, topic: 'Finance', explain: 'Cash flow tracks the timing of money coming in (revenue, loans) and going out (expenses, wages). A profitable business can still fail with poor cash flow.' },
+    { q: 'What is a competitive advantage?', opts: ['Being the oldest business', 'A factor that allows a business to outperform competitors', 'Having the most employees', 'Being located in a city'], ans: 1, topic: 'Business Ideas', explain: 'Competitive advantage is what makes a business better than rivals \u2014 it could be lower costs, unique product, better service, stronger brand, or innovation.' },
+    { q: 'What is the difference between a private and public company?', opts: ['Private is smaller', 'Private shares aren\u2019t traded on the stock exchange; public shares are', 'Public companies are government-owned', 'No real difference'], ans: 1, topic: 'Legal Structures', explain: 'Private companies (Pty Ltd) sell shares privately. Public companies (Ltd) list shares on the stock exchange (ASX) for anyone to buy.' },
+    { q: 'What is market research?', opts: ['Selling products at a market', 'Gathering and analysing information about customers and competitors', 'Setting prices', 'Advertising'], ans: 1, topic: 'Marketing', explain: 'Market research collects data about consumer needs, preferences, and competitors. Can be primary (surveys, interviews) or secondary (existing reports, ABS data).' },
+    { q: 'What is a business plan?', opts: ['A daily to-do list', 'A formal document outlining business goals, strategies, and financial projections', 'A marketing brochure', 'An employment contract'], ans: 1, topic: 'Business Planning', explain: 'A business plan outlines the business idea, target market, competitive analysis, operations, marketing strategy, and financial forecasts. Essential for securing finance.' }
+  ],
+  'yr11-methods': [
+    { q: 'What is the domain of a function?', opts: ['The set of all output values', 'The set of all input values', 'The y-intercept', 'The gradient'], ans: 1, topic: 'Functions', explain: 'The domain is all possible x-values (inputs) for which the function is defined. The range is all possible y-values (outputs).' },
+    { q: 'What is f(x) = x\u00B2 an example of?', opts: ['Linear function', 'Quadratic function', 'Exponential function', 'Logarithmic function'], ans: 1, topic: 'Functions', explain: 'A quadratic function has the form f(x) = ax\u00B2 + bx + c. Its graph is a parabola.' },
+    { q: 'If f(x) = 2x + 3, what is f(4)?', opts: ['8', '11', '14', '6'], ans: 1, topic: 'Functions', explain: 'Substitute x = 4: f(4) = 2(4) + 3 = 8 + 3 = 11' },
+    { q: 'What is the y-intercept of f(x) = 3x - 7?', opts: ['3', '-7', '7', '0'], ans: 1, topic: 'Linear Functions', explain: 'The y-intercept is found by setting x = 0: f(0) = 3(0) - 7 = -7. It\u2019s the constant term in y = mx + c.' },
+    { q: 'What transformation does f(x) + 3 represent?', opts: ['Shift right 3', 'Shift left 3', 'Shift up 3', 'Shift down 3'], ans: 2, topic: 'Transformations', explain: 'Adding a constant outside the function shifts the graph vertically. f(x) + 3 shifts UP 3 units.' },
+    { q: 'What transformation does f(x - 2) represent?', opts: ['Shift right 2', 'Shift left 2', 'Shift up 2', 'Shift down 2'], ans: 0, topic: 'Transformations', explain: 'f(x - 2) shifts the graph RIGHT by 2. It seems counterintuitive: replacing x with (x-2) moves the graph in the positive x direction.' },
+    { q: 'What is the discriminant of a quadratic equation ax\u00B2 + bx + c = 0?', opts: ['a + b + c', 'b\u00B2 - 4ac', '2a/b', 'a\u00B2 - bc'], ans: 1, topic: 'Algebra', explain: '\u0394 = b\u00B2 - 4ac. If \u0394 > 0: two real solutions. If \u0394 = 0: one repeated solution. If \u0394 < 0: no real solutions.' },
+    { q: 'Simplify: 2\u00B3 \u00D7 2\u2074', opts: ['2\u00B9\u00B2', '2\u2077', '4\u2077', '2\u00B9'], ans: 1, topic: 'Index Laws', explain: 'When multiplying powers with the same base, ADD the indices: 2\u00B3 \u00D7 2\u2074 = 2\u00B3\u207A\u2074 = 2\u2077 = 128' },
+    { q: 'What is the gradient of the line y = -3x + 5?', opts: ['5', '-3', '3', '-5'], ans: 1, topic: 'Linear Functions', explain: 'In y = mx + c form, m is the gradient (slope). Here m = -3, meaning the line goes down 3 for every 1 unit right.' },
+    { q: 'What does it mean if two lines are perpendicular?', opts: ['Same gradient', 'Gradients multiply to give -1', 'They never meet', 'They have the same y-intercept'], ans: 1, topic: 'Linear Functions', explain: 'Perpendicular lines meet at 90\u00B0. Their gradients are negative reciprocals: m\u2081 \u00D7 m\u2082 = -1. E.g., if m\u2081 = 2, then m\u2082 = -1/2.' },
+    { q: 'What is the axis of symmetry of y = x\u00B2 - 6x + 5?', opts: ['x = 3', 'x = -3', 'x = 6', 'x = 5'], ans: 0, topic: 'Quadratics', explain: 'Axis of symmetry: x = -b/(2a) = -(-6)/(2\u00D71) = 6/2 = 3. The vertex (turning point) lies on this line.' },
+    { q: 'An exponential function f(x) = 2\u02E3 always passes through which point?', opts: ['(0, 0)', '(1, 0)', '(0, 1)', '(0, 2)'], ans: 2, topic: 'Exponential Functions', explain: 'Any exponential function a\u02E3 (where a > 0) passes through (0, 1) because a\u2070 = 1 for any non-zero base.' },
+    { q: 'If P(A) = 0.3, what is P(not A)?', opts: ['0.3', '0.7', '0.1', '1.3'], ans: 1, topic: 'Probability', explain: 'Complementary events: P(not A) = 1 - P(A) = 1 - 0.3 = 0.7. The probabilities of all outcomes must sum to 1.' },
+    { q: 'What is the factored form of x\u00B2 - 9?', opts: ['(x-3)(x+3)', '(x-9)(x+1)', '(x-3)\u00B2', 'Cannot be factored'], ans: 0, topic: 'Algebra', explain: 'This is a difference of two squares: a\u00B2 - b\u00B2 = (a-b)(a+b). So x\u00B2 - 9 = x\u00B2 - 3\u00B2 = (x-3)(x+3).' },
+    { q: 'Solve: 2x + 5 = 17', opts: ['x = 6', 'x = 11', 'x = 7', 'x = 5'], ans: 0, topic: 'Algebra', explain: '2x + 5 = 17 \u2192 2x = 12 \u2192 x = 6. Always check: 2(6) + 5 = 17 \u2713' }
+  ]
+};
+
+const RESOURCES = {
+  'yr11-methods': [
+    { type: 'YouTube', title: 'Eddie Woo \u2014 Graphing Techniques', desc: 'Polynomials, exponentials, rational functions. Brilliant visual explanations.', url: 'https://www.youtube.com/@misterwootube', color: '#FF0000' },
+    { type: 'YouTube', title: 'Eddie Woo \u2014 Basic Algebra', desc: '3.5 hours of expanding, simplifying, substitution, factorising.', url: 'https://www.classcentral.com/course/youtube-basic-algebraic-techniques-91210', color: '#FF0000' },
+    { type: 'YouTube', title: 'Eddie Woo \u2014 Probability', desc: 'Introduction to probability, complementary events, Venn diagrams.', url: 'https://www.classcentral.com/course/youtube-basic-probability-91218', color: '#FF0000' },
+    { type: 'Website', title: 'Wootube Topic Browser', desc: 'Browse all Eddie Woo videos by topic \u2014 mapped to Australian curriculum.', url: 'https://wootube.mathspace.co/au', color: '#6366f1' }
+  ],
+  'yr11-biology': [
+    { type: 'YouTube', title: 'Amoeba Sisters', desc: 'Animated biology: cells, transport, DNA, mitosis, meiosis. Perfect for VCE Bio.', url: 'https://www.youtube.com/@AmoebaSisters', color: '#FF0000' },
+    { type: 'YouTube', title: 'Crash Course Biology (2024)', desc: '50-episode series covering cells, biochemistry, genetics, ecology.', url: 'https://www.youtube.com/playlist?list=PL8dPuuaLjXtPW_ofbxdHNciuLoTRLPMgB', color: '#FF0000' },
+    { type: 'YouTube', title: 'GTAC Biology Revision', desc: 'VCE-specific revision videos: enzymes, photosynthesis, immune response.', url: 'https://gtac.edu.au/revision-series/vbrs/', color: '#FF0000' },
+    { type: 'Website', title: 'VCE BioNinja \u2014 Unit 1', desc: 'Text-based study resource aligned directly to VCE Biology Unit 1.', url: 'https://vce.bioninja.com.au/unit-one/', color: '#059669' },
+    { type: 'Podcast', title: 'Mr. Barlow\u2019s VCE Biology Podcast', desc: 'Episodes 1\u201312 cover Unit 1. Listen on the bus/train.', url: 'https://podcasts.apple.com/us/podcast/vce-biology/id272577510', color: '#8B5CF6' },
+    { type: 'Documentary', title: 'Our Planet (Netflix)', desc: 'David Attenborough. Stunning visuals of ecosystems and biodiversity.', url: 'https://www.ourplanet.com/en/', color: '#059669' }
+  ],
+  'yr11-economics': [
+    { type: 'YouTube', title: 'Crash Course Economics', desc: '35 episodes covering supply/demand, opportunity cost, behavioural econ, market failure.', url: 'https://www.youtube.com/playlist?list=PL8dPuuaLjXtPNZwz5_o_5uirJ8gQXnhEO', color: '#FF0000' },
+    { type: 'YouTube', title: 'EconplusDal', desc: '728+ videos. Supply/demand diagrams, elasticity, behavioural economics, utility theory.', url: 'https://www.youtube.com/@econplusdal', color: '#FF0000' },
+    { type: 'YouTube', title: 'Economics Explained', desc: 'Australian channel. Accessible essays on inflation, GDP, trade, housing.', url: 'https://www.youtube.com/channel/UCZ4AMrDcNrfy3X6nsU8-rPg', color: '#FF0000' },
+    { type: 'Podcast', title: 'Planet Money (NPR)', desc: 'Fun, accessible economics storytelling. Short episodes perfect for commute.', url: 'https://www.npr.org/podcasts/510289/planet-money', color: '#8B5CF6' },
+    { type: 'Podcast', title: 'Freakonomics Radio', desc: 'The hidden side of everything. Economics applied to everyday life.', url: 'https://freakonomics.com/podcasts/', color: '#8B5CF6' },
+    { type: 'Movie', title: 'The Big Short (2015)', desc: 'The 2008 financial crisis explained through colourful characters. Brilliant and educational.', url: 'https://www.imdb.com/title/tt1596363/', color: '#d97706' },
+    { type: 'Movie', title: 'Inside Job (2010)', desc: 'Oscar-winning documentary narrated by Matt Damon about the GFC.', url: 'https://www.imdb.com/title/tt1645089/', color: '#d97706' }
+  ],
+  'yr11-busman': [
+    { type: 'YouTube', title: 'Teaching Bubble', desc: 'VCE Business Management-specific. Short, concise revision videos for Units 1\u20134.', url: 'https://www.youtube.com/@teachingbubble', color: '#FF0000' },
+    { type: 'YouTube', title: 'Two Teachers', desc: 'Business studies videos with activity resources. Great for concepts like marketing mix, HR.', url: 'https://www.youtube.com/c/TwoTeachers', color: '#FF0000' },
+    { type: 'Movie', title: 'The Social Network (2010)', desc: 'Facebook\u2019s founding. Entrepreneurship, innovation, and business disputes.', url: 'https://www.imdb.com/title/tt1285016/', color: '#8b5cf6' },
+    { type: 'Movie', title: 'Moneyball (2011)', desc: 'Data-driven decisions in baseball. Challenges conventional business thinking.', url: 'https://www.imdb.com/title/tt1210166/', color: '#8b5cf6' },
+    { type: 'Documentary', title: 'Formula 1: Drive to Survive (Netflix)', desc: 'Team management, sponsorship, global business \u2014 through the lens of F1 racing.', url: 'https://www.netflix.com/title/80204890', color: '#0891b2' },
+    { type: 'Documentary', title: 'Welcome to Wrexham (Disney+)', desc: 'Ryan Reynolds buys a football club. Real-world business, investment, community.', url: 'https://www.imdb.com/title/tt14674086/', color: '#0891b2' }
+  ]
+};
+
+let quizState = { subjectId: null, questions: [], current: 0, score: 0, answered: false, selectedAnswer: null };
+
+function renderStudyZone() {
+  let html = '<div class="section-title">\u{1F3AE} Study Zone</div>';
+
+  if (quizState.subjectId && quizState.questions.length > 0) {
+    html += renderQuizGame();
+  } else {
+    html += '<div class="info-box">Test your knowledge with quick-fire quizzes designed for learning on the go. Pick a subject below to start!</div>';
+    html += '<div class="section-title" style="margin-top:1rem;">Start a Quiz</div>';
+    html += '<div class="quiz-subject-selector">';
+    const quizSubjects = [
+      { id: 'yr11-methods', name: 'Maths Methods', icon: '\u{1F4D0}', color: '#6366f1', count: QUIZ_QUESTIONS['yr11-methods'].length },
+      { id: 'yr11-biology', name: 'Biology', icon: '\u{1F9EC}', color: '#059669', count: QUIZ_QUESTIONS['yr11-biology'].length },
+      { id: 'yr11-economics', name: 'Economics', icon: '\u{1F4C8}', color: '#d97706', count: QUIZ_QUESTIONS['yr11-economics'].length },
+      { id: 'yr11-busman', name: 'Business Management', icon: '\u{1F4BC}', color: '#8b5cf6', count: QUIZ_QUESTIONS['yr11-busman'].length }
+    ];
+    quizSubjects.forEach(s => {
+      html += `<button class="quiz-subject-btn" onclick="startQuiz('${s.id}')">`;
+      html += `<div class="quiz-subject-icon" style="background:${s.color}">${s.icon}</div>`;
+      html += `<div><div style="font-weight:700;font-size:0.95rem;">${s.name}</div>`;
+      html += `<div style="font-size:0.8rem;color:var(--text-muted);">${s.count} questions \u2022 Unit 1</div></div>`;
+      html += `</button>`;
+    });
+    html += '</div>';
+
+    // Resources section
+    html += '<div class="section-title" style="margin-top:1.5rem;">\u{1F4DA} Learning Resources</div>';
+    const resourceSubjects = [
+      { id: 'yr11-methods', name: 'Maths Methods', color: '#6366f1' },
+      { id: 'yr11-biology', name: 'Biology', color: '#059669' },
+      { id: 'yr11-economics', name: 'Economics', color: '#d97706' },
+      { id: 'yr11-busman', name: 'Business Management', color: '#8b5cf6' }
+    ];
+    resourceSubjects.forEach(s => {
+      const res = RESOURCES[s.id] || [];
+      if (res.length === 0) return;
+      html += `<div style="margin-bottom:1.5rem;">`;
+      html += `<h3 style="font-size:0.95rem;margin-bottom:0.5rem;color:${s.color}">${s.name}</h3>`;
+      html += '<div class="resource-grid">';
+      res.forEach(r => {
+        html += `<div class="resource-card">`;
+        html += `<div class="resource-type" style="color:${r.color}">${r.type}</div>`;
+        html += `<div class="resource-title">${r.title}</div>`;
+        html += `<div class="resource-desc">${r.desc}</div>`;
+        html += `<a href="${r.url}" target="_blank" rel="noopener" class="resource-link">Open \u2192</a>`;
+        html += `</div>`;
+      });
+      html += '</div></div>';
+    });
+  }
+
+  return html;
+}
+
+function renderQuizGame() {
+  const qs = quizState.questions;
+  const q = qs[quizState.current];
+  const total = qs.length;
+  const progress = ((quizState.current + (quizState.answered ? 1 : 0)) / total) * 100;
+
+  let html = '<div class="quiz-container">';
+
+  // Completed state
+  if (quizState.current >= total) {
+    const pct = Math.round((quizState.score / total) * 100);
+    const emoji = pct >= 80 ? '\u{1F389}' : pct >= 60 ? '\u{1F44D}' : '\u{1F4AA}';
+    html += '<div class="card"><div class="quiz-result">';
+    html += `<div style="font-size:3rem;">${emoji}</div>`;
+    html += `<div class="quiz-score">${quizState.score}/${total}</div>`;
+    html += `<div style="font-size:1.1rem;font-weight:600;margin:0.5rem 0;">${pct}% Correct</div>`;
+    html += `<div style="color:var(--text-muted);margin-bottom:1.5rem;">${pct >= 80 ? 'Outstanding! You really know this material.' : pct >= 60 ? 'Good effort! Review the ones you missed.' : 'Keep studying \u2014 you\u2019ll get there!'}</div>`;
+    html += `<div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">`;
+    html += `<button class="btn btn-primary" onclick="startQuiz('${quizState.subjectId}')">Try Again</button>`;
+    html += `<button class="btn btn-secondary" onclick="exitQuiz()">Back to Study Zone</button>`;
+    html += `</div></div></div>`;
+    html += '</div>';
+    return html;
+  }
+
+  // Quiz header
+  html += '<div class="card">';
+  html += '<div class="quiz-header">';
+  html += `<span style="font-weight:600;">Question ${quizState.current + 1} of ${total}</span>`;
+  html += `<span style="font-weight:700;color:var(--accent);">Score: ${quizState.score}</span>`;
+  html += `<button class="btn btn-secondary btn-sm" onclick="exitQuiz()">Exit</button>`;
+  html += '</div>';
+  html += `<div class="quiz-progress"><div class="quiz-progress-fill" style="width:${progress}%"></div></div>`;
+
+  html += `<div class="quiz-topic">${q.topic}</div>`;
+  html += `<div class="quiz-question">${q.q}</div>`;
+  html += '<div class="quiz-options">';
+
+  q.opts.forEach((opt, i) => {
+    let cls = 'quiz-option';
+    if (quizState.answered) {
+      if (i === q.ans) cls += ' correct';
+      else if (i === quizState.selectedAnswer && i !== q.ans) cls += ' incorrect';
+      else cls += ' dimmed';
+    }
+    const disabled = quizState.answered ? 'pointer-events:none;' : '';
+    html += `<button class="${cls}" style="${disabled}" onclick="answerQuiz(${i})">${opt}</button>`;
+  });
+  html += '</div>';
+
+  if (quizState.answered) {
+    const isCorrect = quizState.selectedAnswer === q.ans;
+    html += `<div class="quiz-explanation" style="background:${isCorrect ? '#f0fff4' : '#fff5f5'};border-color:${isCorrect ? '#c6f6d5' : '#fed7d7'};">`;
+    html += `<strong>${isCorrect ? '\u2705 Correct!' : '\u274C Incorrect.'}</strong> ${q.explain}`;
+    html += `</div>`;
+    html += `<div style="text-align:center;margin-top:1rem;">`;
+    html += `<button class="btn btn-primary" onclick="nextQuestion()">Next Question \u2192</button>`;
+    html += `</div>`;
+  }
+
+  html += '</div></div>';
+  return html;
+}
+
+function startQuiz(subjectId) {
+  const questions = [...QUIZ_QUESTIONS[subjectId]];
+  // Shuffle
+  for (let i = questions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questions[i], questions[j]] = [questions[j], questions[i]];
+  }
+  quizState = { subjectId, questions, current: 0, score: 0, answered: false, selectedAnswer: null };
+  render();
+}
+
+function answerQuiz(index) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  quizState.selectedAnswer = index;
+  if (index === quizState.questions[quizState.current].ans) quizState.score++;
+  render();
+}
+
+function nextQuestion() {
+  quizState.current++;
+  quizState.answered = false;
+  quizState.selectedAnswer = null;
+  render();
+}
+
+function exitQuiz() {
+  quizState = { subjectId: null, questions: [], current: 0, score: 0, answered: false, selectedAnswer: null };
+  render();
 }
 
 // ============================================================
