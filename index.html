@@ -728,6 +728,42 @@ input[type="number"].input-sm { width: 65px; }
   backdrop-filter: blur(4px);
 }
 
+/* Semester Selector */
+.semester-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.semester-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.semester-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.semester-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.semester-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 /* Quiz Styles */
 .quiz-container { max-width: 600px; margin: 0 auto; }
 .quiz-header {
@@ -1310,6 +1346,44 @@ function getSubjects() {
 // ============================================================
 let currentView = 'dashboard';
 let expandedSubjects = {};
+let currentSemester = 's1-2026';
+
+const SEMESTERS = [
+  {
+    id: 's1-2026',
+    label: 'Sem 1 · 2026',
+    year: 11,
+    filterUnit: 1, // Unit 1 for standard subjects
+    subjects: ['yr11-methods', 'yr11-biology', 'yr11-english', 'yr11-economics', 'yr11-busman', 'yr11-vetsport'],
+    vetUnit: 3, // VET Sport does Unit 3 in Sem 1
+    description: 'Year 11 — Unit 1 (VET Sport Unit 3)'
+  },
+  {
+    id: 's2-2026',
+    label: 'Sem 2 · 2026',
+    year: 11,
+    filterUnit: 2,
+    subjects: ['yr11-methods', 'yr11-biology', 'yr11-english', 'yr11-economics', 'yr11-busman', 'yr11-vetsport'],
+    vetUnit: 4,
+    description: 'Year 11 — Unit 2 (VET Sport Unit 4)'
+  },
+  {
+    id: 's1-2027',
+    label: 'Sem 1 · 2027',
+    year: 12,
+    filterUnit: 3,
+    subjects: ['yr12-english', 'yr12-methods', 'yr12-biology', 'yr12-economics', 'yr12-busman'],
+    description: 'Year 12 — Unit 3'
+  },
+  {
+    id: 's2-2027',
+    label: 'Sem 2 · 2027',
+    year: 12,
+    filterUnit: 4,
+    subjects: ['yr12-english', 'yr12-methods', 'yr12-biology', 'yr12-economics', 'yr12-busman'],
+    description: 'Year 12 — Unit 4 & Exams'
+  }
+];
 
 // ============================================================
 // DARK MODE
@@ -1423,18 +1497,42 @@ function render() {
 // ============================================================
 // DASHBOARD
 // ============================================================
+function switchSemester(semId) {
+  currentSemester = semId;
+  render();
+}
+
+function getSemesterSubjects(semester) {
+  const allSubjects = getSubjects();
+  return allSubjects.filter(sub => semester.subjects.includes(sub.id));
+}
+
+function getSemesterAssessments(subject, semester) {
+  const isVet = subject.id === 'yr11-vetsport';
+  const targetUnit = isVet ? semester.vetUnit : semester.filterUnit;
+  // For VET exam that spans "3 & 4", include it in both semesters
+  return subject.assessments.filter(a => {
+    if (a.unit === targetUnit) return true;
+    if (isVet && a.unit === '3 & 4') return true;
+    // Include semester exams that cover "All Unit X"
+    return false;
+  });
+}
+
 function renderDashboard() {
-  const subjects = getSubjects();
+  const semester = SEMESTERS.find(s => s.id === currentSemester);
+  const semSubjects = getSemesterSubjects(semester);
   const state = loadState();
   const today = new Date();
   today.setHours(0,0,0,0);
 
-  // Gather all assessments with dates
+  // Gather assessments for this semester only
   const allAssessments = [];
   const totalAssessments = { total: 0, withDates: 0, withResults: 0 };
 
-  subjects.forEach(sub => {
-    sub.assessments.forEach(a => {
+  semSubjects.forEach(sub => {
+    const semAssessments = getSemesterAssessments(sub, semester);
+    semAssessments.forEach(a => {
       totalAssessments.total++;
       const data = state[a.id] || {};
       if (data.date) totalAssessments.withDates++;
@@ -1465,17 +1563,30 @@ function renderDashboard() {
   let html = '';
 
   // Hero section
+  const heroMessages = {
+    's1-2026': { title: 'Your future starts now, Jack.', sub: `${semSubjects.length} subjects this semester. Every study session is an investment in the life you want to build.` },
+    's2-2026': { title: 'Keep the momentum going, Jack.', sub: `Semester 2 \u2014 ${semSubjects.length} subjects, deeper content. You\u2019ve got this.` },
+    's1-2027': { title: 'Year 12. This is your year, Jack.', sub: `${semSubjects.length} subjects, Units 3 & 4. Everything counts towards your ATAR now.` },
+    's2-2027': { title: 'The home stretch, Jack.', sub: `Final semester. ${semSubjects.length} subjects heading into exams. Finish strong.` }
+  };
+  const heroMsg = heroMessages[semester.id];
+
   html += '<div class="hero">';
-  html += '<div class="hero-title">\u{1F680} <span style="background:linear-gradient(90deg,#fff,#c4b5fd,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Your future starts now, Jack.</span></div>';
-  html += '<div class="hero-subtitle">6 subjects. 47 assessments. Every study session is an investment in the life you want to build. You\u2019ve chosen an incredible combination \u2014 analytical, creative, practical, and ambitious.</div>';
+  html += `<div class="hero-title">\u{1F680} <span style="background:linear-gradient(90deg,#fff,#c4b5fd,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${heroMsg.title}</span></div>`;
+  html += `<div class="hero-subtitle">${heroMsg.sub}</div>`;
   html += '<div class="hero-subjects">';
-  html += '<span class="hero-chip">\u{1F4D0} Maths Methods</span>';
-  html += '<span class="hero-chip">\u{1F9EC} Biology</span>';
-  html += '<span class="hero-chip">\u{1F4D6} English</span>';
-  html += '<span class="hero-chip">\u{1F4C8} Economics</span>';
-  html += '<span class="hero-chip">\u{1F4BC} Business Mgmt</span>';
-  html += '<span class="hero-chip">\u{1F3C0} VET Sport</span>';
+  semSubjects.forEach(sub => {
+    html += `<span class="hero-chip">${sub.icon} ${sub.name.replace('Mathematical ', '').replace(' & Recreation', '')}</span>`;
+  });
   html += '</div></div>';
+
+  // Semester selector
+  html += '<div class="semester-label">Semester</div>';
+  html += '<div class="semester-selector">';
+  SEMESTERS.forEach(s => {
+    html += `<button class="semester-btn${s.id === currentSemester ? ' active' : ''}" onclick="switchSemester('${s.id}')">${s.label}</button>`;
+  });
+  html += '</div>';
 
   // Stats row
   html += '<div class="stat-row">';
@@ -1522,23 +1633,37 @@ function renderDashboard() {
   }
   html += '</div>';
 
-  // Subject progress
+  // Subject progress — only this semester's subjects and assessments
   html += '<div class="card">';
-  html += '<div class="section-title">Subject Progress</div>';
-  subjects.forEach(sub => {
-    const total = sub.assessments.length;
-    const done = sub.assessments.filter(a => {
+  html += `<div class="section-title">Subject Progress — ${semester.description}</div>`;
+  semSubjects.forEach(sub => {
+    const semAssessments = getSemesterAssessments(sub, semester);
+    const total = semAssessments.length;
+    const done = semAssessments.filter(a => {
       const d = state[a.id];
       return d && d.result !== undefined && d.result !== null && d.result !== '';
     }).length;
     const pct = total > 0 ? Math.round((done / total) * 100) : 0;
 
-    // Weighted average
-    let wavg = calcWeightedAvg(sub, state);
+    // Weighted average for semester assessments only
+    const semWeight = semAssessments.reduce((sum, a) => sum + a.weight, 0);
+    let wavg = null;
+    if (semWeight > 0) {
+      let earned = 0, possible = 0;
+      semAssessments.forEach(a => {
+        const d = state[a.id];
+        if (d && d.result !== undefined && d.result !== null && d.result !== '') {
+          const total = d.resultTotal || 100;
+          earned += (d.result / total) * a.weight;
+          possible += a.weight;
+        }
+      });
+      if (possible > 0) wavg = Math.round((earned / possible) * 100);
+    }
 
     html += '<div class="subject-progress-row">';
     html += `<div class="subject-progress-dot" style="background:${sub.color}"></div>`;
-    html += `<div class="subject-progress-name">${sub.year === 12 ? 'Yr12 ' : ''}${sub.name}</div>`;
+    html += `<div class="subject-progress-name">${sub.name}</div>`;
     html += '<div class="progress-ring" style="flex:1">';
     html += `<div class="progress-bar-horiz"><div class="progress-bar-fill" style="width:${pct}%;background:${sub.color}"></div></div>`;
     html += '</div>';
