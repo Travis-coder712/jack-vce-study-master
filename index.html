@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jack VCE Study Master</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231a365d'/><stop offset='50%25' stop-color='%236366f1'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><polygon points='50,22 88,40 50,54 12,40' fill='white'/><rect x='47' y='40' width='6' height='28' fill='white' rx='2'/><path d='M28 46 L28 62 Q50 76 72 62 L72 46' fill='none' stroke='white' stroke-width='3.5'/><circle cx='50' cy='72' r='4.5' fill='%23fbbf24'/></svg>">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VCE Study">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Jack%20VCE%20Study%20Master%22%2C%22short_name%22%3A%22VCE%20Study%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a365d%22%2C%22theme_color%22%3A%22%231a365d%22%7D">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { overflow-x: hidden; }
@@ -1312,7 +1316,61 @@ let expandedSubjects = {};
 // ============================================================
 const DARK_MODE_KEY = 'jackVCEStudyMaster_darkMode';
 
+function generateTouchIcon() {
+  const c = document.createElement('canvas');
+  c.width = 180; c.height = 180;
+  const ctx = c.getContext('2d');
+  const g = ctx.createLinearGradient(0, 0, 180, 180);
+  g.addColorStop(0, '#1a365d');
+  g.addColorStop(0.5, '#6366f1');
+  g.addColorStop(1, '#8b5cf6');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, 180, 180, 36);
+  ctx.fill();
+  // Graduation cap
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  ctx.moveTo(90, 36);
+  ctx.lineTo(160, 68);
+  ctx.lineTo(90, 96);
+  ctx.lineTo(20, 68);
+  ctx.closePath();
+  ctx.fill();
+  // Tassel post
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  ctx.roundRect(84, 68, 12, 52, 3);
+  ctx.fill();
+  // Cap body curve
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.moveTo(48, 80);
+  ctx.lineTo(48, 110);
+  ctx.quadraticCurveTo(90, 138, 132, 110);
+  ctx.lineTo(132, 80);
+  ctx.stroke();
+  // Tassel ball
+  ctx.fillStyle = '#fbbf24';
+  ctx.beginPath();
+  ctx.arc(90, 128, 8, 0, Math.PI * 2);
+  ctx.fill();
+  // Tassel string
+  ctx.strokeStyle = '#fbbf24';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(90, 128);
+  ctx.quadraticCurveTo(105, 140, 110, 152);
+  ctx.stroke();
+  const link = document.createElement('link');
+  link.rel = 'apple-touch-icon';
+  link.href = c.toDataURL('image/png');
+  document.head.appendChild(link);
+}
+
 function initDarkMode() {
+  generateTouchIcon();
   const saved = localStorage.getItem(DARK_MODE_KEY);
   if (saved === 'true') {
     document.documentElement.classList.add('dark');
