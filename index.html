@@ -1007,7 +1007,7 @@ html.dark input, html.dark select, html.dark textarea {
 
 <div class="header">
   <div class="header-inner">
-    <h1><span>🚀</span> Jack VCE Study Master <button class="theme-toggle" onclick="toggleDarkMode()" id="themeToggle" title="Toggle dark mode">🌙</button></h1>
+    <h1><span id="rocketIcon" style="cursor:pointer;">🚀</span> Jack VCE Study Master <button class="theme-toggle" onclick="toggleDarkMode()" id="themeToggle" title="Toggle dark mode">🌙</button></h1>
     <div class="nav" id="nav">
       <button class="active" data-view="dashboard">Dashboard</button>
       <button data-view="year11">Year 11</button>
@@ -2679,17 +2679,31 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// Triple-click title for memory game
+// Triple-click/tap title for memory game
 let titleClickCount = 0;
 let titleClickTimer = null;
 document.querySelector('.header h1').addEventListener('click', function(e) {
-  if (e.target.closest('.theme-toggle')) return;
+  if (e.target.closest('.theme-toggle') || e.target.closest('#rocketIcon')) return;
   titleClickCount++;
   clearTimeout(titleClickTimer);
   titleClickTimer = setTimeout(() => { titleClickCount = 0; }, 500);
   if (titleClickCount >= 3) {
     titleClickCount = 0;
     launchMemoryGame();
+  }
+});
+
+// Tap rocket emoji 5 times for Snake (mobile-friendly Konami alternative)
+let rocketTapCount = 0;
+let rocketTapTimer = null;
+document.getElementById('rocketIcon').addEventListener('click', function(e) {
+  e.stopPropagation();
+  rocketTapCount++;
+  clearTimeout(rocketTapTimer);
+  rocketTapTimer = setTimeout(() => { rocketTapCount = 0; }, 800);
+  if (rocketTapCount >= 5) {
+    rocketTapCount = 0;
+    launchSnakeGame();
   }
 });
 
@@ -2716,7 +2730,7 @@ function launchSnakeGame() {
     </div>
     <div class="game-body" style="display:flex;flex-direction:column;align-items:center;padding:1rem;">
       <canvas id="snakeCanvas" width="380" height="380" style="border:2px solid var(--border);border-radius:8px;background:#0f172a;max-width:100%;"></canvas>
-      <div style="text-align:center;padding-top:0.75rem;font-size:0.8rem;color:var(--text-muted);">Arrow keys to move. Eat the food to grow!</div>
+      <div style="text-align:center;padding-top:0.75rem;font-size:0.8rem;color:var(--text-muted);">Arrow keys or swipe to move. Eat the food to grow!</div>
     </div>
   `;
   overlay.classList.add('open');
@@ -2835,6 +2849,34 @@ function launchSnakeGame() {
   document.removeEventListener('keydown', window._snakeHandler);
   window._snakeHandler = handleSnakeKey;
   document.addEventListener('keydown', window._snakeHandler);
+
+  // Touch/swipe controls for mobile
+  let touchStartX = 0, touchStartY = 0;
+  canvas.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    e.preventDefault();
+    // Tap to restart when game over
+    if (!gameRunning) {
+      snake = [{x: 10, y: 10}]; dx = 0; dy = 0; score = 0; gameRunning = true;
+      document.getElementById('snakeScore').textContent = 'Score: 0';
+      placeFood();
+      window._snakeInterval = setInterval(update, 120);
+    }
+  }, { passive: false });
+  canvas.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+  canvas.addEventListener('touchend', function(e) {
+    const diffX = e.changedTouches[0].clientX - touchStartX;
+    const diffY = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(diffX) < 10 && Math.abs(diffY) < 10) return; // too small, ignore
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0 && dx !== -1) { dx = 1; dy = 0; }
+      else if (diffX < 0 && dx !== 1) { dx = -1; dy = 0; }
+    } else {
+      if (diffY > 0 && dy !== -1) { dx = 0; dy = 1; }
+      else if (diffY < 0 && dy !== 1) { dx = 0; dy = -1; }
+    }
+  });
 
   placeFood();
   draw();
