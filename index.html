@@ -897,6 +897,52 @@ input[type="number"].input-sm { width: 65px; }
 }
 .resource-link:hover { text-decoration: underline; }
 
+.resource-subject-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.resource-subject-card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.resource-subject-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-align: left;
+  color: var(--text);
+}
+.resource-subject-btn:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.resource-subject-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.resource-subject-icon { font-size: 1.3rem; }
+.resource-chevron { font-size: 0.7rem; color: var(--text-muted); }
+.resource-subject-card.open .resource-subject-btn {
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+  background: var(--bg-subtle);
+}
+.resource-subject-card.open .resource-grid {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: var(--bg-subtle);
+}
+
 /* Scaling slider */
 .scaling-slider-container {
   display: flex;
@@ -2102,6 +2148,40 @@ const QUIZ_QUESTIONS = {
     { q: 'If P(A) = 0.3, what is P(not A)?', opts: ['0.3', '0.7', '0.1', '1.3'], ans: 1, topic: 'Probability', explain: 'Complementary events: P(not A) = 1 - P(A) = 1 - 0.3 = 0.7. The probabilities of all outcomes must sum to 1.' },
     { q: 'What is the factored form of x\u00B2 - 9?', opts: ['(x-3)(x+3)', '(x-9)(x+1)', '(x-3)\u00B2', 'Cannot be factored'], ans: 0, topic: 'Algebra', explain: 'This is a difference of two squares: a\u00B2 - b\u00B2 = (a-b)(a+b). So x\u00B2 - 9 = x\u00B2 - 3\u00B2 = (x-3)(x+3).' },
     { q: 'Solve: 2x + 5 = 17', opts: ['x = 6', 'x = 11', 'x = 7', 'x = 5'], ans: 0, topic: 'Algebra', explain: '2x + 5 = 17 \u2192 2x = 12 \u2192 x = 6. Always check: 2(6) + 5 = 17 \u2713' }
+  ],
+  'yr11-english': [
+    { q: 'What is metalanguage in English studies?', opts: ['The language of social media', 'Language used to describe and analyse how texts work', 'A foreign language used in texts', 'The language spoken by characters'], ans: 1, topic: 'Text Analysis', explain: 'Metalanguage is the specialised vocabulary used to discuss how language works in texts \u2014 terms like tone, syntax, imagery, and narrative voice.' },
+    { q: 'Which persuasive appeal targets the audience\'s emotions?', opts: ['Ethos', 'Logos', 'Pathos', 'Kairos'], ans: 2, topic: 'Argument Analysis', explain: 'Pathos appeals to emotions (fear, sympathy, hope). Ethos appeals to credibility, logos to logic, and kairos to timeliness.' },
+    { q: 'What is the difference between tone and mood?', opts: ['They are the same thing', 'Tone is the author\'s attitude; mood is the feeling created for the reader', 'Mood is the author\'s attitude; tone is the feeling created for the reader', 'Tone relates to sound; mood relates to colour'], ans: 1, topic: 'Language Features', explain: 'Tone is the writer\u2019s attitude toward the subject or audience. Mood is the atmosphere or emotional response evoked in the reader.' },
+    { q: 'What does "authorial intent" refer to?', opts: ['The biography of the author', 'The purpose or message the author aims to convey through their text', 'The author\'s writing schedule', 'The genre the author prefers'], ans: 1, topic: 'Context & Purpose', explain: 'Authorial intent is the purpose behind the text \u2014 what the author wants the reader to think, feel, or understand after engaging with the work.' },
+    { q: 'Which of the following is an example of a simile?', opts: ['The wind howled in anger', 'Her eyes were diamonds', 'He ran like a cheetah', 'The flowers danced in the breeze'], ans: 2, topic: 'Language Features', explain: 'A simile compares two things using "like" or "as". "He ran like a cheetah" uses "like" to make the comparison. A metaphor would say "he was a cheetah".' },
+    { q: 'In analytical writing, what does a topic sentence do?', opts: ['Summarises the entire essay', 'Introduces the main idea of a paragraph', 'Provides a quote from the text', 'Restates the essay prompt'], ans: 1, topic: 'Analytical Writing', explain: 'A topic sentence introduces the key argument or point of the paragraph. It tells the reader what the paragraph will be about and connects to the thesis.' },
+    { q: 'What is personification?', opts: ['Comparing two things using "like"', 'Giving human qualities to non-human things', 'Exaggerating for effect', 'Repeating the first consonant sound'], ans: 1, topic: 'Language Features', explain: 'Personification gives human characteristics to animals, objects, or ideas \u2014 e.g., "the wind whispered through the trees".' },
+    { q: 'What is the purpose of a text response essay in VCE English?', opts: ['To retell the story in your own words', 'To present a sustained analytical interpretation of a text', 'To write a creative continuation of the text', 'To summarise the text for someone who hasn\'t read it'], ans: 1, topic: 'Analytical Writing', explain: 'A text response essay presents a detailed, evidence-based analysis of a text. It interprets themes, characters, and language rather than simply retelling the plot.' },
+    { q: 'What does "context" refer to when analysing a text?', opts: ['The table of contents', 'The social, cultural, and historical circumstances surrounding a text', 'The number of pages', 'The font and formatting used'], ans: 1, topic: 'Context & Purpose', explain: 'Context includes the historical period, social values, cultural background, and personal circumstances that influence how a text is created and received.' },
+    { q: 'What is the purpose of embedding quotes in an analytical essay?', opts: ['To make the essay longer', 'To provide direct textual evidence that supports your argument', 'To show you have read the text', 'To fill space between paragraphs'], ans: 1, topic: 'Analytical Writing', explain: 'Embedded quotes provide evidence for your analysis. They should be woven into your sentences seamlessly and followed by explanation of their significance.' },
+    { q: 'Which text type is primarily intended to persuade?', opts: ['A diary entry', 'A scientific report', 'An opinion editorial (op-ed)', 'A narrative short story'], ans: 2, topic: 'Argument Analysis', explain: 'An opinion editorial (op-ed) is a persuasive text that presents an argument on a current issue, using evidence and rhetorical techniques to influence the reader.' },
+    { q: 'What is the narrative point of view in a text told by an unnamed observer who knows all characters\' thoughts?', opts: ['First person', 'Second person', 'Third person limited', 'Third person omniscient'], ans: 3, topic: 'Text Analysis', explain: 'Third person omniscient uses "he/she/they" and the narrator has unlimited knowledge of all characters\u2019 thoughts, feelings, and experiences.' },
+    { q: 'What does "audience" mean in text analysis?', opts: ['The people who act in a play', 'The intended readers, viewers, or listeners of a text', 'The characters within the text', 'The publisher of the text'], ans: 1, topic: 'Context & Purpose', explain: 'Audience refers to the intended recipients of the text. Understanding audience helps analyse language choices, tone, and purpose \u2014 writers tailor their approach to their audience.' },
+    { q: 'In creative writing, what is the purpose of sensory language?', opts: ['To use complex vocabulary', 'To engage the reader\'s senses and create vivid imagery', 'To explain abstract concepts', 'To follow formal essay conventions'], ans: 1, topic: 'Creative Writing', explain: 'Sensory language appeals to sight, sound, taste, touch, and smell, helping the reader experience the scene vividly and emotionally connect with the writing.' },
+    { q: 'What is a contention in argument analysis?', opts: ['A quote from the text', 'The main argument or position put forward by the writer', 'A type of figurative language', 'The conclusion of an essay'], ans: 1, topic: 'Argument Analysis', explain: 'The contention is the writer\u2019s main argument or stance on an issue. Identifying the contention is the first step in analysing persuasive texts.' }
+  ],
+  'yr11-vetsport': [
+    { q: 'Which of the following is a sector of the sport industry?', opts: ['Hospitality', 'Public sport sector (government-funded)', 'Mining', 'Agriculture'], ans: 1, topic: 'Sport Industry', explain: 'The sport industry includes public (government-funded), private (commercial), and not-for-profit sectors, each playing different roles in sport delivery.' },
+    { q: 'What is the first step in planning a sport or recreation event?', opts: ['Book the venue', 'Define the purpose and objectives of the event', 'Hire staff', 'Create promotional materials'], ans: 1, topic: 'Event Planning', explain: 'Defining the purpose and objectives is essential before any other planning. It guides all decisions about venue, budget, staffing, and marketing.' },
+    { q: 'What does a risk assessment involve?', opts: ['Cancelling activities that might be dangerous', 'Identifying hazards, assessing likelihood and severity, and implementing controls', 'Only checking weather conditions', 'Removing all equipment from the venue'], ans: 1, topic: 'Risk Management', explain: 'Risk assessment is a systematic process: identify hazards, assess the likelihood and severity of harm, and implement control measures to minimise risk.' },
+    { q: 'What does OH&S stand for in a sport setting?', opts: ['Overtime Hours & Scheduling', 'Occupational Health and Safety', 'Outdoor Hazard Systems', 'Organisation of High-level Sport'], ans: 1, topic: 'Workplace Safety', explain: 'Occupational Health and Safety (OH&S) refers to laws, regulations, and practices designed to protect the health and safety of workers and participants.' },
+    { q: 'Which coaching principle focuses on activities being appropriate for the participant\'s age and ability?', opts: ['Periodisation', 'Progressive overload', 'Developmental appropriateness', 'Tapering'], ans: 2, topic: 'Coaching', explain: 'Developmental appropriateness means tailoring activities to suit the physical, cognitive, and emotional development level of participants.' },
+    { q: 'What is the primary purpose of a pre-activity screening?', opts: ['To rank participants by ability', 'To identify health risks or conditions that may affect safe participation', 'To determine team selections', 'To collect membership fees'], ans: 1, topic: 'Client Services', explain: 'Pre-activity screening identifies any health conditions, injuries, or risk factors that could affect a person\u2019s ability to safely participate in physical activity.' },
+    { q: 'What is a key responsibility of a sport facility manager?', opts: ['Coaching all teams', 'Ensuring the facility is safe, maintained, and fit for purpose', 'Setting ticket prices for professional matches', 'Selecting athletes for competition'], ans: 1, topic: 'Sport Industry', explain: 'Facility managers are responsible for maintenance, safety compliance, scheduling, and ensuring the facility meets the needs of users and regulatory standards.' },
+    { q: 'What level of first aid qualification is typically required for sport and recreation workers?', opts: ['No first aid is required', 'A current First Aid certificate (e.g., HLTAID011)', 'A medical degree', 'A sports science diploma'], ans: 1, topic: 'Workplace Safety', explain: 'Sport and recreation workers typically need a current First Aid certificate covering CPR, basic wound care, and emergency response procedures.' },
+    { q: 'What does inclusion mean in a sport and recreation context?', opts: ['Only allowing elite athletes to participate', 'Ensuring programs are accessible and welcoming to people of all abilities, backgrounds, and identities', 'Separating participants by gender', 'Limiting group sizes'], ans: 1, topic: 'Client Services', explain: 'Inclusion means removing barriers so everyone can participate, regardless of ability, age, gender, cultural background, or socioeconomic status.' },
+    { q: 'What is the purpose of a warm-up before physical activity?', opts: ['To tire participants before the main activity', 'To gradually increase heart rate, blood flow, and prepare muscles and joints for activity', 'To test fitness levels', 'To teach new skills'], ans: 1, topic: 'Coaching', explain: 'A warm-up prepares the body for exercise by increasing blood flow to muscles, raising body temperature, and reducing the risk of injury.' },
+    { q: 'Which of the following is an example of a marketing strategy for a sport event?', opts: ['Conducting a risk assessment', 'Using social media promotion and early-bird ticket pricing', 'Writing an incident report', 'Completing a first aid course'], ans: 1, topic: 'Sport Industry', explain: 'Marketing strategies for sport events include social media campaigns, early-bird pricing, sponsorships, flyers, and community engagement to attract participants and spectators.' },
+    { q: 'What should be included in an event run sheet?', opts: ['Only the venue address', 'A timeline of activities, responsibilities, and key contacts', 'Just the budget', 'The list of award winners'], ans: 1, topic: 'Event Planning', explain: 'A run sheet is a detailed timeline that outlines what happens, when, who is responsible, and key contacts \u2014 it keeps the event running smoothly.' },
+    { q: 'What is the hierarchy of hazard control measures?', opts: ['Warn, remove, ignore', 'Elimination, substitution, engineering controls, administrative controls, PPE', 'PPE first, then elimination', 'Report, review, close'], ans: 1, topic: 'Risk Management', explain: 'The hierarchy of control prioritises the most effective measures first: eliminate the hazard, substitute with something safer, use engineering controls, then administrative controls, and finally personal protective equipment (PPE).' },
+    { q: 'Why is effective communication important when working with sport clients?', opts: ['It is not important', 'It builds trust, ensures understanding of programs, and supports client safety and satisfaction', 'It only matters for elite athletes', 'It replaces the need for written policies'], ans: 1, topic: 'Client Services', explain: 'Effective communication ensures clients understand instructions, feel valued, and are informed about safety \u2014 leading to better outcomes and client retention.' },
+    { q: 'What is the role of Sport Australia (formerly Australian Sports Commission)?', opts: ['To manage individual sport clubs', 'To lead and support the development of sport at all levels across Australia', 'To only fund Olympic athletes', 'To run local community gyms'], ans: 1, topic: 'Sport Industry', explain: 'Sport Australia is the national body that supports sport development, participation, high performance, and integrity across all levels of Australian sport.' }
   ]
 };
 
@@ -2142,10 +2222,30 @@ const RESOURCES = {
     { type: 'Movie', title: 'Moneyball (2011)', desc: 'Data-driven decisions in baseball. Challenges conventional business thinking.', url: 'https://www.imdb.com/title/tt1210166/', color: '#8b5cf6' },
     { type: 'Documentary', title: 'Formula 1: Drive to Survive (Netflix)', desc: 'Team management, sponsorship, global business \u2014 through the lens of F1 racing.', url: 'https://www.netflix.com/title/80204890', color: '#0891b2' },
     { type: 'Documentary', title: 'Welcome to Wrexham (Disney+)', desc: 'Ryan Reynolds buys a football club. Real-world business, investment, community.', url: 'https://www.imdb.com/title/tt14674086/', color: '#0891b2' }
+  ],
+  'yr11-english': [
+    { type: 'YouTube', title: 'Lisa Tran \u2014 VCE English', desc: 'VCE English tips: text response essays, comparative analysis, and exam strategies.', url: 'https://www.youtube.com/@lisas-study-guides', color: '#FF0000' },
+    { type: 'YouTube', title: 'Crash Course Literature', desc: 'Engaging analysis of classic and modern texts. Great for building analytical skills.', url: 'https://www.youtube.com/playlist?list=PL8dPuuaLjXtOeEc9ME62zTfqc0h6Pe8vb', color: '#FF0000' },
+    { type: 'Website', title: 'VCAA English Study Design', desc: 'Official VCE English study design \u2014 outcomes, key knowledge, assessment criteria.', url: 'https://www.vcaa.vic.edu.au/curriculum/vce/vce-study-designs/english/Pages/Index.aspx', color: '#dc2626' },
+    { type: 'Podcast', title: 'The VCE English Podcast', desc: 'Tips on text analysis, essay writing, and exam technique for VCE English students.', url: 'https://podcasts.apple.com/au/podcast/the-vce-english-podcast/id1458932804', color: '#8B5CF6' },
+    { type: 'Website', title: 'Lisa\'s Study Guides', desc: 'Free VCE English text guides, essay topic breakdowns, and study tips.', url: 'https://www.lisasStudyguides.com/', color: '#dc2626' }
+  ],
+  'yr11-vetsport': [
+    { type: 'YouTube', title: 'Sport Australia \u2014 Community Sport', desc: 'Resources on community sport programs, inclusion, and participation strategies.', url: 'https://www.sportaus.gov.au/', color: '#FF0000' },
+    { type: 'Website', title: 'VET Sport & Recreation Info', desc: 'Course overview, competency requirements, and assessment guides for Certificate III.', url: 'https://www.vcaa.vic.edu.au/curriculum/vet/Pages/Index.aspx', color: '#38a169' },
+    { type: 'Website', title: 'Sport and Recreation Victoria', desc: 'State government resources on sport facilities, programs, and industry standards.', url: 'https://sport.vic.gov.au/', color: '#38a169' },
+    { type: 'YouTube', title: 'Coaching Association \u2014 Fundamentals', desc: 'Coaching principles, session planning, and athlete development frameworks.', url: 'https://www.youtube.com/@AustralianSportsCommission', color: '#FF0000' }
   ]
 };
 
 let quizState = { subjectId: null, questions: [], current: 0, score: 0, answered: false, selectedAnswer: null };
+
+let expandedResourceSubject = null;
+
+function toggleResourceSubject(id) {
+  expandedResourceSubject = expandedResourceSubject === id ? null : id;
+  render();
+}
 
 function renderStudyZone() {
   let html = '<div class="section-title">\u{1F3AE} Study Zone</div>';
@@ -2159,8 +2259,10 @@ function renderStudyZone() {
     const quizSubjects = [
       { id: 'yr11-methods', name: 'Maths Methods', icon: '\u{1F4D0}', color: '#6366f1', count: QUIZ_QUESTIONS['yr11-methods'].length },
       { id: 'yr11-biology', name: 'Biology', icon: '\u{1F9EC}', color: '#059669', count: QUIZ_QUESTIONS['yr11-biology'].length },
+      { id: 'yr11-english', name: 'English', icon: '\u{1F4DA}', color: '#dc2626', count: QUIZ_QUESTIONS['yr11-english'].length },
       { id: 'yr11-economics', name: 'Economics', icon: '\u{1F4C8}', color: '#d97706', count: QUIZ_QUESTIONS['yr11-economics'].length },
-      { id: 'yr11-busman', name: 'Business Management', icon: '\u{1F4BC}', color: '#8b5cf6', count: QUIZ_QUESTIONS['yr11-busman'].length }
+      { id: 'yr11-busman', name: 'Business Management', icon: '\u{1F4BC}', color: '#8b5cf6', count: QUIZ_QUESTIONS['yr11-busman'].length },
+      { id: 'yr11-vetsport', name: 'VET Sport & Rec', icon: '\u{1F3C3}', color: '#38a169', count: QUIZ_QUESTIONS['yr11-vetsport'].length }
     ];
     quizSubjects.forEach(s => {
       html += `<button class="quiz-subject-btn" onclick="startQuiz('${s.id}')">`;
@@ -2173,28 +2275,47 @@ function renderStudyZone() {
 
     // Resources section
     html += '<div class="section-title" style="margin-top:1.5rem;">\u{1F4DA} Learning Resources</div>';
+    html += '<div class="info-box" style="margin-bottom:0.75rem;">Tap a subject to see curated YouTube channels, podcasts, websites, and more.</div>';
+    html += '<div class="resource-subject-grid">';
     const resourceSubjects = [
-      { id: 'yr11-methods', name: 'Maths Methods', color: '#6366f1' },
-      { id: 'yr11-biology', name: 'Biology', color: '#059669' },
-      { id: 'yr11-economics', name: 'Economics', color: '#d97706' },
-      { id: 'yr11-busman', name: 'Business Management', color: '#8b5cf6' }
+      { id: 'yr11-methods', name: 'Maths Methods', icon: '\u{1F4D0}', color: '#6366f1' },
+      { id: 'yr11-biology', name: 'Biology', icon: '\u{1F9EC}', color: '#059669' },
+      { id: 'yr11-english', name: 'English', icon: '\u{1F4DA}', color: '#dc2626' },
+      { id: 'yr11-economics', name: 'Economics', icon: '\u{1F4C8}', color: '#d97706' },
+      { id: 'yr11-busman', name: 'Business Management', icon: '\u{1F4BC}', color: '#8b5cf6' },
+      { id: 'yr11-vetsport', name: 'VET Sport & Rec', icon: '\u{1F3C3}', color: '#38a169' }
     ];
     resourceSubjects.forEach(s => {
       const res = RESOURCES[s.id] || [];
       if (res.length === 0) return;
-      html += `<div style="margin-bottom:1.5rem;">`;
-      html += `<h3 style="font-size:0.95rem;margin-bottom:0.5rem;color:${s.color}">${s.name}</h3>`;
-      html += '<div class="resource-grid">';
-      res.forEach(r => {
-        html += `<div class="resource-card">`;
-        html += `<div class="resource-type" style="color:${r.color}">${r.type}</div>`;
-        html += `<div class="resource-title">${r.title}</div>`;
-        html += `<div class="resource-desc">${r.desc}</div>`;
-        html += `<a href="${r.url}" target="_blank" rel="noopener" class="resource-link">Open \u2192</a>`;
-        html += `</div>`;
-      });
-      html += '</div></div>';
+      const types = {};
+      res.forEach(r => { types[r.type] = (types[r.type] || 0) + 1; });
+      const summary = Object.entries(types).map(([t, c]) => `${c} ${t}`).join(' \u00B7 ');
+      const isOpen = expandedResourceSubject === s.id;
+      html += `<div class="resource-subject-card${isOpen ? ' open' : ''}">`;
+      html += `<button class="resource-subject-btn" onclick="toggleResourceSubject('${s.id}')" style="border-left:4px solid ${s.color}">`;
+      html += `<div class="resource-subject-info">`;
+      html += `<span class="resource-subject-icon">${s.icon}</span>`;
+      html += `<div><div style="font-weight:700;font-size:0.95rem;">${s.name}</div>`;
+      html += `<div style="font-size:0.78rem;color:var(--text-muted);">${summary}</div></div>`;
+      html += `</div>`;
+      html += `<span class="resource-chevron">${isOpen ? '\u25B2' : '\u25BC'}</span>`;
+      html += `</button>`;
+      if (isOpen) {
+        html += '<div class="resource-grid" style="margin-top:0.75rem;">';
+        res.forEach(r => {
+          html += `<div class="resource-card">`;
+          html += `<div class="resource-type" style="color:${r.color}">${r.type}</div>`;
+          html += `<div class="resource-title">${r.title}</div>`;
+          html += `<div class="resource-desc">${r.desc}</div>`;
+          html += `<a href="${r.url}" target="_blank" rel="noopener" class="resource-link">Open \u2192</a>`;
+          html += `</div>`;
+        });
+        html += '</div>';
+      }
+      html += '</div>';
     });
+    html += '</div>';
   }
 
   return html;
@@ -2527,8 +2648,36 @@ function renderUniCareers() {
 // SETTINGS VIEW
 // ============================================================
 function renderSettings() {
-  let html = '<div class="section-title">\u2699\uFE0F Settings & Data</div>';
+  let html = '<div class="section-title">\u2699\uFE0F Settings & Info</div>';
 
+  // How This App Works
+  html += '<div class="card">';
+  html += '<div class="settings-section">';
+  html += '<h3>\u{1F4D6} How This App Works</h3>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">This app is your personal VCE study tracker. Here\'s what each section does:</p>';
+  html += '<div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">';
+  html += '<p><strong>Dashboard</strong> \u2014 Your home screen. Shows which subjects you\'re studying this semester, upcoming assessments, and a quick overview of how you\'re tracking. Use the semester buttons to switch between Sem 1 and Sem 2 for Year 11 and Year 12.</p>';
+  html += '<p style="margin-top:0.5rem;"><strong>Year 11 / Year 12</strong> \u2014 Tap into any subject to see all your SACs and exams. You can set due dates, enter your results (as a percentage), and add personal notes. The app calculates your weighted average automatically based on VCAA weightings.</p>';
+  html += '<p style="margin-top:0.5rem;"><strong>Study Zone</strong> \u2014 Quick-fire quizzes for every subject to test your knowledge on the go. Plus curated learning resources \u2014 YouTube channels, podcasts, websites, and documentaries \u2014 all hand-picked for your subjects.</p>';
+  html += '<p style="margin-top:0.5rem;"><strong>Uni & Careers</strong> \u2014 See how your subjects connect to university degrees and career paths. Includes an ATAR estimator to give you a rough idea of where your aggregate might land, and an explanation of how ATAR scaling works.</p>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+
+  // Hidden Games
+  html += '<div class="card">';
+  html += '<div class="settings-section">';
+  html += '<h3>\u{1F3AE} Hidden Games</h3>';
+  html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem;">There are a few hidden games built into the app for when you need a study break:</p>';
+  html += '<div style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">';
+  html += '<p>\u{1F9E0} <strong>Memory Match</strong> \u2014 Triple-click (or triple-tap) the app title "Jack VCE Study Master" at the top of the page.</p>';
+  html += '<p style="margin-top:0.25rem;">\u{1F40D} <strong>Snake Game</strong> \u2014 Tap the rocket emoji in the header 5 times quickly. On a keyboard, you can also enter the Konami Code: \u2191 \u2191 \u2193 \u2193 \u2190 \u2192 \u2190 \u2192 B A</p>';
+  html += '<p style="margin-top:0.25rem;">\u{1F319} <strong>Dark Mode</strong> \u2014 Tap the moon/sun icon next to the app title to toggle dark mode.</p>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+
+  // Export / Import Data
   html += '<div class="card">';
   html += '<div class="settings-section">';
   html += '<h3>Export / Import Data</h3>';
@@ -2541,6 +2690,7 @@ function renderSettings() {
   html += '</div>';
   html += '</div>';
 
+  // Reset Customisations
   html += '<div class="card">';
   html += '<div class="settings-section">';
   html += '<h3>Reset Customisations</h3>';
@@ -2549,6 +2699,7 @@ function renderSettings() {
   html += '</div>';
   html += '</div>';
 
+  // Clear All Data
   html += '<div class="card">';
   html += '<div class="settings-section">';
   html += '<h3>Clear All Data</h3>';
@@ -2557,6 +2708,7 @@ function renderSettings() {
   html += '</div>';
   html += '</div>';
 
+  // About
   html += '<div class="card">';
   html += '<div class="settings-section">';
   html += '<h3>About</h3>';
