@@ -1108,6 +1108,10 @@ html.dark input, html.dark select, html.dark textarea {
       <button data-view="settings">Settings</button>
     </div>
   </div>
+  <div id="updateBanner" style="display:none;background:#fbbf24;color:#1a202c;text-align:center;padding:6px 12px;font-size:0.82rem;font-weight:600;cursor:pointer;" onclick="location.reload(true)">
+    🔄 Update available — tap to refresh
+  </div>
+  <div style="text-align:center;padding:2px 0;font-size:0.65rem;color:rgba(255,255,255,0.5);" id="versionBadge"></div>
 </div>
 
 <div class="main" id="app"></div>
@@ -1123,6 +1127,11 @@ html.dark input, html.dark select, html.dark textarea {
 </div>
 
 <script>
+// ============================================================
+// VERSION
+// ============================================================
+const APP_VERSION = '1.1.0';
+
 // ============================================================
 // DATA: Subject and assessment definitions
 // ============================================================
@@ -1517,6 +1526,8 @@ function updateThemeToggleIcon() {
 
 function init() {
   initDarkMode();
+  document.getElementById('versionBadge').textContent = 'v' + APP_VERSION;
+  checkForUpdates();
   document.querySelectorAll('#nav button').forEach(btn => {
     btn.addEventListener('click', () => {
       currentView = btn.dataset.view;
@@ -1526,6 +1537,18 @@ function init() {
     });
   });
   render();
+}
+
+function checkForUpdates() {
+  fetch('https://raw.githubusercontent.com/Travis-coder712/jack-vce-study-master/main/index.html', { cache: 'no-store' })
+    .then(r => r.ok ? r.text() : '')
+    .then(text => {
+      const match = text.match(/APP_VERSION\s*=\s*'([^']+)'/);
+      if (match && match[1] !== APP_VERSION) {
+        document.getElementById('updateBanner').style.display = 'block';
+      }
+    })
+    .catch(() => {});
 }
 
 function render() {
@@ -2168,21 +2191,21 @@ const QUIZ_QUESTIONS = {
     { q: 'What is a contention in argument analysis?', opts: ['A quote from the text', 'The main argument or position put forward by the writer', 'A type of figurative language', 'The conclusion of an essay'], ans: 1, topic: 'Argument Analysis', explain: 'The contention is the writer\u2019s main argument or stance on an issue. Identifying the contention is the first step in analysing persuasive texts.' }
   ],
   'yr11-vetsport': [
-    { q: 'Which of the following is a sector of the sport industry?', opts: ['Hospitality', 'Public sport sector (government-funded)', 'Mining', 'Agriculture'], ans: 1, topic: 'Sport Industry', explain: 'The sport industry includes public (government-funded), private (commercial), and not-for-profit sectors, each playing different roles in sport delivery.' },
-    { q: 'What is the first step in planning a sport or recreation event?', opts: ['Book the venue', 'Define the purpose and objectives of the event', 'Hire staff', 'Create promotional materials'], ans: 1, topic: 'Event Planning', explain: 'Defining the purpose and objectives is essential before any other planning. It guides all decisions about venue, budget, staffing, and marketing.' },
-    { q: 'What does a risk assessment involve?', opts: ['Cancelling activities that might be dangerous', 'Identifying hazards, assessing likelihood and severity, and implementing controls', 'Only checking weather conditions', 'Removing all equipment from the venue'], ans: 1, topic: 'Risk Management', explain: 'Risk assessment is a systematic process: identify hazards, assess the likelihood and severity of harm, and implement control measures to minimise risk.' },
-    { q: 'What does OH&S stand for in a sport setting?', opts: ['Overtime Hours & Scheduling', 'Occupational Health and Safety', 'Outdoor Hazard Systems', 'Organisation of High-level Sport'], ans: 1, topic: 'Workplace Safety', explain: 'Occupational Health and Safety (OH&S) refers to laws, regulations, and practices designed to protect the health and safety of workers and participants.' },
-    { q: 'Which coaching principle focuses on activities being appropriate for the participant\'s age and ability?', opts: ['Periodisation', 'Progressive overload', 'Developmental appropriateness', 'Tapering'], ans: 2, topic: 'Coaching', explain: 'Developmental appropriateness means tailoring activities to suit the physical, cognitive, and emotional development level of participants.' },
-    { q: 'What is the primary purpose of a pre-activity screening?', opts: ['To rank participants by ability', 'To identify health risks or conditions that may affect safe participation', 'To determine team selections', 'To collect membership fees'], ans: 1, topic: 'Client Services', explain: 'Pre-activity screening identifies any health conditions, injuries, or risk factors that could affect a person\u2019s ability to safely participate in physical activity.' },
-    { q: 'What is a key responsibility of a sport facility manager?', opts: ['Coaching all teams', 'Ensuring the facility is safe, maintained, and fit for purpose', 'Setting ticket prices for professional matches', 'Selecting athletes for competition'], ans: 1, topic: 'Sport Industry', explain: 'Facility managers are responsible for maintenance, safety compliance, scheduling, and ensuring the facility meets the needs of users and regulatory standards.' },
-    { q: 'What level of first aid qualification is typically required for sport and recreation workers?', opts: ['No first aid is required', 'A current First Aid certificate (e.g., HLTAID011)', 'A medical degree', 'A sports science diploma'], ans: 1, topic: 'Workplace Safety', explain: 'Sport and recreation workers typically need a current First Aid certificate covering CPR, basic wound care, and emergency response procedures.' },
-    { q: 'What does inclusion mean in a sport and recreation context?', opts: ['Only allowing elite athletes to participate', 'Ensuring programs are accessible and welcoming to people of all abilities, backgrounds, and identities', 'Separating participants by gender', 'Limiting group sizes'], ans: 1, topic: 'Client Services', explain: 'Inclusion means removing barriers so everyone can participate, regardless of ability, age, gender, cultural background, or socioeconomic status.' },
-    { q: 'What is the purpose of a warm-up before physical activity?', opts: ['To tire participants before the main activity', 'To gradually increase heart rate, blood flow, and prepare muscles and joints for activity', 'To test fitness levels', 'To teach new skills'], ans: 1, topic: 'Coaching', explain: 'A warm-up prepares the body for exercise by increasing blood flow to muscles, raising body temperature, and reducing the risk of injury.' },
-    { q: 'Which of the following is an example of a marketing strategy for a sport event?', opts: ['Conducting a risk assessment', 'Using social media promotion and early-bird ticket pricing', 'Writing an incident report', 'Completing a first aid course'], ans: 1, topic: 'Sport Industry', explain: 'Marketing strategies for sport events include social media campaigns, early-bird pricing, sponsorships, flyers, and community engagement to attract participants and spectators.' },
-    { q: 'What should be included in an event run sheet?', opts: ['Only the venue address', 'A timeline of activities, responsibilities, and key contacts', 'Just the budget', 'The list of award winners'], ans: 1, topic: 'Event Planning', explain: 'A run sheet is a detailed timeline that outlines what happens, when, who is responsible, and key contacts \u2014 it keeps the event running smoothly.' },
-    { q: 'What is the hierarchy of hazard control measures?', opts: ['Warn, remove, ignore', 'Elimination, substitution, engineering controls, administrative controls, PPE', 'PPE first, then elimination', 'Report, review, close'], ans: 1, topic: 'Risk Management', explain: 'The hierarchy of control prioritises the most effective measures first: eliminate the hazard, substitute with something safer, use engineering controls, then administrative controls, and finally personal protective equipment (PPE).' },
-    { q: 'Why is effective communication important when working with sport clients?', opts: ['It is not important', 'It builds trust, ensures understanding of programs, and supports client safety and satisfaction', 'It only matters for elite athletes', 'It replaces the need for written policies'], ans: 1, topic: 'Client Services', explain: 'Effective communication ensures clients understand instructions, feel valued, and are informed about safety \u2014 leading to better outcomes and client retention.' },
-    { q: 'What is the role of Sport Australia (formerly Australian Sports Commission)?', opts: ['To manage individual sport clubs', 'To lead and support the development of sport at all levels across Australia', 'To only fund Olympic athletes', 'To run local community gyms'], ans: 1, topic: 'Sport Industry', explain: 'Sport Australia is the national body that supports sport development, participation, high performance, and integrity across all levels of Australian sport.' }
+    { q: 'When designing a sport and recreation session plan, what must be considered first?', opts: ['Equipment brand preferences', 'The needs, goals, and fitness levels of the participants', 'The instructor\'s favourite drills', 'What other facilities are offering'], ans: 1, topic: 'Program Design (Unit 3)', explain: 'Session planning starts with a client-centred approach — understanding participants\' goals, fitness levels, health conditions, and preferences to design appropriate activities.' },
+    { q: 'What is the purpose of a session plan in sport and recreation?', opts: ['To impress a supervisor', 'To provide a structured outline of activities, timing, equipment, and safety considerations', 'To list only the warm-up activities', 'To record attendance'], ans: 1, topic: 'Program Design (Unit 3)', explain: 'A session plan is a structured document that outlines objectives, warm-up, main activities, cool-down, timing, equipment needed, and safety/risk considerations.' },
+    { q: 'Which component must be included when conducting a sport or recreation session?', opts: ['A written exam for participants', 'A warm-up, main activity, and cool-down', 'A team selection trial', 'A media interview'], ans: 1, topic: 'Conducting Sessions (Unit 3)', explain: 'Every session must include a warm-up (preparing the body), the main activity (skill development, game, or fitness), and a cool-down (recovery and flexibility).' },
+    { q: 'What does the FITT principle stand for in fitness programming?', opts: ['Fun, Interest, Timing, Training', 'Frequency, Intensity, Time, Type', 'Flexibility, Intervals, Technique, Tempo', 'Focus, Improvement, Targets, Testing'], ans: 1, topic: 'Fitness Programming (Unit 3)', explain: 'FITT stands for Frequency (how often), Intensity (how hard), Time (duration), and Type (what kind of exercise). It guides the design of effective training programs.' },
+    { q: 'When conducting a session, how should an instructor modify activities for participants with varying ability levels?', opts: ['Exclude less skilled participants', 'Use differentiation — adjust rules, equipment, space, or task complexity', 'Only run activities suited to the most advanced participants', 'Let participants self-select out of activities'], ans: 1, topic: 'Conducting Sessions (Unit 3)', explain: 'Differentiation means modifying activities so all participants can be challenged appropriately — e.g. using larger balls, smaller courts, simplified rules, or peer support.' },
+    { q: 'What is the purpose of reflective practice after conducting a session?', opts: ['To blame participants for poor performance', 'To evaluate what worked well, what could improve, and how to enhance future sessions', 'To complete payroll documentation', 'To select the best athlete'], ans: 1, topic: 'Program Evaluation (Unit 3)', explain: 'Reflective practice involves critically evaluating a session — what went well, what didn\'t, participant feedback, and adjustments for future sessions. It drives continuous improvement.' },
+    { q: 'In organising a community sport event, what is a key legal requirement under Australian law?', opts: ['All participants must be over 18', 'A risk management plan must be developed and implemented', 'Events must be approved by the Prime Minister', 'Only accredited coaches can attend'], ans: 1, topic: 'Legal Requirements (Unit 4)', explain: 'Organisations have a legal duty of care. A risk management plan identifying hazards, assessing risks, and outlining control measures is a legal requirement for sport events.' },
+    { q: 'What does "duty of care" mean for a sport and recreation worker?', opts: ['Caring about winning', 'A legal obligation to take reasonable steps to ensure the safety and wellbeing of participants', 'Only applies to medical professionals', 'Providing refreshments at events'], ans: 1, topic: 'Legal Requirements (Unit 4)', explain: 'Duty of care is a legal obligation requiring sport and recreation workers to take all reasonable steps to prevent foreseeable harm to participants, spectators, and staff.' },
+    { q: 'Which legislation governs workplace health and safety in Victorian sport organisations?', opts: ['The Sports Act 2004', 'The Occupational Health and Safety Act 2004 (Vic)', 'The Education and Training Reform Act', 'The Fair Work Act only'], ans: 1, topic: 'WHS Legislation (Unit 4)', explain: 'The Occupational Health and Safety Act 2004 (Vic) sets out duties for employers, employees, and self-employed persons to ensure workplace health and safety, including sport environments.' },
+    { q: 'What is the role of a National Sporting Organisation (NSO) in Australia?', opts: ['To run local club training sessions', 'To govern, develop, and promote a sport nationally — including rules, pathways, and high performance', 'To only manage Olympic athletes', 'To sell sporting merchandise'], ans: 1, topic: 'Sport Industry Structure (Unit 4)', explain: 'NSOs (e.g. Cricket Australia, Football Australia) govern their sport nationally — setting rules, managing competitions, developing participation pathways, and supporting high performance programs.' },
+    { q: 'What is the purpose of a client consultation in sport and recreation?', opts: ['To sell memberships', 'To gather information about a client\'s health, fitness goals, preferences, and any medical conditions', 'To test their maximum strength', 'To assign them to a team'], ans: 1, topic: 'Client Services (Unit 3)', explain: 'Client consultations gather essential information — health history, goals, exercise preferences, injuries, and medical conditions — to design safe and effective programs.' },
+    { q: 'How should an instructor respond to an injury during a sport session?', opts: ['Continue the session and deal with it later', 'Follow the emergency action plan — stop activity, assess the injury, apply first aid, and complete an incident report', 'Ask other participants to treat the injured person', 'Only respond if the injury looks serious'], ans: 1, topic: 'Risk Management (Unit 3)', explain: 'The instructor must follow the facility\'s emergency action plan: stop the activity, assess using DRSABCD, apply appropriate first aid, seek further help if needed, and complete an incident report.' },
+    { q: 'What is the difference between a sport organisation\'s vision and its mission?', opts: ['They are the same thing', 'The vision describes the long-term aspiration; the mission describes the purpose and how it will be achieved', 'The vision is about finances; the mission is about staffing', 'Only large organisations need both'], ans: 1, topic: 'Sport Organisations (Unit 4)', explain: 'A vision statement describes what the organisation aspires to become. A mission statement defines its current purpose, what it does, who it serves, and how it operates.' },
+    { q: 'What are the benefits of technology in sport and recreation programs?', opts: ['It replaces the need for qualified instructors', 'It can enhance session delivery through fitness apps, wearable trackers, video analysis, and online booking systems', 'It is only useful for elite sport', 'It increases workplace hazards'], ans: 1, topic: 'Technology in Sport (Unit 4)', explain: 'Technology enhances sport and recreation through fitness tracking apps, heart rate monitors, video analysis for technique, online booking systems, and digital session planning tools.' },
+    { q: 'What role do volunteers play in the Australian sport industry?', opts: ['They have no significant role', 'They are essential — providing coaching, officiating, administration, and event support that sustains community sport', 'They only help at the Olympic Games', 'They are paid staff with a different title'], ans: 1, topic: 'Sport Industry Structure (Unit 4)', explain: 'Volunteers are the backbone of Australian community sport — providing coaching, officiating, committee roles, canteen duties, and event management that most clubs could not function without.' }
   ]
 };
 
