@@ -172,6 +172,22 @@ html.dark .gradient-text {
 }
 .nav button:hover { background: rgba(255,255,255,0.15); color: white; }
 .nav button.active { background: rgba(255,255,255,0.25); color: white; }
+.nav a {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.nav a:hover { background: rgba(255,255,255,0.15); color: white; }
 
 /* Main Content */
 .main {
@@ -679,7 +695,7 @@ input[type="number"].input-sm { width: 65px; }
   .dashboard-grid { grid-template-columns: 1fr; }
   .header-inner { flex-direction: column; align-items: stretch; overflow: visible; }
   .nav { flex-wrap: wrap; justify-content: center; gap: 4px; }
-  .nav button { white-space: nowrap; padding: 0.35rem 0.6rem; font-size: 0.78rem; }
+  .nav button, .nav a { white-space: nowrap; padding: 0.35rem 0.6rem; font-size: 0.78rem; }
   .stat-row { flex-direction: column; }
   .assessment-table { font-size: 0.8rem; }
   .assessment-table th, .assessment-table td { padding: 0.5rem 0.4rem; }
@@ -1323,6 +1339,7 @@ html.dark input, html.dark select, html.dark textarea {
       <button data-view="year11">Year 11</button>
       <button data-view="year12">Year 12</button>
       <button data-view="study">Study Zone</button>
+      <a href="study-week.html">🗓 Study Week</a>
       <button data-view="methods-prep" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;">📐 Methods Prep</button>
       <button data-view="uni">Uni & Careers</button>
       <button data-view="settings">Settings</button>
@@ -1350,7 +1367,7 @@ html.dark input, html.dark select, html.dark textarea {
 // ============================================================
 // VERSION
 // ============================================================
-const APP_VERSION = '1.11.0';
+const APP_VERSION = '1.12.0';
 
 // ============================================================
 // DATA: Subject and assessment definitions

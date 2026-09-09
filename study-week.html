@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack's Study Week</title>
+<meta name="description" content="Jack's Year 11 weekly study routine — the standard timetable, the reasoning, the Saturday planning habit, and a planner that copies straight into the calendar.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Study Week">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232F4B7C'/><rect x='22' y='26' width='56' height='10' rx='3' fill='%23fff'/><rect x='22' y='45' width='36' height='10' rx='3' fill='%23E09A5C'/><rect x='22' y='64' width='46' height='10' rx='3' fill='%2394C27C'/></svg>">
+<style>
+html{ -webkit-text-size-adjust:100%; }
+body{ margin:0; }
+img{ max-width:100%; }
+[hidden]{ display:none !important; }
+</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#F5F7FA;
+  --card:#FFFFFF;
+  --card-2:#F0F3F7;
+  --ink:#141922;
+  --ink-2:#4C5566;
+  --ink-3:#7C8697;
+  --rule:#DDE3EC;
+  --rule-2:#C2CBD9;
+  --accent:#2F4B7C;
+  --accent-soft:#E7EDF7;
+  --shadow:0 1px 2px rgba(20,25,34,.05), 0 8px 24px -12px rgba(20,25,34,.14);
+  --tint:13%;
+  --tint-2:8%;
+  --ink-mix:20%;
+
+  --s-maths:#2F4B7C;
+  --s-eco:#A2571C;
+  --s-eng:#1B6C70;
+  --s-bio:#4A7734;
+  --s-vet:#A03E44;
+  --s-bus:#67487F;
+
+  --ok:#3F7A46;
+  --warn:#9A6516;
+  --btn-fg:#FFFFFF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1116;
+    --card:#161A21;
+    --card-2:#1D222B;
+    --ink:#E9EBF0;
+    --ink-2:#A9B1BF;
+    --ink-3:#79828F;
+    --rule:#262C36;
+    --rule-2:#39414E;
+    --accent:#87A6DC;
+    --accent-soft:#1C2430;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+    --tint:24%;
+    --tint-2:15%;
+    --ink-mix:14%;
+
+    --s-maths:#87A6DC;
+    --s-eco:#E09A5C;
+    --s-eng:#5AB7B9;
+    --s-bio:#94C27C;
+    --s-vet:#E38A8F;
+    --s-bus:#B192D4;
+
+    --ok:#79C285;
+    --warn:#E0B45C;
+    --btn-fg:#0E1116;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1116;
+  --card:#161A21;
+  --card-2:#1D222B;
+  --ink:#E9EBF0;
+  --ink-2:#A9B1BF;
+  --ink-3:#79828F;
+  --rule:#262C36;
+  --rule-2:#39414E;
+  --accent:#87A6DC;
+  --accent-soft:#1C2430;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  --tint:24%;
+  --tint-2:15%;
+  --ink-mix:14%;
+
+  --s-maths:#87A6DC;
+  --s-eco:#E09A5C;
+  --s-eng:#5AB7B9;
+  --s-bio:#94C27C;
+  --s-vet:#E38A8F;
+  --s-bus:#B192D4;
+
+  --ok:#79C285;
+  --warn:#E0B45C;
+  --btn-fg:#0E1116;
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:16px;
+  line-height:1.55;
+  margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.ui{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
+h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:-.018em;line-height:1.14;font-weight:700}
+p{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
+
+.eyebrow{
+  font-family:Archivo,sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ============ CHROME ============ */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:11px clamp(16px,4vw,40px);
+}
+.brand{font-family:Archivo,sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;margin-right:auto}
+.brand span{color:var(--ink-3);font-weight:500}
+.tabs{display:flex;gap:4px;background:var(--card-2);padding:3px;border-radius:8px;border:1px solid var(--rule)}
+.tab{
+  font-family:Archivo,sans-serif;font-size:13px;font-weight:600;
+  padding:6px 14px;border-radius:6px;border:0;background:transparent;
+  color:var(--ink-2);cursor:pointer;
+}
+.tab[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tab:focus-visible,.btn:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn{
+  font-family:Archivo,sans-serif;font-size:13px;font-weight:600;
+  padding:7px 14px;border-radius:7px;cursor:pointer;
+  background:var(--accent);color:var(--btn-fg);border:1px solid transparent;
+}
+.btn.ghost{background:var(--card);color:var(--ink);border-color:var(--rule-2)}
+.btn.ghost:hover{background:var(--card-2)}
+
+/* ============ DECK ============ */
+.deck{padding:clamp(20px,3.5vw,44px) clamp(14px,4vw,40px) 80px;display:flex;flex-direction:column;gap:clamp(20px,3vw,36px);align-items:center}
+.slide{
+  width:100%;max-width:1120px;background:var(--card);
+  border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow);
+  padding:clamp(24px,3.4vw,44px);position:relative;overflow:hidden;
+}
+.slide::after{
+  content:attr(data-n);position:absolute;right:20px;bottom:14px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);letter-spacing:.06em;
+}
+.ruled{
+  background-image:repeating-linear-gradient(to bottom,
+    color-mix(in srgb,var(--rule) 55%,transparent) 0 1px, transparent 1px 34px);
+  background-position:0 0;
+}
+.slide-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.slide h2{font-size:clamp(24px,2.9vw,33px)}
+.lede{color:var(--ink-2);font-size:clamp(15px,1.5vw,17.5px);max-width:66ch;margin-top:10px}
+.hr{height:1px;background:var(--rule);border:0;margin:22px 0}
+
+/* Cover */
+.cover{padding-block:clamp(34px,5vw,60px)}
+.cover h1{font-size:clamp(38px,6.4vw,72px);letter-spacing:-.035em;line-height:1.02}
+.cover .sub{font-size:clamp(17px,2vw,22px);color:var(--ink-2);margin-top:16px;max-width:52ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-top:34px}
+.stat{background:var(--card);padding:16px 18px}
+.stat .n{font-family:Archivo,sans-serif;font-weight:700;font-size:clamp(28px,3.6vw,40px);letter-spacing:-.03em;line-height:1;color:var(--accent)}
+.stat .l{font-size:12.5px;color:var(--ink-2);margin-top:7px;line-height:1.35}
+
+/* ============ TIMETABLE ============ */
+.tt{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:22px}
+.col{background:var(--card-2);border:1px solid var(--rule);border-radius:10px;padding:10px 9px 9px;display:flex;flex-direction:column;min-width:0}
+.col-head{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:9px;padding:0 2px}
+.col-head .d{font-family:Archivo,sans-serif;font-weight:700;font-size:14px;letter-spacing:-.01em}
+.band{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.stack{display:flex;flex-direction:column;gap:4px;flex:1}
+.blk{
+  --sc:var(--s-maths);
+  border-radius:7px;padding:7px 9px;min-width:0;
+  background:color-mix(in srgb,var(--sc) var(--tint),var(--card));
+  border:1px solid color-mix(in srgb,var(--sc) 34%,var(--card));
+  border-left:3px solid var(--sc);
+  display:flex;flex-direction:column;justify-content:center;gap:2px;
+}
+.blk.h1{min-height:52px}
+.blk.h2{min-height:108px}
+.blk .t{font-family:"IBM Plex Mono",monospace;font-size:10px;color:color-mix(in srgb,var(--sc) 62%,var(--ink));letter-spacing:.01em}
+.blk .s{font-family:Archivo,sans-serif;font-weight:600;font-size:12.5px;line-height:1.2;color:color-mix(in srgb,var(--sc) 78%,var(--ink));word-break:break-word}
+.blk.tutor{
+  background:repeating-linear-gradient(135deg,
+    color-mix(in srgb,var(--sc) var(--tint),var(--card)) 0 7px,
+    color-mix(in srgb,var(--sc) var(--tint-2),var(--card)) 7px 14px);
+  border-style:solid;border-width:1px 1px 1px 3px;
+}
+.tag{
+  display:inline-block;font-family:Archivo,sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;margin-top:3px;
+  color:color-mix(in srgb,var(--sc) 70%,var(--ink));
+}
+.gap{height:16px;border-left:1px dashed var(--rule-2);margin-left:11px}
+.gap.lg{height:24px}
+.col-foot{margin-top:9px;padding-top:8px;border-top:1px solid var(--rule);font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);display:flex;justify-content:space-between;gap:4px}
+.bankable{color:var(--warn);font-weight:500}
+
+.legend{display:flex;flex-wrap:wrap;gap:7px 16px;margin-top:18px;align-items:center}
+.lg-item{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+.sw{width:11px;height:11px;border-radius:3px;background:var(--sc);flex:none}
+.lg-note{font-size:12.5px;color:var(--ink-3);font-style:italic}
+
+/* ============ HOURS ============ */
+.hours{display:flex;flex-direction:column;gap:9px;margin-top:20px}
+.hrow{display:grid;grid-template-columns:150px 1fr 92px;gap:14px;align-items:center}
+.hrow .nm{font-family:Archivo,sans-serif;font-weight:600;font-size:13.5px;text-align:right;color:var(--ink)}
+.bar{display:flex;gap:3px;align-items:center;min-width:0}
+.unit{height:22px;flex:0 0 30px;border-radius:4px;background:color-mix(in srgb,var(--sc) 72%,var(--card));border:1px solid color-mix(in srgb,var(--sc) 85%,var(--card))}
+.unit.tut{flex:0 0 63px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--sc) 62%,var(--card)) 0 5px,color-mix(in srgb,var(--sc) 26%,var(--card)) 5px 10px)}
+.hrow .amt{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2)}
+
+.callout{
+  border:1px solid color-mix(in srgb,var(--warn) 42%,var(--rule));
+  background:color-mix(in srgb,var(--warn) 9%,var(--card));
+  border-left:3px solid var(--warn);
+  border-radius:9px;padding:15px 18px;margin-top:24px;
+}
+.callout h4{font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--warn);margin-bottom:7px}
+.callout p{font-size:14.5px;color:var(--ink-2)}
+.callout p + p{margin-top:7px}
+
+/* ============ LISTS ============ */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px 30px;margin-top:22px}
+.item{display:flex;gap:13px;align-items:flex-start}
+.marker{
+  flex:none;width:26px;height:26px;border-radius:7px;background:var(--accent-soft);
+  color:var(--accent);font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;margin-top:1px;
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+}
+.item h4{font-size:14.5px;margin-bottom:4px;letter-spacing:-.005em}
+.item p{font-size:14.5px;color:var(--ink-2);line-height:1.5}
+
+.rules{display:flex;flex-direction:column;gap:0;margin-top:20px;border-top:1px solid var(--rule)}
+.rule-row{display:grid;grid-template-columns:126px 1fr;gap:20px;padding:13px 0;border-bottom:1px solid var(--rule);align-items:start}
+.rule-row .k{font-family:Archivo,sans-serif;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding-top:3px}
+.k.fixed{color:var(--s-maths)}
+.k.trade{color:var(--s-eco)}
+.k.bank{color:var(--warn)}
+.k.floor{color:var(--s-vet)}
+.rule-row .v{font-size:15px;color:var(--ink-2)}
+.rule-row .v b{color:var(--ink);font-weight:600}
+
+.example{background:var(--card-2);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin-top:24px}
+.example h4{font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+.swap{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:11px}
+.pill{
+  --sc:var(--s-maths);
+  font-family:Archivo,sans-serif;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:20px;
+  background:color-mix(in srgb,var(--sc) var(--tint),var(--card));
+  border:1px solid color-mix(in srgb,var(--sc) 38%,var(--card));
+  color:color-mix(in srgb,var(--sc) 78%,var(--ink));white-space:nowrap;
+}
+.arrow{color:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:15px}
+
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:14px;margin-top:22px}
+.step{display:grid;grid-template-columns:34px 1fr;gap:15px;align-items:start}
+.step .num{
+  counter-increment:s;width:28px;height:28px;border-radius:50%;
+  background:var(--accent);color:var(--btn-fg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;margin-top:1px;
+}
+.step .num::before{content:counter(s)}
+.step h4{font-size:15px;margin-bottom:3px}
+.step p{font-size:14.5px;color:var(--ink-2)}
+.step .mins{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);margin-left:8px;font-weight:400}
+
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;background:var(--rule);border:1px solid var(--rule);border-radius:11px;overflow:hidden;margin-top:22px}
+.tip{background:var(--card);padding:16px 18px}
+.tip h4{font-size:14.5px;margin-bottom:5px}
+.tip p{font-size:14px;color:var(--ink-2);line-height:1.5}
+.tip .no{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);letter-spacing:.08em;display:block;margin-bottom:6px}
+
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:22px}
+.dos h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.dos .do h4{color:var(--ok)}
+.dos .dont h4{color:var(--s-vet)}
+.dos ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.dos li{font-size:14.5px;color:var(--ink-2);padding-left:22px;position:relative;line-height:1.45}
+.dos .do li::before{content:"+";position:absolute;left:0;top:-1px;color:var(--ok);font-family:"IBM Plex Mono",monospace;font-weight:600}
+.dos .dont li::before{content:"–";position:absolute;left:0;top:-1px;color:var(--s-vet);font-family:"IBM Plex Mono",monospace;font-weight:600}
+.dos li b{color:var(--ink);font-weight:600}
+
+/* Blank grid slide */
+.blank{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:20px}
+.bcol{border:1px solid var(--rule-2);border-radius:9px;overflow:hidden;display:flex;flex-direction:column}
+.bcol .bh{background:var(--card-2);padding:8px 10px;font-family:Archivo,sans-serif;font-weight:700;font-size:13px;border-bottom:1px solid var(--rule-2)}
+.bslot{border-bottom:1px dashed var(--rule);padding:7px 9px 6px;min-height:54px}
+.bslot:last-child{border-bottom:0}
+.bslot .bt{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-3)}
+.bline{border-bottom:1px solid var(--rule-2);height:15px;margin-top:5px}
+.weekof{display:flex;align-items:baseline;gap:12px;margin-top:16px;font-family:Archivo,sans-serif;font-size:14px;font-weight:600}
+.weekof .fill{flex:1;max-width:260px;border-bottom:1.5px solid var(--rule-2);height:20px}
+
+/* ============ PLANNER ============ */
+.planner{padding:clamp(20px,3.5vw,40px) clamp(14px,4vw,40px) 90px;max-width:1240px;margin:0 auto}
+.pl-head{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;margin-bottom:8px}
+.pl-head h2{font-size:clamp(22px,2.6vw,29px)}
+.pl-actions{display:flex;gap:8px;flex-wrap:wrap}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-family:Archivo,sans-serif;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+input[type="date"],input[type="text"],select{
+  font-family:Archivo,sans-serif;font-size:13px;color:var(--ink);
+  background:var(--card);border:1px solid var(--rule-2);border-radius:7px;padding:6px 9px;
+}
+input[type="text"]{font-family:"Source Serif 4",serif;font-size:13.5px;width:100%}
+input[type="text"]::placeholder{color:var(--ink-3);opacity:.75}
+
+.tally{display:flex;flex-wrap:wrap;gap:7px;margin:20px 0;align-items:center}
+.tchip{
+  --sc:var(--s-maths);display:flex;align-items:center;gap:7px;
+  font-family:Archivo,sans-serif;font-size:12.5px;font-weight:600;
+  padding:6px 12px;border-radius:20px;
+  background:color-mix(in srgb,var(--sc) var(--tint-2),var(--card));
+  border:1px solid color-mix(in srgb,var(--sc) 32%,var(--card));
+  color:color-mix(in srgb,var(--sc) 74%,var(--ink));
+}
+.tchip .ct{font-family:"IBM Plex Mono",monospace;font-size:12px}
+.tchip .dl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;padding:1px 5px;border-radius:9px;background:color-mix(in srgb,var(--sc) 22%,var(--card))}
+.tchip.up .dl{background:color-mix(in srgb,var(--ok) 26%,var(--card));color:var(--ok)}
+.tchip.down .dl{background:color-mix(in srgb,var(--warn) 26%,var(--card));color:var(--warn)}
+.total{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-2)}
+
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.pcol{background:var(--card);border:1px solid var(--rule);border-radius:11px;padding:11px 10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.pcol > .col-head{margin-bottom:0}
+.pblk{
+  --sc:var(--s-maths);
+  border-radius:8px;padding:8px;
+  background:color-mix(in srgb,var(--sc) var(--tint-2),var(--card));
+  border:1px solid color-mix(in srgb,var(--sc) 30%,var(--card));
+  border-left:3px solid var(--sc);
+  display:flex;flex-direction:column;gap:6px;min-width:0;
+}
+.pblk .row1{display:flex;gap:5px;align-items:center;min-width:0}
+.pblk select{flex:1;min-width:0;font-size:12px;padding:4px 5px}
+.pblk select.time{flex:0 0 74px}
+.pblk input[type="text"]{font-size:12.5px;padding:5px 7px}
+.x{
+  flex:none;width:22px;height:22px;border-radius:5px;border:1px solid var(--rule-2);
+  background:var(--card);color:var(--ink-3);cursor:pointer;line-height:1;
+  font-family:"IBM Plex Mono",monospace;font-size:13px;padding:0;
+}
+.x:hover{color:var(--s-vet);border-color:var(--s-vet)}
+.locked{
+  font-family:Archivo,sans-serif;font-size:12.5px;font-weight:600;
+  color:color-mix(in srgb,var(--sc) 76%,var(--ink));
+  display:flex;justify-content:space-between;gap:8px;align-items:baseline;
+}
+.locked .lt{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:400;color:color-mix(in srgb,var(--sc) 58%,var(--ink))}
+.add{
+  border:1px dashed var(--rule-2);background:transparent;color:var(--ink-3);
+  border-radius:8px;padding:7px;cursor:pointer;
+  font-family:Archivo,sans-serif;font-size:12px;font-weight:600;
+}
+.add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+
+.out{margin-top:26px;background:var(--card);border:1px solid var(--rule);border-radius:11px;padding:18px 20px}
+.out-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.out-head h3{font-size:16px}
+.out-head p{font-size:13px;color:var(--ink-3);margin-top:3px}
+textarea{
+  width:100%;min-height:230px;resize:vertical;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.65;
+  color:var(--ink);background:var(--card-2);border:1px solid var(--rule);
+  border-radius:8px;padding:13px;
+}
+.saved{font-family:Archivo,sans-serif;font-size:12px;color:var(--ok);opacity:0;transition:opacity .25s}
+.saved.on{opacity:1}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1000px){
+  .tt,.blank,.pgrid{grid-template-columns:repeat(2,1fr)}
+  .hrow{grid-template-columns:112px 1fr;row-gap:4px}
+  .hrow .amt{grid-column:2;text-align:left}
+}
+@media (max-width:620px){
+  .tt,.blank,.pgrid{grid-template-columns:1fr}
+  .dos{grid-template-columns:1fr;gap:22px}
+  .rule-row{grid-template-columns:1fr;gap:5px}
+  .hrow .nm{text-align:left}
+  .blk.h1,.blk.h2{min-height:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ============ PRINT ============ */
+@media print{
+  :root{
+    --paper:#fff;--card:#fff;--card-2:#F4F6F9;--ink:#101419;--ink-2:#3F4753;--ink-3:#6C7684;
+    --rule:#D6DCE5;--rule-2:#AEB8C6;--accent:#2F4B7C;--accent-soft:#EAF0F8;
+    --shadow:none;--tint:15%;--tint-2:9%;
+    --s-maths:#2F4B7C;--s-eco:#A2571C;--s-eng:#1B6C70;--s-bio:#4A7734;--s-vet:#A03E44;--s-bus:#67487F;
+    --ok:#3F7A46;--warn:#8A5A12;--btn-fg:#FFFFFF;
+  }
+  @page{size:A4 landscape;margin:11mm}
+  html,body{background:#fff!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .topbar,.planner,.noprint{display:none!important}
+  .deck{padding:0;gap:0;display:block}
+  .slide{
+    max-width:none;width:100%;border:0;border-radius:0;box-shadow:none;
+    padding:0 0 8mm;break-after:page;page-break-after:always;overflow:visible;
+  }
+  .slide:last-child{break-after:auto;page-break-after:auto}
+  .slide,.tt,.col,.blk,.tips,.stats,.example,.callout,.dos,.blank,.bcol{break-inside:avoid;page-break-inside:avoid}
+  .cover{padding-block:14mm}
+  .ruled{background-image:none}
+  .slide::after{bottom:2mm;right:2mm}
+}
+</style>
+
+<div class="topbar noprint">
+  <div class="brand">Jack's Study Week <span>· Year 11, Semester 2 2026</span></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tab-deck" role="tab" aria-selected="true" aria-controls="view-deck">The plan</button>
+    <button class="tab" id="tab-plan" role="tab" aria-selected="false" aria-controls="view-plan">Week planner</button>
+  </div>
+  <button class="btn" id="printBtn">Print the deck</button>
+</div>
+
+<div class="backbar noprint">
+  <a href="index.html">&larr; Back to VCE Study Master</a>
+</div>
+<style>
+.backbar{ padding:10px clamp(16px,4vw,40px) 0; }
+.backbar a{
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif; font-size:13px; font-weight:600;
+  color:var(--ink-3); text-decoration:none;
+}
+.backbar a:hover{ color:var(--accent); text-decoration:underline; }
+@media print{ .backbar{ display:none !important; } }
+</style>
+
+<!-- ==================== DECK ==================== -->
+<main class="deck" id="view-deck" role="tabpanel" aria-labelledby="tab-deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide cover ruled" data-n="1 / 9">
+    <div class="eyebrow">Year 11 · Semester 2, 2026 · Set 9 September</div>
+    <h1>Eight hours a<br>week, on purpose.</h1>
+    <p class="sub">Jack's study routine for the rest of Year 11 — built in 30-minute blocks around two tutoring sessions, planned every Saturday, and flexible enough to survive a real week.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">6</div><div class="l">subjects</div></div>
+      <div class="stat"><div class="n">12</div><div class="l">30-minute study blocks</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">tutoring hours <br>(Maths, English)</div></div>
+      <div class="stat"><div class="n">8</div><div class="l">hours a week, Mon–Fri</div></div>
+      <div class="stat"><div class="n">Sat</div><div class="l">the week ahead gets planned</div></div>
+    </div>
+  </section>
+
+  <!-- 2 · TIMETABLE -->
+  <section class="slide" data-n="2 / 9">
+    <div class="slide-head"><div class="eyebrow">The baseline</div></div>
+    <h2>The standard week</h2>
+    <p class="lede">This is the default. It runs unless Jack deliberately changes it on Saturday — and it's what everyone can assume is happening on any given afternoon.</p>
+    <div class="tt" id="ttGrid"></div>
+    <div class="legend" id="ttLegend"></div>
+  </section>
+
+  <!-- 3 · HOURS -->
+  <section class="slide" data-n="3 / 9">
+    <div class="slide-head"><div class="eyebrow">Where the time goes</div></div>
+    <h2>Six subjects, weighted deliberately</h2>
+    <p class="lede">Maths gets the most because it's the subject that punishes gaps — miss a week and the next topic doesn't make sense. Business Management and VET get the least because they're the most self-contained.</p>
+    <div class="hours" id="hoursChart"></div>
+    <div class="callout">
+      <h4>Worth knowing</h4>
+      <p><b>Thursday and Friday nights carry 2&frac12; of the 8 hours</b> — nearly a third of the week sits in the two slots most likely to be missed.</p>
+      <p>That's by design, not by accident: they're the two that can be banked to the weekend. But it does mean a fortnight of skipped Thursdays and Fridays quietly costs a third of the plan, so they're the first thing to look at if the week keeps coming up short.</p>
+    </div>
+  </section>
+
+  <!-- 4 · THINKING -->
+  <section class="slide" data-n="4 / 9">
+    <div class="slide-head"><div class="eyebrow">The reasoning</div></div>
+    <h2>Why it's shaped like this</h2>
+    <div class="grid2">
+      <div class="item"><div class="marker">30</div><div><h4>Half an hour is the unit</h4><p>Short enough to start without dread, long enough to finish something. Two or three of them stacked feels like a normal afternoon, not a study session.</p></div></div>
+      <div class="item"><div class="marker">M</div><div><h4>Maths every single day</h4><p>Methods is cumulative and it's the one that unravels fastest. Four self-study blocks plus the Monday tutor means Jack touches it five days out of seven.</p></div></div>
+      <div class="item"><div class="marker">T</div><div><h4>Tutoring is the skeleton</h4><p>Monday 5:00 and Wednesday 5:40 are fixed points in the week. Everything else was placed around them, not the other way around.</p></div></div>
+      <div class="item"><div class="marker">B</div><div><h4>Tuesday runs straight through</h4><p>Maths, VET and Business Management back-to-back from 4:00 to 5:30 — no tutoring to work around. Bus Man sits last because it follows the Tuesday double period, so it builds on a lesson that's still fresh.</p></div></div>
+      <div class="item"><div class="marker">PM</div><div><h4>Thursday and Friday move late</h4><p>Those two nights sit at 8:00pm, after whatever else is on. They're the most likely to be missed — which is fine, because they're the two that can be banked to the weekend.</p></div></div>
+      <div class="item"><div class="marker">—</div><div><h4>The weekend stays empty</h4><p>Nothing is scheduled Saturday or Sunday by default. That's deliberate: it's the buffer that absorbs a missed night or a SAC, and it only gets used when it's needed.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 5 · FLEX -->
+  <section class="slide" data-n="5 / 9">
+    <div class="slide-head"><div class="eyebrow">Flexibility, with edges</div></div>
+    <h2>Changing the week without losing it</h2>
+    <p class="lede">The plan is meant to flex — that's the point of setting it weekly. These are the rules that keep flexing from quietly turning into not doing it.</p>
+    <div class="rules">
+      <div class="rule-row"><div class="k fixed">Never moves</div><div class="v">The <b>two tutoring sessions</b>, and <b>Maths appears every weekday</b>. If a Maths block has to go, it moves — it doesn't disappear.</div></div>
+      <div class="rule-row"><div class="k trade">Trade 1-for-1</div><div class="v">Everything else is swappable inside the same week. A SAC in one subject buys blocks from another, and the total stays at 12.</div></div>
+      <div class="rule-row"><div class="k bank">Bankable</div><div class="v">Thursday and Friday evenings can be carried to the weekend. Monday–Wednesday can't — they're too close to the tutoring to skip.</div></div>
+      <div class="rule-row"><div class="k floor">The floor</div><div class="v">A subject can drop to <b>zero for one week</b> to make room for a SAC — never two weeks running. Cap any single subject at 3 blocks.</div></div>
+    </div>
+    <div class="example">
+      <h4>Worked example · Business Management SAC on Friday</h4>
+      <p style="font-size:14.5px;color:var(--ink-2)">Drop Economics and VET to one block each for the week, and give both back to Business Management. Bus Man goes 1 → 3; the total stays at 12; next Saturday it resets to baseline.</p>
+      <div class="swap">
+        <span class="pill" style="--sc:var(--s-eco)">Economics 2 → 1</span>
+        <span class="arrow">+</span>
+        <span class="pill" style="--sc:var(--s-vet)">VET 2 → 1</span>
+        <span class="arrow">→</span>
+        <span class="pill" style="--sc:var(--s-bus)">Business Man. 1 → 3</span>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-3);margin-top:12px">Tuesday finishes at 5:30, so 5:30–6:00 is the natural spare slot if a week needs a 13th block rather than a trade.</p>
+    </div>
+  </section>
+
+  <!-- 6 · SATURDAY -->
+  <section class="slide" data-n="6 / 9">
+    <div class="slide-head"><div class="eyebrow">The weekly habit</div></div>
+    <h2>Saturday afternoon: set the week</h2>
+    <p class="lede">Twenty minutes on a Saturday is what makes the other eight hours work. The point isn't the timetable — it's knowing what's due, and deciding what each block is actually for.</p>
+    <div class="steps">
+      <div class="step"><div class="num"></div><div><h4>Open the planner and reset to baseline <span class="mins">1 min</span></h4><p>Start from the standard week every time. Don't carry last week's changes forward.</p></div></div>
+      <div class="step"><div class="num"></div><div><h4>Look up what's actually due <span class="mins">7 min</span></h4><p>SACs, assignments, prac reports, tests, presentations — for the next two weeks, not just this one. This is the step that gets skipped and it's the one that matters.</p></div></div>
+      <div class="step"><div class="num"></div><div><h4>Check what's on <span class="mins">2 min</span></h4><p>Sport, work, birthdays, family things. Mark the blocks that realistically won't happen and move them rather than pretending.</p></div></div>
+      <div class="step"><div class="num"></div><div><h4>Reprioritise using the trade rules <span class="mins">3 min</span></h4><p>Shift blocks toward whatever's due first. Keep the total at 12.</p></div></div>
+      <div class="step"><div class="num"></div><div><h4>Write one job per block <span class="mins">5 min</span></h4><p><b>"Eco: 3 exam questions on market failure"</b> — not "do some Economics". A block with a named job starts in ten seconds; a block without one starts in ten minutes.</p></div></div>
+      <div class="step"><div class="num"></div><div><h4>Copy it into the phone calendar <span class="mins">2 min</span></h4><p>Every block as its own event with a 5-minute alert. If it isn't in the calendar it isn't a plan, it's an intention.</p></div></div>
+      <div class="step"><div class="num"></div><div><h4>Sunday: a two-minute look <span class="mins">2 min</span></h4><p>Anything cropped up since yesterday? Add a weekend block now if it has, rather than discovering it on Wednesday night.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 7 · TIPS -->
+  <section class="slide" data-n="7 / 9">
+    <div class="slide-head"><div class="eyebrow">Making it count</div></div>
+    <h2>How to spend thirty minutes</h2>
+    <p class="lede">Thirty minutes of real work beats two distracted hours, and it's the difference between a plan that works and a plan that just looks good on paper.</p>
+    <div class="tips">
+      <div class="tip"><span class="no">01</span><h4>Know the job before you sit down</h4><p>It was written on Saturday. Open the book to the right page and go. Deciding what to do at the desk eats the first ten minutes every time.</p></div>
+      <div class="tip"><span class="no">02</span><h4>Phone in another room</h4><p>Face-down on the desk still costs you — the brain keeps a little attention on it. Out of the room, on silent. Nothing in thirty minutes can't wait.</p></div>
+      <div class="tip"><span class="no">03</span><h4>Nothing else on the screen</h4><p>No YouTube "for background", no Discord, no music with words. If the block needs a laptop, close every other tab before starting.</p></div>
+      <div class="tip"><span class="no">04</span><h4>Produce something, don't just read</h4><p>Re-reading notes feels productive and barely works. Close the book and write what you remember, do questions, explain it out loud. If nothing's on the page at the end, the block didn't happen.</p></div>
+      <div class="tip"><span class="no">05</span><h4>Hardest thing first</h4><p>The first ten minutes are the sharpest ten minutes. Don't spend them colour-coding a summary.</p></div>
+      <div class="tip"><span class="no">06</span><h4>Stuck for five minutes? Write it down and move on</h4><p>Note the question, take it to the tutor or the teacher next lesson. One problem should never eat a whole block.</p></div>
+      <div class="tip"><span class="no">07</span><h4>End with one line about where you got to</h4><p>"Up to Q14, chain rule still shaky." Next block picks up instantly instead of re-reading to find the spot.</p></div>
+      <div class="tip"><span class="no">08</span><h4>Actually take the break</h4><p>Thirty on, then stand up and leave the desk. Two blocks run back-to-back without a break just becomes one ordinary hour.</p></div>
+    </div>
+  </section>
+
+  <!-- 8 · PARENTS -->
+  <section class="slide" data-n="8 / 9">
+    <div class="slide-head"><div class="eyebrow">For Mum and Dad</div></div>
+    <h2>Our part in it</h2>
+    <p class="lede">The plan belongs to Jack — he sets it, so he owns it. Our job is to protect the time and ask about the plan, not to audit the blocks.</p>
+    <div class="dos">
+      <div class="do">
+        <h4>Worth doing</h4>
+        <ul>
+          <li><b>Protect the slots.</b> No jobs, errands or dinner debates at 4:00 Monday or 8:00 Thursday. If the time is real to us, it stays real to him.</li>
+          <li><b>One check-in a week</b> — Saturday, when the plan gets set. "What's on this week?" That's the whole conversation.</li>
+          <li><b>Ask about the plan, not the marks.</b> "What are you working on Tuesday?" lands very differently from "have you done your homework?"</li>
+          <li><b>Notice the streak, not the block.</b> Four weeks of a set plan is the win, whether or not every block happened.</li>
+          <li><b>Keep the weekend genuinely free</b> when the week went well. The buffer only works if it's a reward for using it.</li>
+        </ul>
+      </div>
+      <div class="dont">
+        <h4>Best avoided</h4>
+        <ul>
+          <li><b>Checking mid-block.</b> Walking in at 4:15 to see if it's happening ends the block.</li>
+          <li><b>Treating a missed block as a problem.</b> Missing one is normal and the plan is built for it. Missing three weeks running is the actual signal.</li>
+          <li><b>Rewriting his plan for him.</b> If the weighting looks wrong, ask why it's set that way — a plan he was handed is a plan he'll drop.</li>
+          <li><b>Adding subjects or hours when things get tense.</b> Eight hours done properly beats twelve resented ones.</li>
+          <li><b>Letting Saturday quietly slide.</b> This is the one habit worth being firm about — everything else follows from it.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · BLANK -->
+  <section class="slide" data-n="9 / 9">
+    <div class="slide-head"><div class="eyebrow">Print and fill in</div></div>
+    <h2>This week's plan</h2>
+    <p class="lede">A blank week for the fridge or the desk — for when it's easier to fill in with a pen on Saturday than to open a laptop. One job per line.</p>
+    <div class="weekof"><span>Week beginning</span><span class="fill"></span><span style="color:var(--ink-3);font-weight:400">Due this week:</span><span class="fill"></span></div>
+    <div class="blank" id="blankGrid"></div>
+  </section>
+
+</main>
+
+<!-- ==================== PLANNER ==================== -->
+<section class="planner" id="view-plan" role="tabpanel" aria-labelledby="tab-plan" hidden>
+  <div class="pl-head">
+    <div>
+      <h2>Week planner</h2>
+      <p style="color:var(--ink-2);font-size:15px;margin-top:8px;max-width:62ch">Adjust the week, write one job per block, then copy it straight into the calendar. It saves in this browser, so it'll still be here next Saturday.</p>
+    </div>
+    <div class="pl-actions">
+      <div class="field"><label for="weekOf">Week beginning</label><input type="date" id="weekOf"></div>
+      <button class="btn ghost" id="resetBtn" style="align-self:flex-end">Reset to baseline</button>
+    </div>
+  </div>
+
+  <div class="tally" id="tally"></div>
+  <div class="pgrid" id="pGrid"></div>
+
+  <div class="out">
+    <div class="out-head">
+      <div>
+        <h3>Copy into the calendar</h3>
+        <p>One line per block. Paste into a note, or use each line as an event title.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span class="saved" id="savedFlag">Copied</span>
+        <button class="btn" id="copyBtn">Copy the week</button>
+      </div>
+    </div>
+    <textarea id="outText" readonly aria-label="Week plan text for copying"></textarea>
+  </div>
+</section>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- DATA ---------- */
+var SUB = {
+  maths:{n:"Maths Methods", s:"Maths", v:"--s-maths"},
+  eco:  {n:"Economics",     s:"Economics", v:"--s-eco"},
+  eng:  {n:"English",       s:"English", v:"--s-eng"},
+  bio:  {n:"Biology",       s:"Biology", v:"--s-bio"},
+  vet:  {n:"VET Sport & Rec", s:"VET Sport & Rec", v:"--s-vet"},
+  bus:  {n:"Business Management", s:"Business Man.", v:"--s-bus"}
+};
+var ORDER = ["maths","eco","eng","bio","vet","bus"];
+var DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+
+function mk(s,st,en,o){ var b={s:s,t:st,e:en,job:""}; if(o){for(var k in o) b[k]=o[k];} return b; }
+
+var BASELINE = {
+  Monday:   [mk("eco","16:00","16:30"), mk("eng","16:30","17:00"), mk("maths","17:00","18:00",{tutor:true})],
+  Tuesday:  [mk("maths","16:00","16:30"), mk("vet","16:30","17:00"), mk("bus","17:00","17:30")],
+  Wednesday:[mk("maths","16:30","17:00"), mk("bio","17:00","17:30"), mk("eng","17:40","18:40",{tutor:true})],
+  Thursday: [mk("maths","20:00","20:30",{eve:true}), mk("eco","20:30","21:00",{eve:true}), mk("bio","21:00","21:30",{eve:true})],
+  Friday:   [mk("maths","20:00","20:30",{eve:true}), mk("vet","20:30","21:00",{eve:true})]
+};
+var TARGET = {maths:4, eco:2, eng:1, bio:2, bus:1, vet:2};
+var BAND = {Monday:"After school",Tuesday:"After school",Wednesday:"After school",Thursday:"Evening",Friday:"Evening"};
+
+/* ---------- HELPERS ---------- */
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+function mins(t){ var p=t.split(":"); return (+p[0])*60 + (+p[1]); }
+function fmt(t){
+  var p=t.split(":"), h=+p[0], m=p[1];
+  var ap = h>=12 ? "pm":"am"; var hh = h%12; if(hh===0) hh=12;
+  return hh+":"+m+ap;
+}
+function range(b){ return fmt(b.t)+"–"+fmt(b.e); }
+function dur(b){ return mins(b.e)-mins(b.t); }
+function el(tag,cls,txt){ var e=document.createElement(tag); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e; }
+
+/* ---------- DECK: TIMETABLE ---------- */
+function buildTimetable(){
+  var g = document.getElementById("ttGrid");
+  g.textContent = "";
+  DAYS.forEach(function(day){
+    var blocks = BASELINE[day];
+    var col = el("div","col");
+
+    var head = el("div","col-head");
+    head.appendChild(el("span","d",day));
+    head.appendChild(el("span","band",BAND[day]));
+    col.appendChild(head);
+
+    var stack = el("div","stack");
+    blocks.forEach(function(b,i){
+      if(i>0){
+        var gm = mins(b.t) - mins(blocks[i-1].e);
+        if(gm > 0) stack.appendChild(el("div","gap"+(gm>=30?" lg":"")));
+      }
+      var d = dur(b);
+      var blk = el("div","blk "+(d>=60?"h2":"h1")+(b.tutor?" tutor":""));
+      blk.style.setProperty("--sc","var("+SUB[b.s].v+")");
+      blk.appendChild(el("div","t",range(b)));
+      blk.appendChild(el("div","s",SUB[b.s].s));
+      if(b.tutor) blk.appendChild(el("div","tag","Tutoring · 1 hr"));
+      stack.appendChild(blk);
+    });
+    col.appendChild(stack);
+
+    var self = blocks.filter(function(b){return !b.tutor;}).length;
+    var tut  = blocks.filter(function(b){return b.tutor;}).length;
+    var foot = el("div","col-foot");
+    foot.appendChild(el("span",null, self+" × 30min"+(tut?" + tutor":"")));
+    foot.appendChild(el("span", BAND[day]==="Evening"?"bankable":null, BAND[day]==="Evening"?"bankable":""));
+    col.appendChild(foot);
+
+    g.appendChild(col);
+  });
+
+  var lg = document.getElementById("ttLegend");
+  lg.textContent = "";
+  ORDER.forEach(function(k){
+    var it = el("div","lg-item");
+    var sw = el("span","sw"); sw.style.setProperty("--sc","var("+SUB[k].v+")");
+    it.appendChild(sw); it.appendChild(el("span",null,SUB[k].n));
+    lg.appendChild(it);
+  });
+  lg.appendChild(el("span","lg-note","Striped blocks are tutoring · dashed lines are gaps · Thu/Fri evenings can be banked to the weekend"));
+}
+
+/* ---------- DECK: HOURS ---------- */
+function buildHours(){
+  var counts = {}, tut = {};
+  ORDER.forEach(function(k){counts[k]=0;tut[k]=0;});
+  DAYS.forEach(function(d){
+    BASELINE[d].forEach(function(b){ if(b.tutor) tut[b.s]++; else counts[b.s]++; });
+  });
+  var sorted = ORDER.slice().sort(function(a,b){
+    var ta = counts[a]*0.5 + tut[a], tb = counts[b]*0.5 + tut[b];
+    return tb - ta;
+  });
+  var wrap = document.getElementById("hoursChart");
+  wrap.textContent = "";
+  sorted.forEach(function(k){
+    var row = el("div","hrow");
+    row.appendChild(el("div","nm",SUB[k].n));
+    var bar = el("div","bar");
+    for(var i=0;i<counts[k];i++){
+      var u = el("div","unit"); u.style.setProperty("--sc","var("+SUB[k].v+")"); bar.appendChild(u);
+    }
+    for(var j=0;j<tut[k];j++){
+      var t = el("div","unit tut"); t.style.setProperty("--sc","var("+SUB[k].v+")"); bar.appendChild(t);
+    }
+    row.appendChild(bar);
+    var hrs = counts[k]*0.5 + tut[k];
+    var lbl = hrs + " hr" + (hrs===1?"":"s");
+    if(tut[k]) lbl += " *";
+    row.appendChild(el("div","amt",lbl));
+    wrap.appendChild(row);
+  });
+  var note = el("div","lg-note");
+  note.style.marginTop="12px";
+  note.textContent = "* includes a one-hour tutoring session (shown striped). Solid block = one 30-minute self-study session.";
+  wrap.appendChild(note);
+}
+
+/* ---------- DECK: BLANK GRID ---------- */
+function buildBlank(){
+  var g = document.getElementById("blankGrid");
+  g.textContent = "";
+  DAYS.forEach(function(day){
+    var col = el("div","bcol");
+    col.appendChild(el("div","bh",day));
+    var n = BASELINE[day].length;
+    for(var i=0;i<Math.max(n,3);i++){
+      var s = el("div","bslot");
+      var b = BASELINE[day][i];
+      s.appendChild(el("div","bt", b ? range(b) : "____ – ____"));
+      s.appendChild(el("div","bline"));
+      col.appendChild(s);
+    }
+    g.appendChild(col);
+  });
+}
+
+/* ---------- PLANNER ---------- */
+var KEY = "jack-study-week-v1";
+var state = null;
+
+function saturdayOf(){
+  var d = new Date();
+  var day = d.getDay();               // 0 Sun .. 6 Sat
+  var add = (8 - day) % 7;            // next Monday
+  if(add === 0) add = 7;
+  d.setDate(d.getDate() + add);
+  return d.toISOString().slice(0,10);
+}
+function freshState(){ return { weekOf: saturdayOf(), days: clone(BASELINE) }; }
+
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      var p = JSON.parse(raw);
+      if(p && p.days && p.days.Monday) return p;
+    }
+  }catch(e){}
+  return freshState();
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+
+var TIMES = (function(){
+  var out = [];
+  for(var m = 15*60; m <= 21*60+30; m += 30){
+    var h = Math.floor(m/60), mm = m%60;
+    out.push((h<10?"0":"")+h+":"+(mm===0?"00":"30"));
+  }
+  out.push("17:40");
+  out.sort(function(a,b){ return mins(a)-mins(b); });
+  return out;
+})();
+
+function addMins(t, n){
+  var m = mins(t) + n, h = Math.floor(m/60), mm = m%60;
+  return (h<10?"0":"")+h+":"+(mm<10?"0":"")+mm;
+}
+
+function sortDay(day){
+  state.days[day].sort(function(a,b){ return mins(a.t)-mins(b.t); });
+}
+
+function buildPlanner(){
+  var g = document.getElementById("pGrid");
+  g.textContent = "";
+  DAYS.forEach(function(day){
+    var col = el("div","pcol");
+    var head = el("div","col-head");
+    head.appendChild(el("span","d",day));
+    head.appendChild(el("span","band",BAND[day]));
+    col.appendChild(head);
+
+    state.days[day].forEach(function(b, idx){
+      var blk = el("div","pblk");
+      blk.style.setProperty("--sc","var("+SUB[b.s].v+")");
+
+      if(b.tutor){
+        var lk = el("div","locked");
+        lk.appendChild(el("span",null, SUB[b.s].s + " tutoring"));
+        lk.appendChild(el("span","lt", range(b)));
+        blk.appendChild(lk);
+      } else {
+        var r = el("div","row1");
+
+        var ts = el("select","time");
+        ts.setAttribute("aria-label", day+" block "+(idx+1)+" start time");
+        TIMES.forEach(function(t){
+          var o = el("option",null,fmt(t)); o.value = t;
+          if(t===b.t) o.selected = true;
+          ts.appendChild(o);
+        });
+        ts.addEventListener("change", function(){
+          b.t = ts.value; b.e = addMins(b.t, 30);
+          sortDay(day); render();
+        });
+
+        var ss = el("select");
+        ss.setAttribute("aria-label", day+" block "+(idx+1)+" subject");
+        ORDER.forEach(function(k){
+          var o = el("option",null,SUB[k].s); o.value = k;
+          if(k===b.s) o.selected = true;
+          ss.appendChild(o);
+        });
+        ss.addEventListener("change", function(){ b.s = ss.value; render(); });
+
+        var x = el("button","x","×");
+        x.type = "button";
+        x.title = "Remove this block";
+        x.setAttribute("aria-label","Remove "+SUB[b.s].s+" on "+day);
+        x.addEventListener("click", function(){
+          state.days[day].splice(state.days[day].indexOf(b),1);
+          render();
+        });
+
+        r.appendChild(ts); r.appendChild(ss); r.appendChild(x);
+        blk.appendChild(r);
+
+        var jb = el("input");
+        jb.type = "text";
+        jb.value = b.job || "";
+        jb.placeholder = "One job for this block…";
+        jb.setAttribute("aria-label", day+" "+SUB[b.s].s+" — job for this block");
+        jb.addEventListener("input", function(){ b.job = jb.value; save(); renderOut(); });
+        blk.appendChild(jb);
+      }
+      col.appendChild(blk);
+    });
+
+    var add = el("button","add","+ add a block");
+    add.type = "button";
+    add.addEventListener("click", function(){
+      var list = state.days[day];
+      var last = list.length ? list[list.length-1] : null;
+      var start = last ? last.e : (BAND[day]==="Evening" ? "20:00" : "16:00");
+      if(mins(start) > mins("21:00")) start = "21:00";
+      list.push(mk("maths", start, addMins(start,30), BAND[day]==="Evening"?{eve:true}:null));
+      sortDay(day);
+      render();
+    });
+    col.appendChild(add);
+
+    g.appendChild(col);
+  });
+}
+
+function buildTally(){
+  var t = document.getElementById("tally");
+  t.textContent = "";
+  var counts = {}; ORDER.forEach(function(k){counts[k]=0;});
+  var total = 0, tutCount = 0;
+  DAYS.forEach(function(d){
+    state.days[d].forEach(function(b){
+      if(b.tutor){ tutCount++; total += 60; }
+      else { counts[b.s]++; total += dur(b); }
+    });
+  });
+  ORDER.forEach(function(k){
+    var d = counts[k] - TARGET[k];
+    var chip = el("div","tchip"+(d>0?" up":d<0?" down":""));
+    chip.style.setProperty("--sc","var("+SUB[k].v+")");
+    chip.appendChild(el("span",null,SUB[k].s));
+    chip.appendChild(el("span","ct",String(counts[k])));
+    if(d!==0) chip.appendChild(el("span","dl",(d>0?"+":"")+d));
+    t.appendChild(chip);
+  });
+  var tot = el("div","total");
+  tot.textContent = (total/60).toFixed(1).replace(/\.0$/,"") + " hrs · " +
+                    DAYS.reduce(function(a,d){return a+state.days[d].filter(function(b){return !b.tutor;}).length;},0) +
+                    " blocks + " + tutCount + " tutoring";
+  t.appendChild(tot);
+}
+
+function weekLabel(){
+  var v = state.weekOf;
+  if(!v) return "";
+  var p = v.split("-");
+  var d = new Date(+p[0], +p[1]-1, +p[2]);
+  if(isNaN(d.getTime())) return "";
+  var M = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return d.getDate()+" "+M[d.getMonth()]+" "+d.getFullYear();
+}
+
+function renderOut(){
+  var lines = [];
+  var wl = weekLabel();
+  lines.push("JACK — STUDY WEEK" + (wl ? ", week beginning Mon "+wl : ""));
+  lines.push("");
+  DAYS.forEach(function(day){
+    var list = state.days[day];
+    lines.push(day.toUpperCase());
+    if(!list.length){ lines.push("  (nothing scheduled)"); }
+    list.forEach(function(b){
+      var label = b.tutor ? SUB[b.s].n + " tutoring" : SUB[b.s].n;
+      var line = "  " + range(b) + "  " + label;
+      if(!b.tutor && b.job && b.job.trim()) line += " — " + b.job.trim();
+      lines.push(line);
+    });
+    lines.push("");
+  });
+  var counts = {}; ORDER.forEach(function(k){counts[k]=0;});
+  var tot=0;
+  DAYS.forEach(function(d){ state.days[d].forEach(function(b){ if(!b.tutor){counts[b.s]++; tot+=dur(b);} else tot+=60; }); });
+  lines.push("This week: " + ORDER.filter(function(k){return counts[k]>0;}).map(function(k){
+    return SUB[k].s+" ×"+counts[k];
+  }).join(", "));
+  lines.push("Total " + (tot/60).toFixed(1).replace(/\.0$/,"") + " hours.");
+  document.getElementById("outText").value = lines.join("\n");
+}
+
+function render(){
+  buildPlanner();
+  buildTally();
+  renderOut();
+  save();
+}
+
+/* ---------- WIRING ---------- */
+function switchTab(which){
+  var deck = which === "deck";
+  document.getElementById("view-deck").hidden = !deck;
+  document.getElementById("view-plan").hidden = deck;
+  document.getElementById("tab-deck").setAttribute("aria-selected", deck ? "true":"false");
+  document.getElementById("tab-plan").setAttribute("aria-selected", deck ? "false":"true");
+  window.scrollTo(0,0);
+}
+
+document.getElementById("tab-deck").addEventListener("click", function(){ switchTab("deck"); });
+document.getElementById("tab-plan").addEventListener("click", function(){ switchTab("plan"); });
+document.getElementById("printBtn").addEventListener("click", function(){
+  switchTab("deck");
+  setTimeout(function(){ window.print(); }, 60);
+});
+
+document.getElementById("resetBtn").addEventListener("click", function(){
+  state.days = clone(BASELINE);
+  render();
+});
+
+document.getElementById("copyBtn").addEventListener("click", function(){
+  var ta = document.getElementById("outText");
+  var flag = document.getElementById("savedFlag");
+  ta.focus(); ta.select();
+  var done = function(){ flag.classList.add("on"); setTimeout(function(){ flag.classList.remove("on"); }, 1600); };
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(done, function(){ try{document.execCommand("copy"); done();}catch(e){} });
+      return;
+    }
+  }catch(e){}
+  try{ document.execCommand("copy"); done(); }catch(e){}
+});
+
+/* ---------- INIT ---------- */
+buildTimetable();
+buildHours();
+buildBlank();
+
+state = load();
+var wo = document.getElementById("weekOf");
+wo.value = state.weekOf || saturdayOf();
+wo.addEventListener("change", function(){ state.weekOf = wo.value; save(); renderOut(); });
+render();
+
+})();
+</script>
+
+</body>
+</html>
