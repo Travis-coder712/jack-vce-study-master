@@ -47,6 +47,8 @@ img{ max-width:100%; }
   --ok:#3F7A46;
   --warn:#9A6516;
   --btn-fg:#FFFFFF;
+  --tutor:#A8386F;
+  --tutor-fg:#FFFFFF;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -75,6 +77,8 @@ img{ max-width:100%; }
     --ok:#79C285;
     --warn:#E0B45C;
     --btn-fg:#0E1116;
+    --tutor:#EC9CC4;
+    --tutor-fg:#141821;
   }
 }
 :root[data-theme="dark"]{
@@ -103,6 +107,8 @@ img{ max-width:100%; }
   --ok:#79C285;
   --warn:#E0B45C;
   --btn-fg:#0E1116;
+  --tutor:#EC9CC4;
+  --tutor-fg:#141821;
 }
 
 /* ============ BASE ============ */
@@ -183,42 +189,57 @@ p{margin:0}
 .stat .n{font-family:Archivo,sans-serif;font-weight:700;font-size:clamp(28px,3.6vw,40px);letter-spacing:-.03em;line-height:1;color:var(--accent)}
 .stat .l{font-size:12.5px;color:var(--ink-2);margin-top:7px;line-height:1.35}
 
-/* ============ TIMETABLE ============ */
-.tt{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:22px}
-.col{background:var(--card-2);border:1px solid var(--rule);border-radius:10px;padding:10px 9px 9px;display:flex;flex-direction:column;min-width:0}
+/* ============ TIMETABLE (time-axis grid) ============ */
 .col-head{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:9px;padding:0 2px}
 .col-head .d{font-family:Archivo,sans-serif;font-weight:700;font-size:14px;letter-spacing:-.01em}
 .band{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
-.stack{display:flex;flex-direction:column;gap:4px;flex:1}
-.blk{
+.bankable{color:var(--warn);font-weight:500}
+
+.tgrid-wrap{overflow-x:auto;margin-top:18px;padding-bottom:2px}
+.tgrid{--gut:52px;min-width:660px}
+.tg-row{display:grid;grid-template-columns:var(--gut) repeat(5,1fr);gap:0 6px}
+.tg-day{
+  font-family:Archivo,sans-serif;font-weight:700;font-size:13px;text-align:center;
+  padding:6px 0;background:var(--card-2);border:1px solid var(--rule);border-radius:7px;
+}
+.tg-band-label{display:flex;justify-content:space-between;align-items:baseline;margin:11px 0 5px}
+.bl-name{font-family:Archivo,sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.bl-time{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
+.tg-band{height:var(--h)}
+.tg-gut{position:relative}
+.tg-time{
+  position:absolute;right:7px;transform:translateY(-50%);
+  font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-3);white-space:nowrap;
+}
+.tg-lane{
+  position:relative;border:1px solid var(--rule);border-radius:7px;background:var(--card-2);
+  background-image:repeating-linear-gradient(to bottom,
+    color-mix(in srgb,var(--rule) 75%,transparent) 0 1px, transparent 1px var(--gl,39px));
+}
+.tg-blk{
   --sc:var(--s-maths);
-  border-radius:7px;padding:7px 9px;min-width:0;
+  position:absolute;left:3px;right:3px;border-radius:5px;padding:3px 7px;overflow:hidden;
   background:color-mix(in srgb,var(--sc) var(--tint),var(--card));
   border:1px solid color-mix(in srgb,var(--sc) 34%,var(--card));
   border-left:3px solid var(--sc);
-  display:flex;flex-direction:column;justify-content:center;gap:2px;
 }
-.blk.h1{min-height:52px}
-.blk.h2{min-height:108px}
-.blk .t{font-family:"IBM Plex Mono",monospace;font-size:10px;color:color-mix(in srgb,var(--sc) 62%,var(--ink));letter-spacing:.01em}
-.blk .s{font-family:Archivo,sans-serif;font-weight:600;font-size:12.5px;line-height:1.2;color:color-mix(in srgb,var(--sc) 78%,var(--ink));word-break:break-word}
-.blk.tutor{
-  background:repeating-linear-gradient(135deg,
-    color-mix(in srgb,var(--sc) var(--tint),var(--card)) 0 7px,
-    color-mix(in srgb,var(--sc) var(--tint-2),var(--card)) 7px 14px);
-  border-style:solid;border-width:1px 1px 1px 3px;
+.tb-s{font-family:Archivo,sans-serif;font-weight:600;font-size:11.5px;line-height:1.15;color:color-mix(in srgb,var(--sc) 78%,var(--ink))}
+.tb-t{font-family:"IBM Plex Mono",monospace;font-size:9px;line-height:1.3;margin-top:1px;color:color-mix(in srgb,var(--sc) 58%,var(--ink))}
+.tg-blk.tut{
+  background:var(--tutor);
+  border-color:var(--tutor);
+  border-left-color:color-mix(in srgb,var(--tutor) 62%,var(--ink));
 }
-.tag{
-  display:inline-block;font-family:Archivo,sans-serif;font-size:9px;font-weight:700;
-  letter-spacing:.09em;text-transform:uppercase;margin-top:3px;
-  color:color-mix(in srgb,var(--sc) 70%,var(--ink));
+.tg-blk.tut .tb-s,.tg-blk.tut .tb-t,.tg-blk.tut .tb-tag{color:var(--tutor-fg)}
+.tg-blk.tut .tb-t{opacity:.82}
+.tb-tag{font-family:Archivo,sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:3px;opacity:.9}
+.tg-foot{margin-top:8px}
+.tg-fcell{
+  display:flex;justify-content:space-between;gap:6px;padding:0 3px;
+  font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-3);
 }
-.gap{height:16px;border-left:1px dashed var(--rule-2);margin-left:11px}
-.gap.lg{height:24px}
-.col-foot{margin-top:9px;padding-top:8px;border-top:1px solid var(--rule);font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);display:flex;justify-content:space-between;gap:4px}
-.bankable{color:var(--warn);font-weight:500}
 
-.legend{display:flex;flex-wrap:wrap;gap:7px 16px;margin-top:18px;align-items:center}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;align-items:center}
 .lg-item{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
 .sw{width:11px;height:11px;border-radius:3px;background:var(--sc);flex:none}
 .lg-note{font-size:12.5px;color:var(--ink-3);font-style:italic}
@@ -229,7 +250,7 @@ p{margin:0}
 .hrow .nm{font-family:Archivo,sans-serif;font-weight:600;font-size:13.5px;text-align:right;color:var(--ink)}
 .bar{display:flex;gap:3px;align-items:center;min-width:0}
 .unit{height:22px;flex:0 0 30px;border-radius:4px;background:color-mix(in srgb,var(--sc) 72%,var(--card));border:1px solid color-mix(in srgb,var(--sc) 85%,var(--card))}
-.unit.tut{flex:0 0 63px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--sc) 62%,var(--card)) 0 5px,color-mix(in srgb,var(--sc) 26%,var(--card)) 5px 10px)}
+.unit.tut{flex:0 0 63px;background:var(--tutor);border-color:var(--tutor)}
 .hrow .amt{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2)}
 
 .callout{
@@ -330,6 +351,7 @@ input[type="date"],input[type="text"],select{
 input[type="text"]{font-family:"Source Serif 4",serif;font-size:13.5px;width:100%}
 input[type="text"]::placeholder{color:var(--ink-3);opacity:.75}
 
+.pl-sub{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin:30px 0 12px}
 .tally{display:flex;flex-wrap:wrap;gap:7px;margin:20px 0;align-items:center}
 .tchip{
   --sc:var(--s-maths);display:flex;align-items:center;gap:7px;
@@ -372,6 +394,13 @@ input[type="text"]::placeholder{color:var(--ink-3);opacity:.75}
   display:flex;justify-content:space-between;gap:8px;align-items:baseline;
 }
 .locked .lt{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:400;color:color-mix(in srgb,var(--sc) 58%,var(--ink))}
+.pblk.tut{
+  background:color-mix(in srgb,var(--tutor) var(--tint-2),var(--card));
+  border-color:color-mix(in srgb,var(--tutor) 34%,var(--card));
+  border-left-color:var(--tutor);
+}
+.pblk.tut .locked{color:color-mix(in srgb,var(--tutor) 74%,var(--ink))}
+.pblk.tut .locked .lt{color:color-mix(in srgb,var(--tutor) 54%,var(--ink))}
 .add{
   border:1px dashed var(--rule-2);background:transparent;color:var(--ink-3);
   border-radius:8px;padding:7px;cursor:pointer;
@@ -394,16 +423,15 @@ textarea{
 
 /* ============ RESPONSIVE ============ */
 @media (max-width:1000px){
-  .tt,.blank,.pgrid{grid-template-columns:repeat(2,1fr)}
+  .blank,.pgrid{grid-template-columns:repeat(2,1fr)}
   .hrow{grid-template-columns:112px 1fr;row-gap:4px}
   .hrow .amt{grid-column:2;text-align:left}
 }
 @media (max-width:620px){
-  .tt,.blank,.pgrid{grid-template-columns:1fr}
+  .blank,.pgrid{grid-template-columns:1fr}
   .dos{grid-template-columns:1fr;gap:22px}
   .rule-row{grid-template-columns:1fr;gap:5px}
   .hrow .nm{text-align:left}
-  .blk.h1,.blk.h2{min-height:0}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
@@ -414,7 +442,7 @@ textarea{
     --rule:#D6DCE5;--rule-2:#AEB8C6;--accent:#2F4B7C;--accent-soft:#EAF0F8;
     --shadow:none;--tint:15%;--tint-2:9%;
     --s-maths:#2F4B7C;--s-eco:#A2571C;--s-eng:#1B6C70;--s-bio:#4A7734;--s-vet:#A03E44;--s-bus:#67487F;
-    --ok:#3F7A46;--warn:#8A5A12;--btn-fg:#FFFFFF;
+    --ok:#3F7A46;--warn:#8A5A12;--btn-fg:#FFFFFF;--tutor:#A8386F;--tutor-fg:#FFFFFF;
   }
   @page{size:A4 landscape;margin:11mm}
   html,body{background:#fff!important}
@@ -426,7 +454,9 @@ textarea{
     padding:0 0 8mm;break-after:page;page-break-after:always;overflow:visible;
   }
   .slide:last-child{break-after:auto;page-break-after:auto}
-  .slide,.tt,.col,.blk,.tips,.stats,.example,.callout,.dos,.blank,.bcol{break-inside:avoid;page-break-inside:avoid}
+  .slide,.tgrid,.tg-band,.tips,.stats,.example,.callout,.dos,.blank,.bcol{break-inside:avoid;page-break-inside:avoid}
+  .tgrid-wrap{overflow:visible!important}
+  .tgrid{min-width:0!important}
   .cover{padding-block:14mm}
   .ruled{background-image:none}
   .slide::after{bottom:2mm;right:2mm}
@@ -477,7 +507,7 @@ textarea{
     <div class="slide-head"><div class="eyebrow">The baseline</div></div>
     <h2>The standard week</h2>
     <p class="lede">This is the default. It runs unless Jack deliberately changes it on Saturday — and it's what everyone can assume is happening on any given afternoon.</p>
-    <div class="tt" id="ttGrid"></div>
+    <div id="ttGrid"></div>
     <div class="legend" id="ttLegend"></div>
   </section>
 
@@ -620,6 +650,9 @@ textarea{
   </div>
 
   <div class="tally" id="tally"></div>
+  <div id="planGrid"></div>
+
+  <h3 class="pl-sub">Adjust the blocks</h3>
   <div class="pgrid" id="pGrid"></div>
 
   <div class="out">
@@ -677,44 +710,102 @@ function range(b){ return fmt(b.t)+"–"+fmt(b.e); }
 function dur(b){ return mins(b.e)-mins(b.t); }
 function el(tag,cls,txt){ var e=document.createElement(tag); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e; }
 
+/* ---------- SHARED: TIME-AXIS GRID ---------- */
+var PXM = 1.3;          // px per minute
+var EVE_CUT = 19*60;    // blocks starting after 7pm belong to the evening band
+
+function fmtMin(m){
+  var h=Math.floor(m/60), mm=m%60, ap=h>=12?"pm":"am", hh=h%12;
+  if(hh===0) hh=12;
+  return hh+":"+(mm<10?"0":"")+mm+ap;
+}
+function bandOf(b){ return mins(b.t) < EVE_CUT ? "aft" : "eve"; }
+
+function bandSpan(days, which){
+  var lo=null, hi=null;
+  DAYS.forEach(function(d){
+    days[d].forEach(function(b){
+      if(bandOf(b)!==which) return;
+      var bs=mins(b.t), be=mins(b.e);
+      if(lo===null || bs<lo) lo=bs;
+      if(hi===null || be>hi) hi=be;
+    });
+  });
+  if(lo===null) return null;
+  return { s:Math.floor(lo/30)*30, e:Math.ceil(hi/10)*10 };
+}
+
+function renderTimeGrid(host, days){
+  host.textContent = "";
+  var wrap = el("div","tgrid-wrap");
+  var grid = el("div","tgrid");
+  grid.style.setProperty("--gl", (30*PXM)+"px");
+
+  var head = el("div","tg-row tg-head");
+  head.appendChild(el("div","tg-gut"));
+  DAYS.forEach(function(d){ head.appendChild(el("div","tg-day",d)); });
+  grid.appendChild(head);
+
+  [["aft","After school"],["eve","Evening"]].forEach(function(pair){
+    var key = pair[0], span = bandSpan(days, key);
+    if(!span) return;
+
+    var lab = el("div","tg-band-label");
+    lab.appendChild(el("span","bl-name", pair[1]));
+    lab.appendChild(el("span","bl-time", fmtMin(span.s)+" – "+fmtMin(span.e)));
+    grid.appendChild(lab);
+
+    var row = el("div","tg-row tg-band");
+    row.style.setProperty("--h", ((span.e-span.s)*PXM)+"px");
+
+    var gut = el("div","tg-gut");
+    for(var m=span.s; m<=span.e; m+=30){
+      var tl = el("div","tg-time", fmtMin(m));
+      tl.style.top = ((m-span.s)*PXM)+"px";
+      gut.appendChild(tl);
+    }
+    row.appendChild(gut);
+
+    DAYS.forEach(function(d){
+      var lane = el("div","tg-lane");
+      days[d].forEach(function(b){
+        if(bandOf(b)!==key) return;
+        var st=mins(b.t), en=mins(b.e);
+        var box = el("div","tg-blk"+(b.tutor?" tut":""));
+        if(!b.tutor) box.style.setProperty("--sc","var("+SUB[b.s].v+")");
+        box.style.top = ((st-span.s)*PXM)+"px";
+        box.style.height = Math.max(20,(en-st)*PXM-3)+"px";
+        box.appendChild(el("div","tb-s", SUB[b.s].s));
+        box.appendChild(el("div","tb-t", fmt(b.t)+"–"+fmt(b.e)));
+        if(b.tutor) box.appendChild(el("div","tb-tag","Tutoring"));
+        lane.appendChild(box);
+      });
+      row.appendChild(lane);
+    });
+    grid.appendChild(row);
+  });
+
+  var foot = el("div","tg-row tg-foot");
+  foot.appendChild(el("div","tg-gut"));
+  DAYS.forEach(function(d){
+    var list = days[d];
+    var self = list.filter(function(b){return !b.tutor;}).length;
+    var tut  = list.filter(function(b){return b.tutor;}).length;
+    var cell = el("div","tg-fcell");
+    cell.appendChild(el("span",null, self+" × 30min"+(tut?" + tutor":"")));
+    if(list.length && list.every(function(b){return bandOf(b)==="eve";}))
+      cell.appendChild(el("span","bankable","bankable"));
+    foot.appendChild(cell);
+  });
+  grid.appendChild(foot);
+
+  wrap.appendChild(grid);
+  host.appendChild(wrap);
+}
+
 /* ---------- DECK: TIMETABLE ---------- */
 function buildTimetable(){
-  var g = document.getElementById("ttGrid");
-  g.textContent = "";
-  DAYS.forEach(function(day){
-    var blocks = BASELINE[day];
-    var col = el("div","col");
-
-    var head = el("div","col-head");
-    head.appendChild(el("span","d",day));
-    head.appendChild(el("span","band",BAND[day]));
-    col.appendChild(head);
-
-    var stack = el("div","stack");
-    blocks.forEach(function(b,i){
-      if(i>0){
-        var gm = mins(b.t) - mins(blocks[i-1].e);
-        if(gm > 0) stack.appendChild(el("div","gap"+(gm>=30?" lg":"")));
-      }
-      var d = dur(b);
-      var blk = el("div","blk "+(d>=60?"h2":"h1")+(b.tutor?" tutor":""));
-      blk.style.setProperty("--sc","var("+SUB[b.s].v+")");
-      blk.appendChild(el("div","t",range(b)));
-      blk.appendChild(el("div","s",SUB[b.s].s));
-      if(b.tutor) blk.appendChild(el("div","tag","Tutoring · 1 hr"));
-      stack.appendChild(blk);
-    });
-    col.appendChild(stack);
-
-    var self = blocks.filter(function(b){return !b.tutor;}).length;
-    var tut  = blocks.filter(function(b){return b.tutor;}).length;
-    var foot = el("div","col-foot");
-    foot.appendChild(el("span",null, self+" × 30min"+(tut?" + tutor":"")));
-    foot.appendChild(el("span", BAND[day]==="Evening"?"bankable":null, BAND[day]==="Evening"?"bankable":""));
-    col.appendChild(foot);
-
-    g.appendChild(col);
-  });
+  renderTimeGrid(document.getElementById("ttGrid"), BASELINE);
 
   var lg = document.getElementById("ttLegend");
   lg.textContent = "";
@@ -724,7 +815,11 @@ function buildTimetable(){
     it.appendChild(sw); it.appendChild(el("span",null,SUB[k].n));
     lg.appendChild(it);
   });
-  lg.appendChild(el("span","lg-note","Striped blocks are tutoring · dashed lines are gaps · Thu/Fri evenings can be banked to the weekend"));
+  var ti = el("div","lg-item");
+  var tsw = el("span","sw"); tsw.style.setProperty("--sc","var(--tutor)");
+  ti.appendChild(tsw); ti.appendChild(el("span",null,"Tutoring — fixed, never moves"));
+  lg.appendChild(ti);
+  lg.appendChild(el("span","lg-note","Thursday and Friday evenings can be banked to the weekend."));
 }
 
 /* ---------- DECK: HOURS ---------- */
@@ -759,7 +854,7 @@ function buildHours(){
   });
   var note = el("div","lg-note");
   note.style.marginTop="12px";
-  note.textContent = "* includes a one-hour tutoring session (shown striped). Solid block = one 30-minute self-study session.";
+  note.textContent = "* includes a one-hour tutoring session, shown in the tutoring colour. Every other block is one 30-minute self-study session.";
   wrap.appendChild(note);
 }
 
@@ -841,7 +936,7 @@ function buildPlanner(){
     col.appendChild(head);
 
     state.days[day].forEach(function(b, idx){
-      var blk = el("div","pblk");
+      var blk = el("div","pblk"+(b.tutor?" tut":""));
       blk.style.setProperty("--sc","var("+SUB[b.s].v+")");
 
       if(b.tutor){
@@ -978,6 +1073,7 @@ function renderOut(){
 }
 
 function render(){
+  renderTimeGrid(document.getElementById("planGrid"), state.days);
   buildPlanner();
   buildTally();
   renderOut();
